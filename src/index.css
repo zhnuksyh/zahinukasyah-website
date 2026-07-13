@@ -60,6 +60,45 @@ a:hover {
   background: transparent;
 }
 
+/*
+ * Transform-based hover lifts. Tailwind's translate utilities set the
+ * standalone `translate` property, which the inline `transition: transform`
+ * declarations don't animate and which imperative style.transform overrides
+ * can't neutralize (that shifted fullscreen cards on hover). These use
+ * `transform`, so inline transforms set during animations win over them.
+ */
+.lift-2:hover {
+  transform: translateY(-2px);
+}
+.lift-6:hover {
+  transform: translateY(-6px);
+}
+.lift-8:hover {
+  transform: translateY(-8px);
+}
+.lift-12:hover {
+  transform: translateY(-12px);
+}
+.lift-16:hover {
+  transform: translateY(-16px);
+}
+.lift-18:hover {
+  transform: translateY(-18px);
+}
+.pop:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+.pop-sm:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+.scale-up:hover {
+  transform: scale(1.08);
+}
+.cta-lift:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.08);
+}
+
 @keyframes float-glow {
   0%,
   100% {

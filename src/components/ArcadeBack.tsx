@@ -448,7 +448,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
             </div>
             <a
               href={gg.href}
-              className="hover:-translate-y-[3px] hover:brightness-[1.08]"
+              className="cta-lift"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',

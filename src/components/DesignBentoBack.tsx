@@ -72,7 +72,7 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
             <div
               key={i}
               onClick={(e) => openTile(e, i)}
-              className="shadow-[0_16px_34px_-18px_rgba(0,0,0,0.55)] hover:-translate-y-2 hover:shadow-[0_34px_60px_-22px_rgba(0,0,0,0.85)]"
+              className="lift-8 shadow-[0_16px_34px_-18px_rgba(0,0,0,0.55)] hover:shadow-[0_34px_60px_-22px_rgba(0,0,0,0.85)]"
               style={{
                 position: 'relative',
                 gridRow: 'span 1',

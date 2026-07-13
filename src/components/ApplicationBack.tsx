@@ -65,7 +65,7 @@ export default function ApplicationBack() {
             return (
               <FlipCard
                 key={i}
-                className="hover:-translate-y-2"
+                className="lift-8"
                 wrapStyle={{
                   position: 'relative',
                   gridRow: 'span 1',

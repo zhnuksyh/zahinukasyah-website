@@ -367,7 +367,7 @@ export default function JournalPage({ active }: { active: boolean }) {
             <a
               href="#"
               onClick={(e) => e.preventDefault()}
-              className="hover:-translate-y-0.5 hover:bg-white/10"
+              className="lift-2 hover:bg-white/10"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',

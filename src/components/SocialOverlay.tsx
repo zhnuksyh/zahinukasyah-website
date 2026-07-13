@@ -67,7 +67,7 @@ export default function SocialOverlay({ open, onClose }: { open: boolean; onClos
               key={s.name}
               href="#"
               onClick={(e) => e.preventDefault()}
-              className="bg-white/[0.04] border border-white/[0.08] hover:-translate-y-2 hover:bg-white/[0.08] hover:border-[rgba(255,255,255,0.22)]"
+              className="lift-8 bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] hover:border-[rgba(255,255,255,0.22)]"
               style={{
                 display: 'flex',
                 flexDirection: 'column',

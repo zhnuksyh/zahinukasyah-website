@@ -358,7 +358,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
                 href="#"
                 onClick={(e) => openCard(e, i)}
                 data-face=""
-                className={`group ${center ? 'hover:-translate-y-[18px]' : 'hover:-translate-y-4'}`}
+                className={`group ${center ? 'lift-18' : 'lift-16'}`}
                 style={{
                   display: 'block',
                   position: 'relative',

@@ -107,7 +107,7 @@ export default function CollabPage({ active }: { active: boolean }) {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginTop: 26 }}>
               <button
                 onClick={() => setEmailOpen(true)}
-                className="hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
+                className="pop-sm hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -156,7 +156,7 @@ export default function CollabPage({ active }: { active: boolean }) {
                 return (
                   <FlipCard
                     key={idx}
-                    className="hover:-translate-y-3"
+                    className="lift-12"
                     duration={0.55}
                     wrapStyle={{
                       position: 'relative',
@@ -168,7 +168,8 @@ export default function CollabPage({ active }: { active: boolean }) {
                       cursor: 'pointer',
                       marginTop: STAG[idx % STAG.length],
                       opacity: up ? 1 : 0,
-                      transform: up ? 'translateY(0)' : 'translateY(40px)',
+                      // no inline transform once risen — it would override the hover lift
+                      ...(up ? {} : { transform: 'translateY(40px)' }),
                       transition: `opacity .5s ease ${delay}s, transform .6s cubic-bezier(.34,1.2,.64,1) ${delay}s`,
                     }}
                     frontStyle={{
@@ -322,7 +323,7 @@ export default function CollabPage({ active }: { active: boolean }) {
               setEmailOpen(false);
               setCopied(false);
             }}
-            className="hover:bg-white/[0.12] hover:scale-[1.08]"
+            className="scale-up hover:bg-white/[0.12]"
             style={{
               position: 'absolute',
               top: 18,
@@ -407,7 +408,7 @@ export default function CollabPage({ active }: { active: boolean }) {
           </div>
           <a
             href={`mailto:${collabEmail}`}
-            className="hover:-translate-y-0.5 hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
+            className="lift-2 hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
             style={{
               display: 'inline-flex',
               alignItems: 'center',

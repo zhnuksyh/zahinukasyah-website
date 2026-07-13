@@ -10,7 +10,7 @@ export default function CloseButton({ onClick, zIndex, animateIn }: CloseButtonP
     <button
       onClick={onClick}
       aria-label="Close"
-      className="bg-[rgba(20,20,22,0.72)] border border-[rgba(255,255,255,0.22)] hover:bg-[rgba(40,40,44,0.92)] hover:border-[rgba(255,255,255,0.4)] hover:scale-[1.08]"
+      className="scale-up bg-[rgba(20,20,22,0.72)] border border-[rgba(255,255,255,0.22)] hover:bg-[rgba(40,40,44,0.92)] hover:border-[rgba(255,255,255,0.4)]"
       style={{
         position: 'fixed',
         top: 28,

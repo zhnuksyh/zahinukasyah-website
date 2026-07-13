@@ -60,7 +60,7 @@ function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaIt
         {items.map((g, idx) => (
           <FlipCard
             key={`${prefix}-${idx}`}
-            className="hover:-translate-y-2"
+            className="lift-8"
             duration={0.55}
             wrapStyle={{
               position: 'relative',
@@ -493,7 +493,7 @@ export default function AboutPage({ active }: { active: boolean }) {
               {HOBBY_ICONS.map((icon, i) => (
                 <div
                   key={i}
-                  className="bg-white/[0.04] border border-white/[0.08] hover:-translate-y-1.5 hover:bg-white/[0.07] hover:border-[rgba(255,255,255,0.2)]"
+                  className="lift-6 bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] hover:border-[rgba(255,255,255,0.2)]"
                   style={{
                     aspectRatio: '1 / 1',
                     borderRadius: 22,
