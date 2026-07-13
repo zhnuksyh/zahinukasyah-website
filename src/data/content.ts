@@ -221,6 +221,8 @@ const gameDesc =
   'Placeholder note — a couple of lines on why this one has my attention right now and what keeps pulling me back in.';
 const bookDesc =
   'Placeholder note — a couple of lines on what this book is about and the idea from it that stuck with me.';
+const movieDesc =
+  'Placeholder note — a couple of lines on what this one is about and the moment that made it stick with me.';
 
 export const gamesData: MediaItem[] = [
   { title: 'Wildfrost', meta: 'Deadpan Games', tag: 'Playing', c: '#a78bfa', desc: gameDesc, img: '/covers/game-wildfrost.jpg' },
@@ -242,6 +244,17 @@ export const booksData: MediaItem[] = [
   { title: 'The Courage to Be Disliked', meta: 'Kishimi & Koga', tag: 'Finished', c: '#2dd4bf', desc: bookDesc, img: '/covers/book-courage-disliked.jpg' },
   { title: 'Slow Productivity', meta: 'Cal Newport', tag: 'Reading', c: '#f472b6', desc: bookDesc, img: '/covers/book-slow-productivity.jpg' },
   { title: 'Muhammad', meta: 'Martin Lings', tag: 'Reading', c: '#8b7cf6', desc: bookDesc, img: '/covers/book-muhammad-lings.jpg' },
+];
+
+export const moviesData: MediaItem[] = [
+  { title: 'To Your Eternity: S3', meta: 'Anime', tag: 'Watching', c: '#a78bfa', desc: movieDesc },
+  { title: 'Boboiboy: Baraju Arc', meta: 'Monsta', tag: 'Watching', c: '#f2603c', desc: movieDesc },
+  { title: 'Yozakura Family Spy: S2', meta: 'Anime', tag: 'Watching', c: '#f472b6', desc: movieDesc },
+  { title: 'Bungou Stray Dogs: S3', meta: 'Bones', tag: 'Finished', c: '#4f8ef7', desc: movieDesc },
+  { title: 'Ejen Ali Movie 2', meta: 'WAU Animation', tag: 'Finished', c: '#35c95a', desc: movieDesc },
+  { title: 'Papazola The Movie', meta: 'Malaysian animation', tag: 'Finished', c: '#ffcf33', desc: movieDesc },
+  { title: "Searching for a World that Doesn't Exist", meta: 'Film', tag: 'Finished', c: '#2dd4bf', desc: movieDesc },
+  { title: 'Solving the M4TCHB0X Mystery', meta: 'Documentary', tag: 'Watching', c: '#8b7cf6', desc: movieDesc },
 ];
 
 export interface TimelineItem {

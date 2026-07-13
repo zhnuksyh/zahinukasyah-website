@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import portrait from '../assets/syah-portrait.jpg';
 import portraitBack from '../assets/syah-portrait-back.jpg';
-import { booksData, gamesData, timelineData } from '../data/content';
+import { booksData, gamesData, moviesData, timelineData } from '../data/content';
 import type { MediaItem } from '../data/content';
 import { hexToRgba, shade, tint } from '../lib/colors';
 import { ACCENT, accentGlow, glowSoft } from '../lib/theme';
@@ -294,7 +294,7 @@ export default function AboutPage({ active }: { active: boolean }) {
             maxWidth: 1140,
             display: 'grid',
             gridTemplateColumns: '330px minmax(0, 1fr)',
-            gridTemplateRows: '460px auto auto auto',
+            gridTemplateRows: '460px auto auto auto auto',
             columnGap: 64,
             rowGap: 56,
             alignContent: 'start',
@@ -544,14 +544,19 @@ export default function AboutPage({ active }: { active: boolean }) {
             </div>
           </div>
 
-          {/* ROW 3 · full width — Games I've been playing recently */}
+          {/* ROW 3 · full width — games */}
           <div style={{ gridColumn: '1 / -1', gridRow: 3, marginTop: 8, ...bioRise(0.58) }}>
-            <MediaGrid heading="Games I've been playing recently" items={gamesData} prefix="game" />
+            <MediaGrid heading="Games I've been liking recently" items={gamesData} prefix="game" />
           </div>
 
-          {/* ROW 4 · full width — Books I've been reading recently */}
+          {/* ROW 4 · full width — books */}
           <div style={{ gridColumn: '1 / -1', gridRow: 4, marginTop: 8, ...bioRise(0.66) }}>
-            <MediaGrid heading="Books I've been reading recently" items={booksData} prefix="book" />
+            <MediaGrid heading="Books I've been liking recently" items={booksData} prefix="book" />
+          </div>
+
+          {/* ROW 5 · full width — movies */}
+          <div style={{ gridColumn: '1 / -1', gridRow: 5, marginTop: 8, ...bioRise(0.74) }}>
+            <MediaGrid heading="Movies I've been liking recently" items={moviesData} prefix="movie" />
           </div>
         </div>
       </div>
