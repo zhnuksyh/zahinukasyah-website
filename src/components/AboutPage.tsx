@@ -340,12 +340,14 @@ export default function AboutPage({
               }}
             />
             <div
+              onClick={() => setFlipped((f) => !f)}
               style={{
                 position: 'absolute',
                 inset: 0,
                 transformStyle: 'preserve-3d',
                 transform: `translateY(${up ? '0px' : '116%'}) rotateY(${flipped ? '180deg' : '0deg'})`,
                 opacity: up ? 1 : 0,
+                cursor: 'pointer',
                 transition: 'transform .72s cubic-bezier(.34,1.2,.64,1), opacity .5s ease',
               }}
             >
