@@ -8,10 +8,10 @@ import ResearchBack from './ResearchBack';
 import ArcadeBack from './ArcadeBack';
 
 const ROTS = [-12, -6.5, 0, 6.5, 12];
-const TXS = [-298, -166, 0, 166, 298];
-const BOTTOMS = [-214, -184, -150, -184, -214];
-const WIDTHS = [250, 260, 284, 260, 250];
-const HEIGHTS = [400, 410, 430, 410, 400];
+const TXS = [-345, -192, 0, 192, 345];
+const BOTTOMS = [-248, -214, -174, -214, -248];
+const WIDTHS = [290, 300, 330, 300, 290];
+const HEIGHTS = [465, 475, 500, 475, 465];
 const ZS = [1, 2, 3, 2, 1];
 
 const CARD_TRANSITION = 'transform .34s cubic-bezier(.34,1.3,.64,1)';
@@ -313,14 +313,14 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
   return (
     <>
       {showClose ? <CloseButton onClick={closeCard} zIndex={350} animateIn /> : null}
-      <div ref={fanRef} style={{ flexShrink: 0, position: 'relative', height: 288, zIndex: 5 }}>
+      <div ref={fanRef} style={{ flexShrink: 0, position: 'relative', height: 334, zIndex: 5 }}>
         <div
           style={{
             position: 'absolute',
             left: '50%',
-            bottom: -170,
-            width: 820,
-            height: 460,
+            bottom: -196,
+            width: 950,
+            height: 530,
             transform: 'translateX(-50%)',
             borderRadius: '50%',
             filter: 'blur(90px)',
