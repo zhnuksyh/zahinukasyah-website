@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import portrait from '../assets/syah-portrait.jpg';
+import portraitBack from '../assets/syah-portrait-back.jpg';
 import { booksData, gamesData, timelineData } from '../data/content';
 import type { MediaItem } from '../data/content';
 import { hexToRgba, shade, tint } from '../lib/colors';
@@ -334,39 +335,20 @@ export default function AboutPage({ active }: { active: boolean }) {
                   transition: 'opacity .05s linear .34s',
                 }}
               >
+                <img
+                  src={portraitBack}
+                  alt=""
+                  draggable={false}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
                 <div
                   style={{
                     position: 'absolute',
                     inset: 0,
                     background: `radial-gradient(120% 62% at 50% 0%, ${accentGlow}, transparent 62%)`,
+                    pointerEvents: 'none',
                   }}
                 />
-                <div
-                  style={{
-                    position: 'relative',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 16,
-                  }}
-                >
-                  <div style={{ fontSize: 84, fontWeight: 700, letterSpacing: '-0.04em', color: ACCENT, lineHeight: 1 }}>
-                    Z
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 500,
-                      letterSpacing: '0.34em',
-                      textTransform: 'uppercase',
-                      color: 'rgba(255,255,255,0.42)',
-                    }}
-                  >
-                    About
-                  </div>
-                </div>
               </div>
               {/* BACK: portrait (placeholder) */}
               <div
