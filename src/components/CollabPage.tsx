@@ -15,6 +15,15 @@ export default function CollabPage({ active }: { active: boolean }) {
   const vp = useViewport();
   const mobile = vp === 'mobile';
   const timers = useRef<number[]>([]);
+  const railRef = useRef<HTMLDivElement>(null);
+
+  // mobile carousel starts centered on the middle card
+  useEffect(() => {
+    if (!mobile || !active) return;
+    const rail = railRef.current;
+    const el = rail?.children[Math.floor(collabData.length / 2)] as HTMLElement | undefined;
+    if (rail && el) rail.scrollLeft = el.offsetLeft - (rail.clientWidth - el.clientWidth) / 2;
+  }, [mobile, active]);
 
   const clearTimers = () => {
     timers.current.forEach(clearTimeout);
@@ -52,7 +61,7 @@ export default function CollabPage({ active }: { active: boolean }) {
           zIndex: 12,
           display: 'flex',
           justifyContent: 'center',
-          padding: mobile ? '80px 22px 24px' : vp === 'tablet' ? '92px 44px 30px' : '92px 100px 30px',
+          padding: mobile ? '80px 26px 24px' : vp === 'tablet' ? '92px 44px 30px' : '92px 100px 30px',
           opacity: active ? 1 : 0,
           pointerEvents: active ? 'auto' : 'none',
           transition: 'opacity .45s ease',
@@ -66,6 +75,7 @@ export default function CollabPage({ active }: { active: boolean }) {
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
+            justifyContent: mobile ? 'center' : undefined,
           }}
         >
           {/* TOP: prompt + email */}
@@ -75,7 +85,7 @@ export default function CollabPage({ active }: { active: boolean }) {
               textAlign: 'center',
               maxWidth: 840,
               margin: '0 auto',
-              paddingTop: 40,
+              paddingTop: mobile ? 0 : 40,
               opacity: up ? 1 : 0,
               transform: up ? 'translateY(0)' : 'translateY(20px)',
               transition: 'opacity .55s ease, transform .6s cubic-bezier(.34,1.15,.64,1)',
@@ -135,9 +145,9 @@ export default function CollabPage({ active }: { active: boolean }) {
           {/* BOTTOM: carousel */}
           <div
             style={{
-              flex: '1 1 auto',
+              flex: mobile ? '0 0 auto' : '1 1 auto',
               minHeight: 0,
-              marginTop: 10,
+              marginTop: mobile ? 26 : 10,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -145,6 +155,7 @@ export default function CollabPage({ active }: { active: boolean }) {
             }}
           >
             <div
+              ref={railRef}
               style={{
                 display: 'flex',
                 gap: mobile ? 14 : 22,
@@ -153,6 +164,7 @@ export default function CollabPage({ active }: { active: boolean }) {
                 padding: mobile ? '0 4px 16px' : '0 40px',
                 width: '100%',
                 overflowX: mobile ? 'auto' : 'visible',
+                ...(mobile ? { scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' } : {}),
               }}
             >
               {collabData.map((cc, idx) => {
@@ -167,10 +179,11 @@ export default function CollabPage({ active }: { active: boolean }) {
                       flex: mobile ? '0 0 200px' : '1 1 0',
                       minWidth: 0,
                       maxWidth: 236,
+                      ...(mobile ? { scrollSnapAlign: 'center' } : {}),
                       height: 250,
                       perspective: 1000,
                       cursor: 'pointer',
-                      marginTop: STAG[idx % STAG.length],
+                      marginTop: mobile ? 0 : STAG[idx % STAG.length],
                       opacity: up ? 1 : 0,
                       // no inline transform once risen — it would override the hover lift
                       ...(up ? {} : { transform: 'translateY(40px)' }),
