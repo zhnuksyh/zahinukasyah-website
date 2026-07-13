@@ -238,6 +238,7 @@ export default function AboutPage({
 }) {
   const [up, setUp] = useState(false);
   const [flipped, setFlipped] = useState(false);
+  const [showTop, setShowTop] = useState(false);
   const timers = useRef<number[]>([]);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const dragScroll = useDragScroll();
@@ -264,6 +265,7 @@ export default function AboutPage({
     } else {
       setUp(false);
       setFlipped(false);
+      setShowTop(false);
     }
     return clearTimers;
   }, [active]);
@@ -290,7 +292,11 @@ export default function AboutPage({
           scrollRef.current = el;
           dragScroll(el);
         }}
-        onScroll={(e) => onScroll?.(e.currentTarget.scrollTop)}
+        onScroll={(e) => {
+          const top = e.currentTarget.scrollTop;
+          onScroll?.(top);
+          setShowTop(top > 320);
+        }}
         style={{
           position: 'absolute',
           inset: 0,
@@ -577,6 +583,39 @@ export default function AboutPage({
           </div>
         </div>
       </div>
+
+      {/* back-to-top (appears once the page is scrolled a bit) */}
+      <button
+        type="button"
+        aria-label="Back to top"
+        onClick={() => scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
+        style={{
+          position: 'absolute',
+          right: 36,
+          bottom: 36,
+          width: 52,
+          height: 52,
+          borderRadius: '50%',
+          border: '1px solid rgba(255,255,255,0.14)',
+          background: 'rgba(22,22,25,0.85)',
+          backdropFilter: 'blur(8px)',
+          color: '#fefefe',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          boxShadow: '0 18px 40px -18px rgba(0,0,0,0.8)',
+          opacity: active && showTop ? 1 : 0,
+          transform: active && showTop ? 'translateY(0)' : 'translateY(14px)',
+          pointerEvents: active && showTop ? 'auto' : 'none',
+          transition: 'opacity .3s ease, transform .3s cubic-bezier(.34,1.4,.64,1)',
+        }}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="19" x2="12" y2="5" />
+          <polyline points="5 12 12 5 19 12" />
+        </svg>
+      </button>
     </div>
   );
 }
