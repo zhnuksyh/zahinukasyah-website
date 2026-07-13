@@ -7,8 +7,6 @@ import CloseButton from './CloseButton';
 
 const COLS = 16;
 const ROWS = 9;
-const CELL_W = 100 / COLS;
-const CELL_H = 100 / ROWS;
 
 /** Back face for the Games card: a walkable arcade floor plus a fullscreen game detail. */
 export default function ArcadeBack({ open }: { open: boolean }) {
@@ -92,6 +90,25 @@ export default function ArcadeBack({ open }: { open: boolean }) {
   const hint = gamesArcadeData.find((o) => o.x === pos.x && o.y === pos.y);
   const gg = gamesArcadeData[gameSel ?? 0] ?? gamesArcadeData[0];
 
+  // The floor keeps square cells everywhere; on phones it turns portrait
+  // (rows and columns swap) so the board stays big enough to walk around.
+  const dCols = mobile ? ROWS : COLS;
+  const dRows = mobile ? COLS : ROWS;
+  const cw = 100 / dCols;
+  const ch = 100 / dRows;
+  const colOf = (p: { x: number; y: number }) => (mobile ? p.y : p.x);
+  const rowOf = (p: { x: number; y: number }) => (mobile ? p.x : p.y);
+
+  // step in screen directions; translate back into data coordinates
+  const step = (dc: number, dr: number) => {
+    const mx = mobile ? dr : dc;
+    const my = mobile ? dc : dr;
+    setPos((p) => ({
+      x: Math.min(COLS - 1, Math.max(0, p.x + mx)),
+      y: Math.min(ROWS - 1, Math.max(0, p.y + my)),
+    }));
+  };
+
   return (
     <>
       <div
@@ -101,54 +118,9 @@ export default function ArcadeBack({ open }: { open: boolean }) {
           overflow: 'hidden',
           backgroundColor: '#0a0a0b',
           backgroundImage:
-            'radial-gradient(120% 130% at 50% 38%, rgba(255,255,255,0.05), transparent 62%),' +
-            'linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),' +
-            'linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)',
-          backgroundSize: `100% 100%, ${CELL_W}% 100%, 100% ${CELL_H}%`,
+            'radial-gradient(120% 130% at 50% 38%, rgba(255,255,255,0.05), transparent 62%)',
         }}
       >
-        {mobile ? (
-          /* mobile: the walkable floor needs a keyboard, so offer a simple game list */
-          <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', padding: '80px 24px 44px' }}>
-            <div
-              style={{
-                fontSize: 12,
-                fontWeight: 600,
-                letterSpacing: '0.4em',
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.4)',
-              }}
-            >
-              Arcade
-            </div>
-            <div style={{ marginTop: 8, fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em', color: '#fafafa' }}>
-              Pick a game to visit
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: 12, marginTop: 24 }}>
-              {gamesArcadeData.map((o, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => openGame(idx)}
-                  style={{
-                    padding: '24px 14px',
-                    borderRadius: 18,
-                    textAlign: 'center',
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: '#ffffff',
-                    cursor: 'pointer',
-                    background: `linear-gradient(150deg, ${tint(o.c, 0.08)}, ${shade(o.c, 0.32)})`,
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    boxShadow: '0 14px 30px -14px ' + hexToRgba(o.c, 0.6),
-                  }}
-                >
-                  {o.title}
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <>
         {/* HUD */}
         <div
           style={{
@@ -187,55 +159,84 @@ export default function ArcadeBack({ open }: { open: boolean }) {
           >
             Walk the space · visit a game
           </div>
-          <div
-            style={{
-              marginTop: 4,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 18,
-              fontSize: 12.5,
-              color: 'rgba(255,255,255,0.42)',
-            }}
-          >
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-              <span
-                style={{
-                  fontFamily: 'monospace',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  letterSpacing: '0.14em',
-                  color: 'rgba(255,255,255,0.8)',
-                  padding: '4px 9px',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  borderRadius: 7,
-                  background: 'rgba(255,255,255,0.05)',
-                }}
-              >
-                WASD
+          {mobile ? (
+            <div style={{ marginTop: 4, fontSize: 12.5, color: 'rgba(255,255,255,0.42)' }}>
+              use the pad to walk · step on a game to visit
+            </div>
+          ) : (
+            <div
+              style={{
+                marginTop: 4,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 18,
+                fontSize: 12.5,
+                color: 'rgba(255,255,255,0.42)',
+              }}
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <span
+                  style={{
+                    fontFamily: 'monospace',
+                    fontSize: 11,
+                    fontWeight: 600,
+                    letterSpacing: '0.14em',
+                    color: 'rgba(255,255,255,0.8)',
+                    padding: '4px 9px',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: 7,
+                    background: 'rgba(255,255,255,0.05)',
+                  }}
+                >
+                  WASD
+                </span>
+                move
               </span>
-              move
-            </span>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-              <span
-                style={{
-                  fontFamily: 'monospace',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  letterSpacing: '0.06em',
-                  color: 'rgba(255,255,255,0.8)',
-                  padding: '4px 9px',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  borderRadius: 7,
-                  background: 'rgba(255,255,255,0.05)',
-                }}
-              >
-                Enter
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <span
+                  style={{
+                    fontFamily: 'monospace',
+                    fontSize: 11,
+                    fontWeight: 600,
+                    letterSpacing: '0.06em',
+                    color: 'rgba(255,255,255,0.8)',
+                    padding: '4px 9px',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: 7,
+                    background: 'rgba(255,255,255,0.05)',
+                  }}
+                >
+                  Enter
+                </span>
+                visit
               </span>
-              visit
-            </span>
-          </div>
+            </div>
+          )}
         </div>
 
+        {/* FLOOR — aspect-locked so cells stay square */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: mobile ? '128px 14px 196px' : '90px 20px 80px',
+          }}
+        >
+          <div
+            style={{
+              position: 'relative',
+              height: '100%',
+              aspectRatio: `${dCols} / ${dRows}`,
+              maxWidth: '100%',
+              backgroundImage:
+                'linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),' +
+                'linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)',
+              backgroundSize: `${cw}% 100%, 100% ${ch}%`,
+            }}
+          >
         {/* ORBS */}
         {gamesArcadeData.map((o, idx) => {
           const on = o.x === pos.x && o.y === pos.y;
@@ -245,10 +246,10 @@ export default function ArcadeBack({ open }: { open: boolean }) {
               onClick={() => openGame(idx)}
               style={{
                 position: 'absolute',
-                left: `${o.x * CELL_W}%`,
-                top: `${o.y * CELL_H}%`,
-                width: `${CELL_W}%`,
-                height: `${CELL_H}%`,
+                left: `${colOf(o) * cw}%`,
+                top: `${rowOf(o) * ch}%`,
+                width: `${cw}%`,
+                height: `${ch}%`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -294,10 +295,10 @@ export default function ArcadeBack({ open }: { open: boolean }) {
         <div
           style={{
             position: 'absolute',
-            left: `${pos.x * CELL_W}%`,
-            top: `${pos.y * CELL_H}%`,
-            width: `${CELL_W}%`,
-            height: `${CELL_H}%`,
+            left: `${colOf(pos) * cw}%`,
+            top: `${rowOf(pos) * ch}%`,
+            width: `${cw}%`,
+            height: `${ch}%`,
             transition: 'left .13s cubic-bezier(.4,0,.2,1), top .13s cubic-bezier(.4,0,.2,1)',
             display: 'flex',
             alignItems: 'center',
@@ -340,13 +341,20 @@ export default function ArcadeBack({ open }: { open: boolean }) {
             />
           </div>
         </div>
+          </div>
+        </div>
 
         {/* INTERACT PROMPT */}
         {hint ? (
           <div
+            onClick={() => {
+              const hit = gamesArcadeData.findIndex((o) => o.x === pos.x && o.y === pos.y);
+              if (hit >= 0) openGame(hit);
+            }}
             style={{
               position: 'absolute',
-              bottom: 34,
+              bottom: mobile ? 132 : 34,
+              cursor: 'pointer',
               left: '50%',
               transform: 'translateX(-50%)',
               zIndex: 8,
@@ -374,26 +382,88 @@ export default function ArcadeBack({ open }: { open: boolean }) {
               {hint.title}
             </span>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontSize: 13, color: '#fafafa' }}>
-              <span
-                style={{
-                  fontFamily: 'monospace',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  letterSpacing: '0.06em',
-                  padding: '4px 9px',
-                  border: '1px solid rgba(255,255,255,0.24)',
-                  borderRadius: 7,
-                  background: 'rgba(255,255,255,0.06)',
-                }}
-              >
-                Enter
-              </span>
-              visit
+              {mobile ? (
+                'tap to visit'
+              ) : (
+                <>
+                  <span
+                    style={{
+                      fontFamily: 'monospace',
+                      fontSize: 11,
+                      fontWeight: 600,
+                      letterSpacing: '0.06em',
+                      padding: '4px 9px',
+                      border: '1px solid rgba(255,255,255,0.24)',
+                      borderRadius: 7,
+                      background: 'rgba(255,255,255,0.06)',
+                    }}
+                  >
+                    Enter
+                  </span>
+                  visit
+                </>
+              )}
             </span>
           </div>
         ) : null}
-          </>
-        )}
+
+        {/* D-PAD (mobile) */}
+        {mobile ? (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 9,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 48px)',
+              gridTemplateRows: 'repeat(2, 48px)',
+              gap: 7,
+            }}
+          >
+            {(
+              [
+                { dc: 0, dr: -1, col: 2, row: 1, rot: 0 },
+                { dc: -1, dr: 0, col: 1, row: 2, rot: -90 },
+                { dc: 0, dr: 1, col: 2, row: 2, rot: 180 },
+                { dc: 1, dr: 0, col: 3, row: 2, rot: 90 },
+              ] as const
+            ).map((b, i) => (
+              <button
+                key={i}
+                onClick={() => step(b.dc, b.dr)}
+                style={{
+                  gridColumn: b.col,
+                  gridRow: b.row,
+                  borderRadius: 14,
+                  border: '1px solid rgba(255,255,255,0.16)',
+                  background: 'rgba(20,20,23,0.85)',
+                  color: '#fefefe',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ transform: `rotate(${b.rot}deg)` }}
+                >
+                  <line x1="12" y1="19" x2="12" y2="5" />
+                  <polyline points="5 12 12 5 19 12" />
+                </svg>
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
 
       {/* GAME DETAIL (orb → full screen) */}
