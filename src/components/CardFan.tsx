@@ -40,6 +40,7 @@ interface CardSpec {
 
 export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) => void }) {
   const fanRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
   const selRef = useRef<SelInfo | null>(null);
   const timers = useRef<number[]>([]);
   const [sel, setSel] = useState<number | null>(null);
@@ -58,6 +59,14 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
   }, []);
 
   const mobile = vw < 768;
+
+  // mobile carousel starts with the Application card (the fan's center) in view
+  useEffect(() => {
+    if (!mobile) return;
+    const rail = railRef.current;
+    const el = rail?.children[2] as HTMLElement | undefined;
+    if (rail && el) rail.scrollLeft = el.offsetLeft - (rail.clientWidth - el.clientWidth) / 2;
+  }, [mobile]);
 
   // scale the whole fan down on narrow screens so it always fits the viewport
   const s = Math.min(1, Math.max(0.34, (vw - 24) / 1030));
@@ -354,11 +363,12 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
         {showClose ? <CloseButton onClick={closeMobile} zIndex={350} animateIn /> : null}
         <div style={{ flexShrink: 0, position: 'relative', zIndex: 5 }}>
           <div
+            ref={railRef}
             style={{
               display: 'flex',
               gap: 14,
               overflowX: 'auto',
-              padding: '10px 24px 26px',
+              padding: '10px 26px 26px',
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
             }}
@@ -411,7 +421,9 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
             transform: mobileAnim ? 'scale(1)' : 'scale(0.96)',
             pointerEvents: mobileSel !== null ? 'auto' : 'none',
             transition: 'opacity .4s ease, transform .45s cubic-bezier(.34,1.2,.64,1)',
-            ...(mc && !mc.plainBack ? { display: 'flex', flexDirection: 'column' } : {}),
+            ...(mc && !mc.plainBack
+              ? { display: 'flex', flexDirection: 'column', justifyContent: 'center' }
+              : {}),
           }}
         >
           {mc ? mc.back : null}
