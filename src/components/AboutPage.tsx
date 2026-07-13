@@ -1,6 +1,5 @@
 ﻿import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
-import logo from '../assets/syah-logo-white.svg';
 import portrait from '../assets/syah-portrait.jpg';
 import portraitBack from '../assets/syah-portrait-back.jpg';
 import { booksData, gamesData, moviesData, timelineData } from '../data/content';
@@ -16,7 +15,7 @@ const CARD_SHADOW = '0 44px 90px -24px rgba(0,0,0,0.85), 0 10px 30px -12px rgba(
 // Hobby nodes orbit the core: `angle` is degrees on the orbit circle (0 = right, -90 = top).
 const HOBBY_NODES: { label: string; angle: number; icon: ReactNode }[] = [
   {
-    label: 'Play Video Games',
+    label: 'Video Games',
     angle: -90,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -29,7 +28,7 @@ const HOBBY_NODES: { label: string; angle: number; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Make Games',
+    label: 'Game Dev',
     angle: -150,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -40,7 +39,7 @@ const HOBBY_NODES: { label: string; angle: number; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Read Philosophy',
+    label: 'Philosophy',
     angle: 150,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -51,7 +50,7 @@ const HOBBY_NODES: { label: string; angle: number; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Watch Anime',
+    label: 'Anime',
     angle: -30,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -62,7 +61,7 @@ const HOBBY_NODES: { label: string; angle: number; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Read Psychology',
+    label: 'Psychology',
     angle: 30,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -73,7 +72,7 @@ const HOBBY_NODES: { label: string; angle: number; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Play Puzzle Games',
+    label: 'Puzzle Games',
     angle: 90,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -84,8 +83,8 @@ const HOBBY_NODES: { label: string; angle: number; icon: ReactNode }[] = [
 ];
 
 // orbit radius (px) tile centers sit on, and the map's total height
-const HOBBY_ORBIT = 168;
-const HOBBY_MAP_H = 480;
+const HOBBY_ORBIT = 122;
+const HOBBY_MAP_H = 340;
 
 // Timeline node icons, matched by index to timelineData.
 const TIMELINE_ICONS: ReactNode[] = [
@@ -556,7 +555,7 @@ export default function AboutPage({ active }: { active: boolean }) {
                 <circle
                   cx="50%"
                   cy="50%"
-                  r={HOBBY_ORBIT - 66}
+                  r={HOBBY_ORBIT - 48}
                   fill="none"
                   stroke="rgba(255,255,255,0.08)"
                   strokeWidth="1"
@@ -570,32 +569,20 @@ export default function AboutPage({ active }: { active: boolean }) {
                   left: '50%',
                   top: '50%',
                   transform: 'translate(-50%, -50%)',
-                  width: 134,
-                  height: 134,
+                  width: 104,
+                  height: 104,
                   borderRadius: '50%',
-                  background: 'radial-gradient(circle at 50% 32%, #26262b, #121214 72%)',
+                  overflow: 'hidden',
                   border: '1px solid rgba(255,255,255,0.12)',
                   boxShadow: '0 30px 70px -20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.14)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 10,
                 }}
               >
-                <img src={logo} alt="" draggable={false} style={{ height: 30, width: 'auto' }} />
-                <div
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 600,
-                    letterSpacing: '0.32em',
-                    textIndent: '0.32em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.75)',
-                  }}
-                >
-                  Hobbies
-                </div>
+                <img
+                  src={portrait}
+                  alt=""
+                  draggable={false}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
               </div>
               {/* orbiting hobby tiles */}
               {HOBBY_NODES.map((n) => {
@@ -611,9 +598,9 @@ export default function AboutPage({ active }: { active: boolean }) {
                       left: `calc(50% + ${dx.toFixed(1)}px)`,
                       top: `calc(50% + ${dy.toFixed(1)}px)`,
                       transform: 'translate(-50%, -50%)',
-                      width: 98,
-                      height: 98,
-                      borderRadius: 20,
+                      width: 84,
+                      height: 84,
+                      borderRadius: 18,
                       background: 'linear-gradient(180deg, #1c1c20, #131315)',
                       border: '1px solid rgba(255,255,255,0.09)',
                       boxShadow: '0 18px 40px -18px rgba(0,0,0,0.75)',
@@ -621,8 +608,8 @@ export default function AboutPage({ active }: { active: boolean }) {
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: 9,
-                      padding: '10px 8px',
+                      gap: 7,
+                      padding: '8px 6px',
                       cursor: 'default',
                       transition: 'transform .28s cubic-bezier(.34,1.4,.64,1)',
                     }}
