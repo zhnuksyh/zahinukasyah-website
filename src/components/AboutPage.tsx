@@ -74,6 +74,26 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
       </svg>
     ),
   },
+  {
+    label: 'Watch Anime',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="6" width="20" height="13" rx="2" />
+        <polyline points="8 2.5 12 6 16 2.5" />
+        <path d="m10.2 9.9 5 2.6-5 2.6z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Psychology',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12.5 3a6.5 6.5 0 0 1 6.5 6.5c0 1.3-.4 2.5-1 3.5l1.5 3h-2.5v2.5a2 2 0 0 1-2 2H12v2.5H7.5V18c-1.9-1.3-3-3.4-3-5.7A6.8 6.8 0 0 1 12.5 3z" />
+        <path d="M10.5 9.5a2 2 0 1 1 2 2v1.5" />
+        <line x1="12.5" y1="15.2" x2="12.5" y2="15.3" />
+      </svg>
+    ),
+  },
 ];
 
 function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaItem[]; prefix: string }) {
