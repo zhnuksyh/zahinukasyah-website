@@ -1,6 +1,7 @@
 import { socials } from '../data/content';
 import { hexToRgba } from '../lib/colors';
 import CloseButton from './CloseButton';
+import { SocialIcon } from './icons/SocialIcons';
 
 export default function SocialOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
@@ -65,8 +66,10 @@ export default function SocialOverlay({ open, onClose }: { open: boolean; onClos
           {socials.map((s) => (
             <a
               key={s.name}
-              href="#"
-              onClick={(e) => e.preventDefault()}
+              href={s.href ?? '#'}
+              target={s.href ? '_blank' : undefined}
+              rel={s.href ? 'noopener noreferrer' : undefined}
+              onClick={s.href ? undefined : (e) => e.preventDefault()}
               className="lift-8 bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] hover:border-[rgba(255,255,255,0.22)]"
               style={{
                 display: 'flex',
@@ -89,15 +92,12 @@ export default function SocialOverlay({ open, onClose }: { open: boolean; onClos
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontWeight: 700,
-                  fontSize: 20,
-                  letterSpacing: '-0.01em',
                   background: s.c,
                   color: s.txt,
                   boxShadow: '0 12px 28px -10px ' + hexToRgba(s.c, 0.7),
                 }}
               >
-                {s.mono}
+                <SocialIcon name={s.name} />
               </div>
               <div style={{ fontSize: 16, fontWeight: 600, color: '#f2f2f2' }}>{s.name}</div>
               <div
