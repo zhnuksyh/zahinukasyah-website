@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useViewport } from '../lib/useViewport';
 
 // Two-line quotes: first line renders bold, second line italic and lighter.
 const QUOTES = [
@@ -15,6 +16,7 @@ const HOLD_MS = 10000;
 const GAP_MS = 400;
 
 export default function Hero() {
+  const mobile = useViewport() === 'mobile';
   const [quote, setQuote] = useState(0);
   const [chars, setChars] = useState(0);
   const [phase, setPhase] = useState<'typing' | 'deleting'>('typing');
@@ -70,7 +72,7 @@ export default function Hero() {
         position: 'relative',
         zIndex: 10,
         textAlign: 'center',
-        padding: '34px 24px 0',
+        padding: mobile ? '16px 26px 0' : '34px 24px 0',
         maxWidth: 900,
         width: '100%',
         margin: '0 auto',
@@ -78,19 +80,28 @@ export default function Hero() {
     >
       <div
         style={{
-          display: 'inline-flex',
+          display: mobile ? 'block' : 'inline-flex',
           alignItems: 'center',
           gap: 9,
           fontSize: 15,
           fontWeight: 500,
+          lineHeight: 1.6,
           color: 'rgba(255,255,255,0.62)',
         }}
       >
-        Zahin Ukasyah here! Glad you made it in time
+        {mobile ? (
+          <>
+            Zahin Ukasyah here!
+            <br />
+            Glad you made it in time
+          </>
+        ) : (
+          'Zahin Ukasyah here! Glad you made it in time'
+        )}
       </div>
       <h1
         style={{
-          marginTop: 26,
+          marginTop: mobile ? 38 : 26,
           fontSize: 'clamp(34px,4.9vw,58px)',
           fontWeight: 700,
           lineHeight: 1.06,
@@ -115,7 +126,7 @@ export default function Hero() {
           lineHeight: 1.65,
           color: 'rgba(255,255,255,0.52)',
           maxWidth: 600,
-          margin: '32px auto 0',
+          margin: mobile ? '42px auto 0' : '32px auto 0',
         }}
       >
         This digital space is a documentation for everything I had done, and I hoped that it would
