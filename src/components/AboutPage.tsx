@@ -229,7 +229,13 @@ function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaIt
   );
 }
 
-export default function AboutPage({ active }: { active: boolean }) {
+export default function AboutPage({
+  active,
+  onScroll,
+}: {
+  active: boolean;
+  onScroll?: (top: number) => void;
+}) {
   const [up, setUp] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const timers = useRef<number[]>([]);
@@ -284,6 +290,7 @@ export default function AboutPage({ active }: { active: boolean }) {
           scrollRef.current = el;
           dragScroll(el);
         }}
+        onScroll={(e) => onScroll?.(e.currentTarget.scrollTop)}
         style={{
           position: 'absolute',
           inset: 0,
