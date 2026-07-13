@@ -12,7 +12,8 @@ export default function CollabPage({ active }: { active: boolean }) {
   const [up, setUp] = useState(false);
   const [emailOpen, setEmailOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const mobile = useViewport() === 'mobile';
+  const vp = useViewport();
+  const mobile = vp === 'mobile';
   const timers = useRef<number[]>([]);
 
   const clearTimers = () => {
@@ -51,7 +52,7 @@ export default function CollabPage({ active }: { active: boolean }) {
           zIndex: 12,
           display: 'flex',
           justifyContent: 'center',
-          padding: mobile ? '80px 22px 24px' : '92px 40px 30px',
+          padding: mobile ? '80px 22px 24px' : vp === 'tablet' ? '92px 44px 30px' : '92px 100px 30px',
           opacity: active ? 1 : 0,
           pointerEvents: active ? 'auto' : 'none',
           transition: 'opacity .45s ease',
@@ -61,7 +62,7 @@ export default function CollabPage({ active }: { active: boolean }) {
           style={{
             position: 'relative',
             width: '100%',
-            maxWidth: 1320,
+            maxWidth: 1140,
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
