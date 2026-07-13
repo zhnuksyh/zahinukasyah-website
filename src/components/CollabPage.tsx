@@ -51,7 +51,7 @@ export default function CollabPage({ active }: { active: boolean }) {
           zIndex: 12,
           display: 'flex',
           justifyContent: 'center',
-          padding: mobile ? '80px 16px 20px' : '92px 40px 30px',
+          padding: mobile ? '80px 22px 24px' : '92px 40px 30px',
           opacity: active ? 1 : 0,
           pointerEvents: active ? 'auto' : 'none',
           transition: 'opacity .45s ease',

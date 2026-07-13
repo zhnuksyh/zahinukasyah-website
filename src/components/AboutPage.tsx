@@ -118,7 +118,7 @@ function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaIt
       <div style={{ fontSize: 'clamp(20px,2.2vw,28px)', fontWeight: 700, letterSpacing: '-0.02em', color: '#fefefe' }}>
         {heading}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols},minmax(0,1fr))`, gap: 20, marginTop: 28 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols},minmax(0,1fr))`, gap: mobile ? 14 : 20, marginTop: 28 }}>
         {items.map((g, idx) => (
           <FlipCard
             key={`${prefix}-${idx}`}
@@ -126,7 +126,7 @@ function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaIt
             duration={0.55}
             wrapStyle={{
               position: 'relative',
-              height: 260,
+              height: mobile ? 'clamp(210px, 62vw, 260px)' : 260,
               perspective: 1000,
               cursor: 'pointer',
               transition: 'transform .3s cubic-bezier(.34,1.4,.64,1)',
@@ -305,7 +305,7 @@ export default function AboutPage({ active }: { active: boolean }) {
           display: 'flex',
           alignItems: 'flex-start',
           justifyContent: 'center',
-          padding: mobile ? '84px 18px 48px' : tablet ? '96px 44px 52px' : '104px 112px 56px',
+          padding: mobile ? '88px 24px 56px' : tablet ? '96px 44px 52px' : '104px 112px 56px',
           opacity: active ? 1 : 0,
           transition: 'opacity .5s ease',
           pointerEvents: active ? 'auto' : 'none',
