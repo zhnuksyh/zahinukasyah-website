@@ -398,10 +398,10 @@ export default function AboutPage({ active }: { active: boolean }) {
                     fontWeight: 600,
                     letterSpacing: '0.28em',
                     textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.5)',
+                    color: '#ffffff',
                   }}
                 >
-                  Zahin Â· About
+                  Zahin Ukasyah
                 </div>
               </div>
             </div>
