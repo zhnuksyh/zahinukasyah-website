@@ -163,20 +163,20 @@ export default function JournalPage({ active }: { active: boolean }) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                height: 34,
-                borderRadius: 10,
+                height: mobile ? 42 : 34,
+                borderRadius: mobile ? 12 : 10,
                 background: searchOpen ? 'rgba(255,255,255,0.09)' : 'rgba(255,255,255,0.05)',
                 border: `1px solid rgba(255,255,255,${searchOpen ? '0.16' : '0.09'})`,
                 overflow: 'hidden',
-                width: searchOpen ? 210 : 34,
+                width: searchOpen ? 210 : mobile ? 42 : 34,
                 transition: 'width .4s cubic-bezier(.4,0,.2,1), background .25s ease, border-color .25s ease',
               }}
             >
               <button
                 onClick={toggleSearch}
                 style={{
-                  width: 32,
-                  height: 32,
+                  width: mobile ? 40 : 32,
+                  height: mobile ? 40 : 32,
                   flexShrink: 0,
                   display: 'flex',
                   alignItems: 'center',
