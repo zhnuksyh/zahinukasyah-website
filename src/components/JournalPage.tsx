@@ -11,6 +11,8 @@ export default function JournalPage({ active }: { active: boolean }) {
   const [filter, setFilter] = useState(0);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [shareLabel, setShareLabel] = useState<'Share' | 'Copied!'>('Share');
+  const shareTimer = useRef<number | undefined>(undefined);
   const timers = useRef<number[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
   const dragScroll = useDragScroll();
@@ -57,6 +59,18 @@ export default function JournalPage({ active }: { active: boolean }) {
   };
 
   const nd = newsData[sel] ?? newsData[0];
+
+  const share = () => {
+    const url = window.location.href;
+    if (typeof navigator.share === 'function') {
+      void navigator.share({ title: document.title, url }).catch(() => {});
+    } else if (navigator.clipboard) {
+      void navigator.clipboard.writeText(url);
+      setShareLabel('Copied!');
+      clearTimeout(shareTimer.current);
+      shareTimer.current = window.setTimeout(() => setShareLabel('Share'), 1600);
+    }
+  };
 
   const filterTabStyle = (f: number) => ({
     position: 'relative' as const,
@@ -366,7 +380,10 @@ export default function JournalPage({ active }: { active: boolean }) {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: 26 }}>
             <a
               href="#"
-              onClick={(e) => e.preventDefault()}
+              onClick={(e) => {
+                e.preventDefault();
+                share();
+              }}
               className="lift-2 hover:bg-white/10"
               style={{
                 display: 'inline-flex',
@@ -389,7 +406,7 @@ export default function JournalPage({ active }: { active: boolean }) {
                 <line x1="5.7" y1="7" x2="10.3" y2="4.5" />
                 <line x1="5.7" y1="9" x2="10.3" y2="11.5" />
               </svg>
-              Share
+              {shareLabel}
             </a>
           </div>
 
