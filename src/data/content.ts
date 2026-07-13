@@ -264,8 +264,8 @@ export interface TimelineItem {
 }
 
 export const timelineData: TimelineItem[] = [
-  { role: 'SWE Engineer', org: 'MIMOS Berhad, MY', date: '2026 — Now' },
-  { role: 'ML Engineer Trainee', org: 'MIMOS Berhad, MY', date: '2025 — 2026' },
-  { role: 'Research Assistant', org: 'Universiti Teknologi Malaysia (UTM)', date: '2025' },
-  { role: 'SWE Student', org: 'Universiti Teknologi Malaysia (UTM)', date: '2023 — 2026' },
+  { role: 'Software Engineer', org: 'MIMOS Berhad, MY', date: '2026 — Now' },
+  { role: 'MLE Trainee', org: 'MIMOS Berhad, MY', date: '2025 — 2026' },
+  { role: 'Research Assistant', org: 'UTM-KL, MY', date: '2025' },
+  { role: 'SWE Undergraduate', org: 'UTM-KL, MY', date: '2023 — 2026' },
 ];
