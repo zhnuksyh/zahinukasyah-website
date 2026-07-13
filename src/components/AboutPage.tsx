@@ -391,7 +391,6 @@ export default function AboutPage({ active }: { active: boolean }) {
               gridColumn: 2,
               gridRow: 1,
               height: 460,
-              maxWidth: 620,
               overflow: 'hidden',
               display: 'flex',
               flexDirection: 'column',
@@ -411,14 +410,14 @@ export default function AboutPage({ active }: { active: boolean }) {
             >
               About Me
             </h2>
-            <p style={{ marginTop: 22, fontSize: 18, lineHeight: 1.7, color: 'rgba(255,255,255,0.6)', maxWidth: 600 }}>
+            <p style={{ marginTop: 22, fontSize: 18, lineHeight: 1.7, color: 'rgba(255,255,255,0.6)' }}>
               Zahin Ukasyah here! This is not a portfolio website, so let's keep things casual
               haha. I think I'm best described as a Puzzle Gamer? since I loved deck-building and
               roguelikes games. However, I do loves abstract ideas as well, I have been long
               fascinated by long studies of fundamental consciousness, especially with the current
               rise of AI.
             </p>
-            <p style={{ marginTop: 16, fontSize: 18, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', maxWidth: 600 }}>
+            <p style={{ marginTop: 16, fontSize: 18, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)' }}>
               Oh, I'm a SWE based in KL. I work on web/ mobile application dev mostly, and I likes
               to design too. This is getting too long, anyway, I'm glad that you're here. Let's be
               friends!
