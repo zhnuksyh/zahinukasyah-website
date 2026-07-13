@@ -61,8 +61,8 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
           style={{
             display: 'grid',
             gridAutoFlow: 'column dense',
-            gridTemplateRows: 'repeat(3, 148px)',
-            gridAutoColumns: '186px',
+            gridTemplateRows: 'repeat(3, 172px)',
+            gridAutoColumns: '222px',
             gap: 16,
             height: '100%',
             width: 'max-content',
