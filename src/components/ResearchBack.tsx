@@ -3,13 +3,16 @@ import { researchData } from '../data/content';
 import { hexToRgba, shade, tint } from '../lib/colors';
 import { ACCENT } from '../lib/theme';
 import { useDragScroll } from '../lib/useDragScroll';
+import { useViewport } from '../lib/useViewport';
 
 /** Back face for the Research card: reading list on the left, paper detail on the right. */
 export default function ResearchBack({ open }: { open: boolean }) {
   const [sel, setSel] = useState(0);
   const [anim, setAnim] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const timers = useRef<number[]>([]);
   const dragScroll = useDragScroll();
+  const mobile = useViewport() === 'mobile';
 
   const clearTimers = () => {
     timers.current.forEach(clearTimeout);
@@ -23,6 +26,7 @@ export default function ResearchBack({ open }: { open: boolean }) {
       timers.current.push(window.setTimeout(() => setAnim(true), 1050));
     } else {
       setAnim(false);
+      setMobileOpen(false);
     }
     return clearTimers;
   }, [open]);
@@ -49,7 +53,7 @@ export default function ResearchBack({ open }: { open: boolean }) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '44px 44px 40px',
+        padding: mobile ? '80px 24px 28px' : '44px 44px 40px',
         background: 'linear-gradient(180deg,#0c0c0e,#08080a)',
       }}
     >
@@ -66,7 +70,7 @@ export default function ResearchBack({ open }: { open: boolean }) {
           Field notes &amp; papers
         </div>
         <div
-          style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.02em', color: '#f4f4f6', marginTop: 6 }}
+          style={{ fontSize: mobile ? 30 : 38, fontWeight: 700, letterSpacing: '-0.02em', color: '#f4f4f6', marginTop: 6 }}
         >
           Research
         </div>
@@ -79,8 +83,8 @@ export default function ResearchBack({ open }: { open: boolean }) {
           flex: '1 1 auto',
           minHeight: 0,
           display: 'grid',
-          gridTemplateColumns: '404px 1fr',
-          gap: 44,
+          gridTemplateColumns: mobile ? '1fr' : '404px 1fr',
+          gap: mobile ? 0 : 44,
         }}
       >
         {/* LEFT: reading list */}
@@ -120,7 +124,10 @@ export default function ResearchBack({ open }: { open: boolean }) {
               return (
                 <div
                   key={idx}
-                  onClick={() => select(idx)}
+                  onClick={() => {
+                    select(idx);
+                    if (mobile) setMobileOpen(true);
+                  }}
                   className={selected ? undefined : 'hover:bg-white/5'}
                   style={{
                     position: 'relative',
@@ -242,11 +249,54 @@ export default function ResearchBack({ open }: { open: boolean }) {
           </div>
         </div>
 
-        {/* RIGHT: paper detail */}
+        {/* RIGHT: paper detail — fullscreen page on mobile, opened from the list */}
         <div
           ref={dragScroll}
-          style={{ height: '100%', minHeight: 0, overflowY: 'auto', paddingRight: 4 }}
+          style={
+            mobile
+              ? {
+                  position: 'fixed',
+                  inset: 0,
+                  zIndex: 20,
+                  background: '#0b0b0d',
+                  overflowY: 'auto',
+                  padding: '84px 24px 48px',
+                  opacity: mobileOpen ? 1 : 0,
+                  transform: mobileOpen ? 'translateY(0)' : 'translateY(26px)',
+                  pointerEvents: mobileOpen ? 'auto' : 'none',
+                  transition: 'opacity .35s ease, transform .4s cubic-bezier(.34,1.15,.64,1)',
+                }
+              : { height: '100%', minHeight: 0, overflowY: 'auto', paddingRight: 4 }
+          }
         >
+          {mobile ? (
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setMobileOpen(false);
+              }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                marginBottom: 24,
+                padding: '10px 18px',
+                borderRadius: 999,
+                fontSize: 14,
+                fontWeight: 600,
+                color: '#fefefe',
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.12)',
+              }}
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+              Back
+            </a>
+          ) : null}
           <div
             style={{
               opacity: anim ? 1 : 0,

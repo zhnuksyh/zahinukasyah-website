@@ -13,6 +13,7 @@ export default function JournalPage({ active }: { active: boolean }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [shareLabel, setShareLabel] = useState<'Share' | 'Copied!'>('Share');
+  const [mobileOpen, setMobileOpen] = useState(false);
   const shareTimer = useRef<number | undefined>(undefined);
   const timers = useRef<number[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -35,6 +36,7 @@ export default function JournalPage({ active }: { active: boolean }) {
     } else {
       setUp(false);
       setDetailOn(false);
+      setMobileOpen(false);
     }
     return clearTimers;
   }, [active]);
@@ -96,7 +98,7 @@ export default function JournalPage({ active }: { active: boolean }) {
         zIndex: 12,
         display: 'flex',
         justifyContent: 'center',
-        padding: mobile ? '80px 16px 20px' : '92px 40px 34px',
+        padding: mobile ? '80px 22px 24px' : '92px 40px 34px',
         opacity: active ? 1 : 0,
         pointerEvents: active ? 'auto' : 'none',
         transition: 'opacity .45s ease',
@@ -110,8 +112,7 @@ export default function JournalPage({ active }: { active: boolean }) {
           height: '100%',
           display: 'grid',
           gridTemplateColumns: mobile ? '1fr' : vp === 'tablet' ? '330px 1fr' : '404px 1fr',
-          gridTemplateRows: mobile ? 'minmax(0, 44%) minmax(0, 1fr)' : 'none',
-          gap: mobile ? 20 : 44,
+          gap: mobile ? 0 : 44,
         }}
       >
         {/* LEFT: feed list */}
@@ -254,6 +255,7 @@ export default function JournalPage({ active }: { active: boolean }) {
                   onClick={(e) => {
                     e.preventDefault();
                     select(idx);
+                    if (mobile) setMobileOpen(true);
                   }}
                   className={selected ? undefined : 'hover:bg-white/5'}
                   style={{
@@ -367,21 +369,70 @@ export default function JournalPage({ active }: { active: boolean }) {
           </div>
         </div>
 
-        {/* RIGHT: detail */}
+        {/* RIGHT: detail — on mobile it becomes a fullscreen page opened from the list */}
         <div
           ref={dragScroll}
-          style={{
-            height: '100%',
-            minHeight: 0,
-            overflowY: 'auto',
-            paddingRight: 4,
-            paddingTop: 4,
-            opacity: up ? 1 : 0,
-            transform: up ? 'translateY(0)' : 'translateY(18px)',
-            transition: 'opacity .55s ease .08s, transform .6s cubic-bezier(.34,1.15,.64,1) .08s',
-          }}
+          style={
+            mobile
+              ? {
+                  position: 'fixed',
+                  inset: 0,
+                  zIndex: 460,
+                  background: '#0a0a0b',
+                  overflowY: 'auto',
+                  padding: '84px 24px 48px',
+                  opacity: mobileOpen ? 1 : 0,
+                  transform: mobileOpen ? 'translateY(0)' : 'translateY(26px)',
+                  pointerEvents: mobileOpen ? 'auto' : 'none',
+                  transition: 'opacity .35s ease, transform .4s cubic-bezier(.34,1.15,.64,1)',
+                }
+              : {
+                  height: '100%',
+                  minHeight: 0,
+                  overflowY: 'auto',
+                  paddingRight: 4,
+                  paddingTop: 4,
+                  opacity: up ? 1 : 0,
+                  transform: up ? 'translateY(0)' : 'translateY(18px)',
+                  transition: 'opacity .55s ease .08s, transform .6s cubic-bezier(.34,1.15,.64,1) .08s',
+                }
+          }
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: 26 }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: mobile ? 'space-between' : 'flex-end',
+              marginBottom: 26,
+            }}
+          >
+            {mobile ? (
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMobileOpen(false);
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '10px 18px',
+                  borderRadius: 999,
+                  fontSize: 14,
+                  fontWeight: 600,
+                  color: '#fefefe',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                }}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+                Back
+              </a>
+            ) : null}
             <a
               href="#"
               onClick={(e) => {
