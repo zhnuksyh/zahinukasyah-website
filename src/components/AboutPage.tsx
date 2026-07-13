@@ -7,6 +7,7 @@ import type { MediaItem } from '../data/content';
 import { hexToRgba, shade, tint } from '../lib/colors';
 import { ACCENT, accentGlow, glowSoft } from '../lib/theme';
 import { useDragScroll } from '../lib/useDragScroll';
+import { useViewport } from '../lib/useViewport';
 import FlipCard from './FlipCard';
 import ImagePlaceholder from './ImagePlaceholder';
 
@@ -109,12 +110,14 @@ const TIMELINE_ICONS: ReactNode[] = [
 ];
 
 function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaItem[]; prefix: string }) {
+  const vp = useViewport();
+  const cols = vp === 'mobile' ? 2 : vp === 'tablet' ? 3 : 4;
   return (
     <>
       <div style={{ fontSize: 'clamp(20px,2.2vw,28px)', fontWeight: 700, letterSpacing: '-0.02em', color: '#fefefe' }}>
         {heading}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,minmax(0,1fr))', gap: 20, marginTop: 28 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols},minmax(0,1fr))`, gap: 20, marginTop: 28 }}>
         {items.map((g, idx) => (
           <FlipCard
             key={`${prefix}-${idx}`}
@@ -239,6 +242,12 @@ export default function AboutPage({
   const [up, setUp] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [showTop, setShowTop] = useState(false);
+  const vp = useViewport();
+  const mobile = vp === 'mobile';
+  const tablet = vp === 'tablet';
+  // On mobile everything stacks in source order; otherwise pin to the 2-col grid.
+  const cell = (col: number | string, row: number): CSSProperties =>
+    mobile ? {} : { gridColumn: col, gridRow: row };
   const timers = useRef<number[]>([]);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const dragScroll = useDragScroll();
@@ -305,7 +314,7 @@ export default function AboutPage({
           display: 'flex',
           alignItems: 'flex-start',
           justifyContent: 'center',
-          padding: '104px 112px 56px',
+          padding: mobile ? '84px 18px 48px' : tablet ? '96px 44px 52px' : '104px 112px 56px',
           opacity: active ? 1 : 0,
           transition: 'opacity .5s ease',
           pointerEvents: active ? 'auto' : 'none',
@@ -317,15 +326,25 @@ export default function AboutPage({
             width: '100%',
             maxWidth: 1140,
             display: 'grid',
-            gridTemplateColumns: '330px minmax(0, 1fr)',
-            gridTemplateRows: '460px auto auto auto auto',
-            columnGap: 64,
-            rowGap: 56,
+            gridTemplateColumns: mobile ? '1fr' : '330px minmax(0, 1fr)',
+            gridTemplateRows: mobile ? 'none' : '460px auto auto auto auto',
+            columnGap: tablet ? 40 : 64,
+            rowGap: mobile ? 44 : 56,
             alignContent: 'start',
           }}
         >
           {/* ROW 1 Â· COL 1 â€” portrait card (rises, then flips) */}
-          <div style={{ position: 'relative', width: 330, height: 460, perspective: 1600, gridColumn: 1, gridRow: 1 }}>
+          <div
+            style={{
+              position: 'relative',
+              width: 330,
+              maxWidth: '100%',
+              height: 460,
+              perspective: 1600,
+              ...cell(1, 1),
+              ...(mobile ? { justifySelf: 'center' } : {}),
+            }}
+          >
             <div
               style={{
                 position: 'absolute',
@@ -414,9 +433,8 @@ export default function AboutPage({
           {/* ROW 1 Â· COL 2 â€” About Me heading + description */}
           <div
             style={{
-              gridColumn: 2,
-              gridRow: 1,
-              height: 460,
+              ...cell(2, 1),
+              height: mobile ? 'auto' : 460,
               overflow: 'hidden',
               display: 'flex',
               flexDirection: 'column',
@@ -451,7 +469,7 @@ export default function AboutPage({
           </div>
 
           {/* ROW 2 Â· COL 1 â€” career timeline (most recent on top) */}
-          <div style={{ gridColumn: 1, gridRow: 2, ...bioRise(0.4) }}>
+          <div style={{ ...cell(1, 2), ...bioRise(0.4) }}>
             <div
               style={{
                 fontSize: 'clamp(20px,2.2vw,28px)',
@@ -508,7 +526,15 @@ export default function AboutPage({
                     />
                   </div>
                   <div>
-                    <div style={{ fontSize: 19, fontWeight: 600, color: '#fefefe', letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>
+                    <div
+                      style={{
+                        fontSize: mobile ? 17 : 19,
+                        fontWeight: 600,
+                        color: '#fefefe',
+                        letterSpacing: '-0.01em',
+                        whiteSpace: mobile ? 'normal' : 'nowrap',
+                      }}
+                    >
                       {ti.role}
                     </div>
                     <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)', marginTop: 4 }}>
@@ -532,7 +558,7 @@ export default function AboutPage({
           </div>
 
           {/* ROW 2 Â· COL 2 â€” My Hobbies */}
-          <div style={{ gridColumn: 2, gridRow: 2, alignSelf: 'start', ...bioRise(0.5) }}>
+          <div style={{ ...cell(2, 2), alignSelf: 'start', ...bioRise(0.5) }}>
             <div
               style={{
                 textAlign: 'center',
@@ -563,24 +589,24 @@ export default function AboutPage({
                   }}
                 >
                   <div style={{ color: ACCENT, display: 'flex' }}>{h.icon}</div>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>{h.label}</div>
+                  <div style={{ fontSize: mobile ? 13 : 15, fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>{h.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* ROW 3 Â· full width â€” games */}
-          <div style={{ gridColumn: '1 / -1', gridRow: 3, marginTop: 8, ...bioRise(0.58) }}>
+          <div style={{ ...cell('1 / -1', 3), marginTop: 8, ...bioRise(0.58) }}>
             <MediaGrid heading="Games I've been obsessing recently" items={gamesData} prefix="game" />
           </div>
 
           {/* ROW 4 Â· full width â€” books */}
-          <div style={{ gridColumn: '1 / -1', gridRow: 4, marginTop: 8, ...bioRise(0.66) }}>
+          <div style={{ ...cell('1 / -1', 4), marginTop: 8, ...bioRise(0.66) }}>
             <MediaGrid heading="Books I've been obsessing recently" items={booksData} prefix="book" />
           </div>
 
           {/* ROW 5 Â· full width â€” movies */}
-          <div style={{ gridColumn: '1 / -1', gridRow: 5, marginTop: 8, ...bioRise(0.74) }}>
+          <div style={{ ...cell('1 / -1', 5), marginTop: 8, ...bioRise(0.74) }}>
             <MediaGrid heading="Movies I've been obsessing recently" items={moviesData} prefix="movie" />
           </div>
         </div>
@@ -593,8 +619,8 @@ export default function AboutPage({
         onClick={() => scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
         style={{
           position: 'absolute',
-          right: 36,
-          bottom: 36,
+          right: mobile ? 18 : 36,
+          bottom: mobile ? 18 : 36,
           width: 52,
           height: 52,
           borderRadius: '50%',

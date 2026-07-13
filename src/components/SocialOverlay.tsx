@@ -1,9 +1,11 @@
 import { socials } from '../data/content';
 import { hexToRgba } from '../lib/colors';
+import { useViewport } from '../lib/useViewport';
 import CloseButton from './CloseButton';
 import { SocialIcon } from './icons/SocialIcons';
 
 export default function SocialOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const mobile = useViewport() === 'mobile';
   return (
     <div
       style={{
@@ -11,9 +13,8 @@ export default function SocialOverlay({ open, onClose }: { open: boolean; onClos
         inset: 0,
         zIndex: 400,
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 40,
+        padding: mobile ? '72px 18px 32px' : 40,
+        overflowY: 'auto',
         background: 'rgba(8,8,10,0.55)',
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',
@@ -32,6 +33,7 @@ export default function SocialOverlay({ open, onClose }: { open: boolean; onClos
           zIndex: 1,
           maxWidth: 860,
           width: '100%',
+          margin: 'auto',
           transform: open ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.97)',
           opacity: open ? 1 : 0,
           transition: 'transform .5s cubic-bezier(.34,1.2,.64,1) .04s, opacity .45s ease .04s',
@@ -76,8 +78,8 @@ export default function SocialOverlay({ open, onClose }: { open: boolean; onClos
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: 14,
-                width: 188,
-                padding: '28px 20px',
+                width: mobile ? 150 : 188,
+                padding: mobile ? '22px 14px' : '28px 20px',
                 borderRadius: 22,
                 textDecoration: 'none',
                 transition:

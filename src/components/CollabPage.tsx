@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { collabData, collabEmail } from '../data/content';
+import { useViewport } from '../lib/useViewport';
 import { shade } from '../lib/colors';
 import { ACCENT } from '../lib/theme';
 import FlipCard from './FlipCard';
@@ -11,6 +12,7 @@ export default function CollabPage({ active }: { active: boolean }) {
   const [up, setUp] = useState(false);
   const [emailOpen, setEmailOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const mobile = useViewport() === 'mobile';
   const timers = useRef<number[]>([]);
 
   const clearTimers = () => {
@@ -49,7 +51,7 @@ export default function CollabPage({ active }: { active: boolean }) {
           zIndex: 12,
           display: 'flex',
           justifyContent: 'center',
-          padding: '92px 40px 30px',
+          padding: mobile ? '80px 16px 20px' : '92px 40px 30px',
           opacity: active ? 1 : 0,
           pointerEvents: active ? 'auto' : 'none',
           transition: 'opacity .45s ease',
@@ -144,11 +146,12 @@ export default function CollabPage({ active }: { active: boolean }) {
             <div
               style={{
                 display: 'flex',
-                gap: 22,
+                gap: mobile ? 14 : 22,
                 alignItems: 'flex-start',
-                justifyContent: 'center',
-                padding: '0 40px',
+                justifyContent: mobile ? 'flex-start' : 'center',
+                padding: mobile ? '0 4px 16px' : '0 40px',
                 width: '100%',
+                overflowX: mobile ? 'auto' : 'visible',
               }}
             >
               {collabData.map((cc, idx) => {
@@ -160,7 +163,7 @@ export default function CollabPage({ active }: { active: boolean }) {
                     duration={0.55}
                     wrapStyle={{
                       position: 'relative',
-                      flex: '1 1 0',
+                      flex: mobile ? '0 0 200px' : '1 1 0',
                       minWidth: 0,
                       maxWidth: 236,
                       height: 250,

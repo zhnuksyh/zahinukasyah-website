@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import logo from '../assets/syah-logo-white.svg';
+import { useViewport } from '../lib/useViewport';
 
 const TABS = ['Home', 'About', 'Journal', 'Collab'];
 const MUTED = 'rgba(255,255,255,0.72)';
@@ -13,6 +14,7 @@ interface HeaderProps {
 export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) {
   const navRef = useRef<HTMLDivElement>(null);
   const [ind, setInd] = useState({ left: 4, width: 72 });
+  const mobile = useViewport() === 'mobile';
 
   useEffect(() => {
     const measure = () => {
@@ -27,7 +29,7 @@ export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) 
       clearTimeout(t);
       window.removeEventListener('resize', measure);
     };
-  }, [active]);
+  }, [active, mobile]);
 
   return (
     <header
@@ -38,14 +40,14 @@ export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) 
         display: 'grid',
         gridTemplateColumns: '1fr auto 1fr',
         alignItems: 'center',
-        padding: '24px 40px',
+        padding: mobile ? '14px 12px' : '24px 40px',
         maxWidth: 1320,
         width: '100%',
         margin: '0 auto',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifySelf: 'start' }}>
-        <img src={logo} alt="Zahin Ukasyah" style={{ height: 30, width: 'auto', display: 'block' }} />
+        <img src={logo} alt="Zahin Ukasyah" style={{ height: mobile ? 22 : 30, width: 'auto', display: 'block' }} />
       </div>
 
       <nav
@@ -86,9 +88,9 @@ export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) 
               style={{
                 position: 'relative',
                 zIndex: 1,
-                padding: '9px 18px',
+                padding: mobile ? '7px 10px' : '9px 18px',
                 borderRadius: 999,
-                fontSize: 14,
+                fontSize: mobile ? 12.5 : 14,
                 fontWeight: 500,
                 color: active === i ? '#0a0a0b' : MUTED,
                 transition: 'color .3s',
@@ -109,9 +111,9 @@ export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) 
           }}
           className="pop hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
           style={{
-            padding: '10px 22px',
+            padding: mobile ? '8px 13px' : '10px 22px',
             borderRadius: 999,
-            fontSize: 14,
+            fontSize: mobile ? 12.5 : 14,
             fontWeight: 600,
             color: '#0a0a0b',
             background: '#ffffff',

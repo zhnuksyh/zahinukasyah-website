@@ -46,6 +46,20 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
   const [showClose, setShowClose] = useState(false);
   // features on the back faces stay live only between open-start and close-start
   const [featureSel, setFeatureSel] = useState<number | null>(null);
+  const [vw, setVw] = useState(() => window.innerWidth);
+
+  useEffect(() => {
+    const onResize = () => setVw(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // scale the whole fan down on narrow screens so it always fits the viewport
+  const s = Math.min(1, Math.max(0.34, (vw - 24) / 1030));
+  const txs = TXS.map((v) => Math.round(v * s));
+  const bottoms = BOTTOMS.map((v) => Math.round(v * s));
+  const widths = WIDTHS.map((v) => Math.round(v * s));
+  const heights = HEIGHTS.map((v) => Math.round(v * s));
 
   const clearTimers = () => {
     timers.current.forEach(clearTimeout);
@@ -69,7 +83,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
       const j = +pos.getAttribute('data-card')!;
       if (j === i) return;
       pos.style.transition = 'transform .5s cubic-bezier(.5,0,.2,1), opacity .45s ease';
-      pos.style.transform = `translateX(${TXS[j] * 1.6}px) translateY(150px) rotate(${ROTS[j]}deg) scale(0.88)`;
+      pos.style.transform = `translateX(${txs[j] * 1.6}px) translateY(150px) rotate(${ROTS[j]}deg) scale(0.88)`;
       pos.style.opacity = '0';
       pos.style.pointerEvents = 'none';
     });
@@ -83,7 +97,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
       const j = +pos.getAttribute('data-card')!;
       if (j === i) return;
       pos.style.transition = 'transform .58s cubic-bezier(.34,1.2,.64,1), opacity .5s ease';
-      pos.style.transform = `translateX(${TXS[j]}px) rotate(${ROTS[j]}deg)`;
+      pos.style.transform = `translateX(${txs[j]}px) rotate(${ROTS[j]}deg)`;
       pos.style.opacity = '';
       pos.style.pointerEvents = '';
     });
@@ -106,11 +120,11 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     pos.style.position = 'absolute';
     pos.style.left = '50%';
     pos.style.top = '';
-    pos.style.bottom = BOTTOMS[i] + 'px';
-    pos.style.width = WIDTHS[i] + 'px';
-    pos.style.height = HEIGHTS[i] + 'px';
-    pos.style.marginLeft = -WIDTHS[i] / 2 + 'px';
-    pos.style.transform = `translateX(${TXS[i]}px) rotate(${ROTS[i]}deg)`;
+    pos.style.bottom = bottoms[i] + 'px';
+    pos.style.width = widths[i] + 'px';
+    pos.style.height = heights[i] + 'px';
+    pos.style.marginLeft = -widths[i] / 2 + 'px';
+    pos.style.transform = `translateX(${txs[i]}px) rotate(${ROTS[i]}deg)`;
     pos.style.zIndex = String(ZS[i]);
     pos.style.perspective = '1200px';
     pos.style.opacity = '';
@@ -135,8 +149,8 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     const pos = fanRef.current.querySelector<HTMLElement>(`[data-card="${i}"]`)!;
     const card = pos.querySelector<HTMLElement>('[data-face]')!;
     const faces = Array.from(pos.querySelectorAll<HTMLElement>('[data-facepane]'));
-    const W = WIDTHS[i];
-    const H = HEIGHTS[i];
+    const W = widths[i];
+    const H = heights[i];
     const rot = ROTS[i];
     const b = pos.getBoundingClientRect();
     // rotation is around the center; derive the un-rotated top-left so the fixed
@@ -313,14 +327,14 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
   return (
     <>
       {showClose ? <CloseButton onClick={closeCard} zIndex={350} animateIn /> : null}
-      <div ref={fanRef} style={{ flexShrink: 0, position: 'relative', height: 334, zIndex: 5 }}>
+      <div ref={fanRef} style={{ flexShrink: 0, position: 'relative', height: Math.round(334 * s), zIndex: 5 }}>
         <div
           style={{
             position: 'absolute',
             left: '50%',
-            bottom: -196,
-            width: 950,
-            height: 530,
+            bottom: Math.round(-196 * s),
+            width: Math.round(950 * s),
+            height: Math.round(530 * s),
             transform: 'translateX(-50%)',
             borderRadius: '50%',
             filter: 'blur(90px)',
@@ -344,11 +358,11 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
               style={{
                 position: 'absolute',
                 left: '50%',
-                bottom: BOTTOMS[i],
-                width: WIDTHS[i],
-                height: HEIGHTS[i],
-                marginLeft: -WIDTHS[i] / 2,
-                transform: `translateX(${TXS[i]}px) rotate(${ROTS[i]}deg)`,
+                bottom: bottoms[i],
+                width: widths[i],
+                height: heights[i],
+                marginLeft: -widths[i] / 2,
+                transform: `translateX(${txs[i]}px) rotate(${ROTS[i]}deg)`,
                 zIndex: ZS[i],
                 perspective: 1200,
                 transformStyle: 'preserve-3d',
@@ -396,13 +410,15 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
                   <div
                     style={{
                       position: 'relative',
-                      padding: center ? '22px 24px' : '20px 22px',
+                      padding: center
+                        ? `${Math.max(12, Math.round(22 * s))}px ${Math.max(13, Math.round(24 * s))}px`
+                        : `${Math.max(11, Math.round(20 * s))}px ${Math.max(12, Math.round(22 * s))}px`,
                       textAlign: c.alignRight ? 'right' : 'left',
                     }}
                   >
                     <div
                       style={{
-                        fontSize: center ? 21 : 19,
+                        fontSize: Math.max(14, Math.round((center ? 21 : 19) * s)),
                         fontWeight: 600,
                         color: center ? '#f6f6f6' : '#f2f2f2',
                       }}
@@ -411,7 +427,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
                     </div>
                     <div
                       style={{
-                        fontSize: 12,
+                        fontSize: Math.max(10, Math.round(12 * s)),
                         color: center ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.38)',
                         marginTop: 2,
                       }}

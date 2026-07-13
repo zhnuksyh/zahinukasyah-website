@@ -3,6 +3,7 @@ import { newsData, newsParas, newsYear } from '../data/content';
 import { hexToRgba, shade, tint } from '../lib/colors';
 import { ACCENT } from '../lib/theme';
 import { useDragScroll } from '../lib/useDragScroll';
+import { useViewport } from '../lib/useViewport';
 
 export default function JournalPage({ active }: { active: boolean }) {
   const [up, setUp] = useState(false);
@@ -16,6 +17,8 @@ export default function JournalPage({ active }: { active: boolean }) {
   const timers = useRef<number[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
   const dragScroll = useDragScroll();
+  const vp = useViewport();
+  const mobile = vp === 'mobile';
 
   const clearTimers = () => {
     timers.current.forEach(clearTimeout);
@@ -93,7 +96,7 @@ export default function JournalPage({ active }: { active: boolean }) {
         zIndex: 12,
         display: 'flex',
         justifyContent: 'center',
-        padding: '92px 40px 34px',
+        padding: mobile ? '80px 16px 20px' : '92px 40px 34px',
         opacity: active ? 1 : 0,
         pointerEvents: active ? 'auto' : 'none',
         transition: 'opacity .45s ease',
@@ -106,8 +109,9 @@ export default function JournalPage({ active }: { active: boolean }) {
           maxWidth: 1320,
           height: '100%',
           display: 'grid',
-          gridTemplateColumns: '404px 1fr',
-          gap: 44,
+          gridTemplateColumns: mobile ? '1fr' : vp === 'tablet' ? '330px 1fr' : '404px 1fr',
+          gridTemplateRows: mobile ? 'minmax(0, 44%) minmax(0, 1fr)' : 'none',
+          gap: mobile ? 20 : 44,
         }}
       >
         {/* LEFT: feed list */}
