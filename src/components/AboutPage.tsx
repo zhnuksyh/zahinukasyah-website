@@ -146,7 +146,16 @@ function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaIt
             front={
               <>
                 <div style={{ position: 'relative', flex: '1 1 auto', minHeight: 0, borderRadius: 16, overflow: 'hidden' }}>
-                  <ImagePlaceholder label="cover art" />
+                  {g.img ? (
+                    <img
+                      src={g.img}
+                      alt={`${g.title} cover art`}
+                      draggable={false}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <ImagePlaceholder label="cover art" />
+                  )}
                   <div
                     style={{
                       position: 'absolute',
@@ -421,12 +430,16 @@ export default function AboutPage({ active }: { active: boolean }) {
               About Me
             </h2>
             <p style={{ marginTop: 22, fontSize: 18, lineHeight: 1.7, color: 'rgba(255,255,255,0.6)', maxWidth: 600 }}>
-              Placeholder bio — a couple of sentences introducing who I am, what I care about, and
-              the kind of work that keeps me up at night. Enough to give a warm first impression.
+              Zahin Ukasyah here! This is not a portfolio website, so let's keep things casual
+              haha. I think I'm best described as a Puzzle Gamer? since I loved deck-building and
+              roguelikes games. However, I do loves abstract ideas as well, I have been long
+              fascinated by long studies of fundamental consciousness, especially with the current
+              rise of AI.
             </p>
             <p style={{ marginTop: 16, fontSize: 18, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', maxWidth: 600 }}>
-              Placeholder line — a second beat about how I got here and what I'm chasing next, kept
-              short so the whole block sits comfortably beside the card.
+              Oh, I'm a SWE based in KL. I work on web/ mobile application dev mostly, and I likes
+              to design too. This is getting too long, anyway, I'm glad that you're here. Let's be
+              friends!
             </p>
           </div>
 
