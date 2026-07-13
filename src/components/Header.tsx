@@ -47,7 +47,7 @@ export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) 
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '16px 20px',
+            padding: '16px 26px',
             width: '100%',
           }}
         >
