@@ -2,6 +2,7 @@ import type { MouseEvent } from 'react';
 import { designData } from '../data/content';
 import { hexToRgba } from '../lib/colors';
 import { useDragScroll } from '../lib/useDragScroll';
+import { useViewport } from '../lib/useViewport';
 import ImagePlaceholder from './ImagePlaceholder';
 
 interface DesignBentoBackProps {
@@ -16,6 +17,7 @@ interface DesignBentoBackProps {
  */
 export default function DesignBentoBack({ label, title, onOpenTile }: DesignBentoBackProps) {
   const dragScroll = useDragScroll();
+  const mobile = useViewport() === 'mobile';
 
   const openTile = (e: MouseEvent, i: number) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
 
   return (
     <>
-      <div style={{ flex: '0 0 auto', padding: '46px 54px 4px' }}>
+      <div style={{ flex: '0 0 auto', padding: mobile ? '76px 24px 0' : '46px 54px 4px' }}>
         <div
           style={{
             fontSize: 13,
@@ -38,7 +40,7 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
           {label}
         </div>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginTop: 8 }}>
-          <div style={{ fontSize: 40, fontWeight: 700, letterSpacing: '-0.02em', color: '#fefefe' }}>
+          <div style={{ fontSize: mobile ? 30 : 40, fontWeight: 700, letterSpacing: '-0.02em', color: '#fefefe' }}>
             {title}
           </div>
           <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.34)', letterSpacing: '0.02em' }}>
@@ -53,18 +55,19 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
           minHeight: 0,
           overflowX: 'auto',
           overflowY: 'hidden',
-          padding: '22px 54px 54px',
+          padding: mobile ? '16px 20px 28px' : '22px 54px 54px',
           cursor: 'grab',
+          ...(mobile ? { display: 'flex', alignItems: 'center' } : {}),
         }}
       >
         <div
           style={{
             display: 'grid',
             gridAutoFlow: 'column dense',
-            gridTemplateRows: 'repeat(3, 172px)',
-            gridAutoColumns: '222px',
-            gap: 16,
-            height: '100%',
+            gridTemplateRows: mobile ? 'repeat(3, minmax(0, 128px))' : 'repeat(3, 172px)',
+            gridAutoColumns: mobile ? '168px' : '222px',
+            gap: mobile ? 12 : 16,
+            height: mobile ? 'auto' : '100%',
             width: 'max-content',
           }}
         >

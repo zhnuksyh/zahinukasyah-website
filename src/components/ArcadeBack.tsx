@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gameParas, gamesArcadeData } from '../data/content';
 import { hexToRgba, shade, tint } from '../lib/colors';
 import { useDragScroll } from '../lib/useDragScroll';
+import { useViewport } from '../lib/useViewport';
 import CloseButton from './CloseButton';
 
 const COLS = 16;
@@ -16,6 +17,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
   const [gameAnim, setGameAnim] = useState(false);
   const timers = useRef<number[]>([]);
   const dragScroll = useDragScroll();
+  const mobile = useViewport() === 'mobile';
 
   const clearTimers = () => {
     timers.current.forEach(clearTimeout);
@@ -105,6 +107,48 @@ export default function ArcadeBack({ open }: { open: boolean }) {
           backgroundSize: `100% 100%, ${CELL_W}% 100%, 100% ${CELL_H}%`,
         }}
       >
+        {mobile ? (
+          /* mobile: the walkable floor needs a keyboard, so offer a simple game list */
+          <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', padding: '80px 24px 44px' }}>
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: '0.4em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.4)',
+              }}
+            >
+              Arcade
+            </div>
+            <div style={{ marginTop: 8, fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em', color: '#fafafa' }}>
+              Pick a game to visit
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: 12, marginTop: 24 }}>
+              {gamesArcadeData.map((o, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => openGame(idx)}
+                  style={{
+                    padding: '24px 14px',
+                    borderRadius: 18,
+                    textAlign: 'center',
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: '#ffffff',
+                    cursor: 'pointer',
+                    background: `linear-gradient(150deg, ${tint(o.c, 0.08)}, ${shade(o.c, 0.32)})`,
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    boxShadow: '0 14px 30px -14px ' + hexToRgba(o.c, 0.6),
+                  }}
+                >
+                  {o.title}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <>
         {/* HUD */}
         <div
           style={{
@@ -348,6 +392,8 @@ export default function ArcadeBack({ open }: { open: boolean }) {
             </span>
           </div>
         ) : null}
+          </>
+        )}
       </div>
 
       {/* GAME DETAIL (orb → full screen) */}
@@ -377,7 +423,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
             transition: 'transform .5s cubic-bezier(.34,1.2,.64,1), opacity .4s ease',
           }}
         >
-          <div style={{ maxWidth: 1080, margin: '0 auto', padding: '96px 40px 90px' }}>
+          <div style={{ maxWidth: 1080, margin: '0 auto', padding: mobile ? '88px 24px 64px' : '96px 40px 90px' }}>
             <div
               style={{
                 position: 'relative',

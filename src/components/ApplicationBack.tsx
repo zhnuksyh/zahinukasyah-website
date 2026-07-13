@@ -1,6 +1,7 @@
 import { projData } from '../data/content';
 import { shade } from '../lib/colors';
 import { useDragScroll } from '../lib/useDragScroll';
+import { useViewport } from '../lib/useViewport';
 import FlipCard from './FlipCard';
 
 const TXT_DARK = '#17171c';
@@ -9,10 +10,11 @@ const TXT_LIGHT = '#f4f4f6';
 /** Back face for the Application card: a drag-scrolled grid of flip cards. */
 export default function ApplicationBack() {
   const dragScroll = useDragScroll();
+  const mobile = useViewport() === 'mobile';
 
   return (
     <>
-      <div style={{ flex: '0 0 auto', padding: '44px 52px 6px' }}>
+      <div style={{ flex: '0 0 auto', padding: mobile ? '76px 24px 0' : '44px 52px 6px' }}>
         <div
           style={{
             fontSize: 13,
@@ -26,7 +28,7 @@ export default function ApplicationBack() {
         </div>
         <div
           style={{
-            fontSize: 38,
+            fontSize: mobile ? 30 : 38,
             fontWeight: 700,
             letterSpacing: '-0.02em',
             color: '#f4f4f6',
@@ -43,20 +45,21 @@ export default function ApplicationBack() {
           minHeight: 0,
           overflowX: 'auto',
           overflowY: 'hidden',
-          padding: '22px 54px 54px',
+          padding: mobile ? '16px 20px 28px' : '22px 54px 54px',
           cursor: 'grab',
           userSelect: 'none',
           WebkitUserSelect: 'none',
+          ...(mobile ? { display: 'flex', alignItems: 'center' } : {}),
         }}
       >
         <div
           style={{
             display: 'grid',
             gridAutoFlow: 'column dense',
-            gridTemplateRows: 'repeat(3, 172px)',
-            gridAutoColumns: '222px',
-            gap: 16,
-            height: '100%',
+            gridTemplateRows: mobile ? 'repeat(3, minmax(0, 128px))' : 'repeat(3, 172px)',
+            gridAutoColumns: mobile ? '168px' : '222px',
+            gap: mobile ? 12 : 16,
+            height: mobile ? 'auto' : '100%',
             width: 'max-content',
           }}
         >
