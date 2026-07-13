@@ -98,7 +98,7 @@ export default function JournalPage({ active }: { active: boolean }) {
         zIndex: 12,
         display: 'flex',
         justifyContent: 'center',
-        padding: mobile ? '80px 22px 24px' : '92px 40px 34px',
+        padding: mobile ? '80px 22px 24px' : vp === 'tablet' ? '92px 44px 34px' : '92px 100px 34px',
         opacity: active ? 1 : 0,
         pointerEvents: active ? 'auto' : 'none',
         transition: 'opacity .45s ease',
@@ -108,7 +108,7 @@ export default function JournalPage({ active }: { active: boolean }) {
         style={{
           position: 'relative',
           width: '100%',
-          maxWidth: 1320,
+          maxWidth: 1140,
           height: '100%',
           display: 'grid',
           gridTemplateColumns: mobile ? '1fr' : vp === 'tablet' ? '330px 1fr' : '404px 1fr',
