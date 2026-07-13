@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ACCENT } from '../lib/theme';
+import logo from '../assets/syah-logo-white.svg';
 
 const TABS = ['Home', 'About', 'Journal', 'Collab'];
 const MUTED = 'rgba(255,255,255,0.72)';
@@ -45,20 +45,7 @@ export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) 
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifySelf: 'start' }}>
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'baseline',
-            whiteSpace: 'nowrap',
-            fontSize: 26,
-            letterSpacing: '-0.03em',
-            lineHeight: 1,
-            color: ACCENT,
-            fontWeight: 700,
-          }}
-        >
-          ZU
-        </div>
+        <img src={logo} alt="Zahin Ukasyah" style={{ height: 30, width: 'auto', display: 'block' }} />
       </div>
 
       <nav
@@ -120,7 +107,7 @@ export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) 
             e.preventDefault();
             onOpenSocial();
           }}
-          className="hover:-translate-y-0.5 hover:scale-[1.04] hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
+          className="pop hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
           style={{
             padding: '10px 22px',
             borderRadius: 999,
