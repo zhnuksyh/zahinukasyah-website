@@ -138,7 +138,26 @@ function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaIt
       <div style={{ fontSize: 'clamp(20px,2.2vw,28px)', fontWeight: 700, letterSpacing: '-0.02em', color: '#fefefe' }}>
         {heading}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols},minmax(0,1fr))`, gap: mobile ? 14 : 20, marginTop: 28 }}>
+      <div
+        style={
+          mobile
+            ? {
+                display: 'flex',
+                gap: 14,
+                overflowX: 'auto',
+                margin: '28px -26px 0',
+                padding: '4px 26px 12px',
+                scrollSnapType: 'x mandatory',
+                WebkitOverflowScrolling: 'touch',
+              }
+            : {
+                display: 'grid',
+                gridTemplateColumns: `repeat(${cols},minmax(0,1fr))`,
+                gap: 20,
+                marginTop: 28,
+              }
+        }
+      >
         {items.map((g, idx) => (
           <FlipCard
             key={`${prefix}-${idx}`}
@@ -147,6 +166,7 @@ function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaIt
             wrapStyle={{
               position: 'relative',
               height: mobile ? 'clamp(210px, 62vw, 260px)' : 260,
+              ...(mobile ? { flex: '0 0 min(62vw, 240px)', scrollSnapAlign: 'center' } : {}),
               perspective: 1000,
               cursor: 'pointer',
               transition: 'transform .3s cubic-bezier(.34,1.4,.64,1)',
@@ -325,7 +345,7 @@ export default function AboutPage({ active }: { active: boolean }) {
           display: 'flex',
           alignItems: 'flex-start',
           justifyContent: 'center',
-          padding: mobile ? '88px 24px 56px' : tablet ? '96px 44px 52px' : '104px 112px 56px',
+          padding: mobile ? '88px 26px 56px' : tablet ? '96px 44px 52px' : '104px 112px 56px',
           opacity: active ? 1 : 0,
           transition: 'opacity .5s ease',
           pointerEvents: active ? 'auto' : 'none',
@@ -607,7 +627,16 @@ export default function AboutPage({ active }: { active: boolean }) {
                   }}
                 >
                   <div style={{ color: ACCENT, display: 'flex' }}>{h.icon}</div>
-                  <div style={{ fontSize: mobile ? 13 : 15, fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>{h.label}</div>
+                  <div
+                    style={{
+                      fontSize: mobile ? 13 : 15,
+                      fontWeight: 600,
+                      textAlign: 'center',
+                      color: 'rgba(255,255,255,0.85)',
+                    }}
+                  >
+                    {h.label}
+                  </div>
                 </div>
               ))}
             </div>
