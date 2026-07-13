@@ -190,7 +190,7 @@ export const socials: SocialItem[] = [
   { name: 'GitHub', handle: 'zhnuksyh', c: '#e7e7ea', txt: '#0a0a0b', href: 'https://github.com/zhnuksyh' },
 ];
 
-export const collabEmail = 'hello@zahin.studio';
+export const collabEmail = 'zhnuksyh03@gmail.com';
 
 export interface CollabItem {
   cat: string;
