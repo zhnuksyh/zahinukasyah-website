@@ -26,7 +26,7 @@ export default function Hero() {
       </div>
       <h1
         style={{
-          marginTop: 16,
+          marginTop: 26,
           fontSize: 'clamp(34px,4.9vw,58px)',
           fontWeight: 700,
           lineHeight: 1.06,
@@ -46,7 +46,7 @@ export default function Hero() {
           lineHeight: 1.65,
           color: 'rgba(255,255,255,0.52)',
           maxWidth: 600,
-          margin: '22px auto 0',
+          margin: '32px auto 0',
         }}
       >
         This digital space is a documentation for everything I had done, and I hoped that it would
