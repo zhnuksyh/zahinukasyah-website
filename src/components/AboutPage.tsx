@@ -13,12 +13,11 @@ import ImagePlaceholder from './ImagePlaceholder';
 
 const CARD_SHADOW = '0 44px 90px -24px rgba(0,0,0,0.85), 0 10px 30px -12px rgba(0,0,0,0.5)';
 
-// Hobby nodes for the mind-map: positions are % coordinates inside the map area.
-const HOBBY_NODES: { label: string; x: number; y: number; icon: ReactNode }[] = [
+// Hobby nodes orbit the core: `angle` is degrees on the orbit circle (0 = right, -90 = top).
+const HOBBY_NODES: { label: string; angle: number; icon: ReactNode }[] = [
   {
     label: 'Play Video Games',
-    x: 18,
-    y: 12,
+    angle: -90,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M6 8h12a4 4 0 0 1 4 4v3a3 3 0 0 1-5.3 1.9L15 15H9l-1.7 1.9A3 3 0 0 1 2 15v-3a4 4 0 0 1 4-4z" />
@@ -31,8 +30,7 @@ const HOBBY_NODES: { label: string; x: number; y: number; icon: ReactNode }[] = 
   },
   {
     label: 'Make Games',
-    x: 72,
-    y: 14,
+    angle: -150,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M15 12l-8.5 8.5a2.12 2.12 0 1 1-3-3L12 9" />
@@ -43,8 +41,7 @@ const HOBBY_NODES: { label: string; x: number; y: number; icon: ReactNode }[] = 
   },
   {
     label: 'Read Philosophy',
-    x: 12,
-    y: 54,
+    angle: 150,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 18h6" />
@@ -55,8 +52,7 @@ const HOBBY_NODES: { label: string; x: number; y: number; icon: ReactNode }[] = 
   },
   {
     label: 'Watch Anime',
-    x: 76,
-    y: 54,
+    angle: -30,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="6" width="20" height="13" rx="2" />
@@ -67,8 +63,7 @@ const HOBBY_NODES: { label: string; x: number; y: number; icon: ReactNode }[] = 
   },
   {
     label: 'Read Psychology',
-    x: 22,
-    y: 90,
+    angle: 30,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12.5 3a6.5 6.5 0 0 1 6.5 6.5c0 1.3-.4 2.5-1 3.5l1.5 3h-2.5v2.5a2 2 0 0 1-2 2H12v2.5H7.5V18c-1.9-1.3-3-3.4-3-5.7A6.8 6.8 0 0 1 12.5 3z" />
@@ -79,8 +74,7 @@ const HOBBY_NODES: { label: string; x: number; y: number; icon: ReactNode }[] = 
   },
   {
     label: 'Play Puzzle Games',
-    x: 64,
-    y: 90,
+    angle: 90,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z" />
@@ -89,9 +83,9 @@ const HOBBY_NODES: { label: string; x: number; y: number; icon: ReactNode }[] = 
   },
 ];
 
-const HOBBY_HUB = { x: 46, y: 50 };
-// accent dots along each connector, as fractions of hub→node distance
-const HOBBY_DOTS = [0.45, 0.78];
+// orbit radius (px) tile centers sit on, and the map's total height
+const HOBBY_ORBIT = 168;
+const HOBBY_MAP_H = 480;
 
 // Timeline node icons, matched by index to timelineData.
 const TIMELINE_ICONS: ReactNode[] = [
@@ -547,100 +541,109 @@ export default function AboutPage({ active }: { active: boolean }) {
             >
               My Hobbies
             </div>
-            <div style={{ position: 'relative', height: 420, marginTop: 24 }}>
-              {/* connectors */}
+            <div style={{ position: 'relative', height: HOBBY_MAP_H, marginTop: 24 }}>
+              {/* orbit rings */}
               <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-                {HOBBY_NODES.map((n) => (
-                  <line
-                    key={n.label}
-                    x1={`${HOBBY_HUB.x}%`}
-                    y1={`${HOBBY_HUB.y}%`}
-                    x2={`${n.x}%`}
-                    y2={`${n.y}%`}
-                    stroke="rgba(255,255,255,0.14)"
-                    strokeWidth="1.5"
-                  />
-                ))}
+                <circle
+                  cx="50%"
+                  cy="50%"
+                  r={HOBBY_ORBIT}
+                  fill="none"
+                  stroke="rgba(255,255,255,0.16)"
+                  strokeWidth="1.5"
+                  strokeDasharray="2 7"
+                />
+                <circle
+                  cx="50%"
+                  cy="50%"
+                  r={HOBBY_ORBIT - 66}
+                  fill="none"
+                  stroke="rgba(255,255,255,0.08)"
+                  strokeWidth="1"
+                  strokeDasharray="2 7"
+                />
               </svg>
-              {/* accent dots riding the connectors */}
-              {HOBBY_NODES.map((n) =>
-                HOBBY_DOTS.map((f) => (
-                  <div
-                    key={`${n.label}-${f}`}
-                    style={{
-                      position: 'absolute',
-                      left: `${HOBBY_HUB.x + (n.x - HOBBY_HUB.x) * f}%`,
-                      top: `${HOBBY_HUB.y + (n.y - HOBBY_HUB.y) * f}%`,
-                      width: 7,
-                      height: 7,
-                      borderRadius: '50%',
-                      background: ACCENT,
-                      boxShadow: `0 0 8px ${hexToRgba(ACCENT, 0.75)}`,
-                      transform: 'translate(-50%, -50%)',
-                      pointerEvents: 'none',
-                    }}
-                  />
-                )),
-              )}
-              {/* hub */}
+              {/* core */}
               <div
                 style={{
                   position: 'absolute',
-                  left: `${HOBBY_HUB.x}%`,
-                  top: `${HOBBY_HUB.y}%`,
+                  left: '50%',
+                  top: '50%',
                   transform: 'translate(-50%, -50%)',
-                  width: 60,
-                  height: 60,
-                  borderRadius: 18,
-                  background: hexToRgba(ACCENT, 0.14),
-                  border: `1px solid ${hexToRgba(ACCENT, 0.55)}`,
-                  boxShadow: `0 0 34px -6px ${hexToRgba(ACCENT, 0.45)}`,
+                  width: 134,
+                  height: 134,
+                  borderRadius: '50%',
+                  background: 'radial-gradient(circle at 50% 32%, #26262b, #121214 72%)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  boxShadow: '0 30px 70px -20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.14)',
                   display: 'flex',
+                  flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  gap: 10,
                 }}
               >
                 <img src={logo} alt="" draggable={false} style={{ height: 30, width: 'auto' }} />
-              </div>
-              {/* hobby nodes */}
-              {HOBBY_NODES.map((n) => (
                 <div
-                  key={n.label}
-                  className="lift-2"
                   style={{
-                    position: 'absolute',
-                    left: `${n.x}%`,
-                    top: `${n.y}%`,
-                    transform: 'translate(-24px, -50%)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    cursor: 'default',
-                    transition: 'transform .28s cubic-bezier(.34,1.4,.64,1)',
+                    fontSize: 11,
+                    fontWeight: 600,
+                    letterSpacing: '0.32em',
+                    textIndent: '0.32em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.75)',
                   }}
                 >
+                  Hobbies
+                </div>
+              </div>
+              {/* orbiting hobby tiles */}
+              {HOBBY_NODES.map((n) => {
+                const rad = (n.angle * Math.PI) / 180;
+                const dx = Math.cos(rad) * HOBBY_ORBIT;
+                const dy = Math.sin(rad) * HOBBY_ORBIT;
+                return (
                   <div
+                    key={n.label}
+                    className="lift-2"
                     style={{
-                      width: 48,
-                      height: 48,
-                      borderRadius: 14,
-                      flexShrink: 0,
-                      background: '#1a1a1d',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      boxShadow: '0 14px 30px -14px rgba(0,0,0,0.7)',
+                      position: 'absolute',
+                      left: `calc(50% + ${dx.toFixed(1)}px)`,
+                      top: `calc(50% + ${dy.toFixed(1)}px)`,
+                      transform: 'translate(-50%, -50%)',
+                      width: 98,
+                      height: 98,
+                      borderRadius: 20,
+                      background: 'linear-gradient(180deg, #1c1c20, #131315)',
+                      border: '1px solid rgba(255,255,255,0.09)',
+                      boxShadow: '0 18px 40px -18px rgba(0,0,0,0.75)',
                       display: 'flex',
+                      flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: ACCENT,
+                      gap: 9,
+                      padding: '10px 8px',
+                      cursor: 'default',
+                      transition: 'transform .28s cubic-bezier(.34,1.4,.64,1)',
                     }}
                   >
-                    {n.icon}
+                    <div style={{ color: ACCENT, display: 'flex' }}>{n.icon}</div>
+                    <div
+                      style={{
+                        fontSize: 9.5,
+                        fontWeight: 600,
+                        letterSpacing: '0.09em',
+                        textTransform: 'uppercase',
+                        textAlign: 'center',
+                        lineHeight: 1.5,
+                        color: 'rgba(255,255,255,0.62)',
+                      }}
+                    >
+                      {n.label}
+                    </div>
                   </div>
-                  <div style={{ fontSize: 14.5, fontWeight: 600, color: 'rgba(255,255,255,0.88)', whiteSpace: 'nowrap' }}>
-                    {n.label}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
