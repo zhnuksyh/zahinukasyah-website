@@ -1,5 +1,6 @@
 ﻿import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import logo from '../assets/syah-logo-white.svg';
 import portrait from '../assets/syah-portrait.jpg';
 import portraitBack from '../assets/syah-portrait-back.jpg';
 import { booksData, gamesData, moviesData, timelineData } from '../data/content';
@@ -12,11 +13,14 @@ import ImagePlaceholder from './ImagePlaceholder';
 
 const CARD_SHADOW = '0 44px 90px -24px rgba(0,0,0,0.85), 0 10px 30px -12px rgba(0,0,0,0.5)';
 
-const HOBBIES: { label: string; icon: ReactNode }[] = [
+// Hobby nodes for the mind-map: positions are % coordinates inside the map area.
+const HOBBY_NODES: { label: string; x: number; y: number; icon: ReactNode }[] = [
   {
     label: 'Play Video Games',
+    x: 18,
+    y: 12,
     icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M6 8h12a4 4 0 0 1 4 4v3a3 3 0 0 1-5.3 1.9L15 15H9l-1.7 1.9A3 3 0 0 1 2 15v-3a4 4 0 0 1 4-4z" />
         <line x1="7" y1="11" x2="10" y2="11" />
         <line x1="8.5" y1="9.5" x2="8.5" y2="12.5" />
@@ -27,8 +31,10 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
   },
   {
     label: 'Make Games',
+    x: 72,
+    y: 14,
     icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M15 12l-8.5 8.5a2.12 2.12 0 1 1-3-3L12 9" />
         <path d="M17.64 15 22 10.64" />
         <path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91" />
@@ -36,21 +42,11 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Play Sudoku',
-    icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="4" y="4" width="16" height="16" rx="2" />
-        <line x1="9.33" y1="4" x2="9.33" y2="20" />
-        <line x1="14.66" y1="4" x2="14.66" y2="20" />
-        <line x1="4" y1="9.33" x2="20" y2="9.33" />
-        <line x1="4" y1="14.66" x2="20" y2="14.66" />
-      </svg>
-    ),
-  },
-  {
     label: 'Read Philosophy',
+    x: 12,
+    y: 54,
     icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 18h6" />
         <path d="M10 21h4" />
         <path d="M12 3a6 6 0 0 0-4 10.5c.6.55 1 1.3 1 2.05V16h6v-.45c0-.75.4-1.5 1-2.05A6 6 0 0 0 12 3z" />
@@ -58,27 +54,11 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Modding Games',
-    icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Solve Chess Puzzles',
-    icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="6.5" r="2.8" />
-        <path d="M10 9.2c.3 1.8-.5 3.4-1.5 4.8h7c-1-1.4-1.8-3-1.5-4.8" />
-        <path d="M7.5 20h9l-1.2-4.5H8.7z" />
-      </svg>
-    ),
-  },
-  {
     label: 'Watch Anime',
+    x: 76,
+    y: 54,
     icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="6" width="20" height="13" rx="2" />
         <polyline points="8 2.5 12 6 16 2.5" />
         <path d="m10.2 9.9 5 2.6-5 2.6z" />
@@ -87,14 +67,63 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
   },
   {
     label: 'Read Psychology',
+    x: 22,
+    y: 90,
     icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12.5 3a6.5 6.5 0 0 1 6.5 6.5c0 1.3-.4 2.5-1 3.5l1.5 3h-2.5v2.5a2 2 0 0 1-2 2H12v2.5H7.5V18c-1.9-1.3-3-3.4-3-5.7A6.8 6.8 0 0 1 12.5 3z" />
         <path d="M10.5 9.5a2 2 0 1 1 2 2v1.5" />
         <line x1="12.5" y1="15.2" x2="12.5" y2="15.3" />
       </svg>
     ),
   },
+  {
+    label: 'Play Puzzle Games',
+    x: 64,
+    y: 90,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z" />
+      </svg>
+    ),
+  },
+];
+
+const HOBBY_HUB = { x: 46, y: 50 };
+// accent dots along each connector, as fractions of hub→node distance
+const HOBBY_DOTS = [0.45, 0.78];
+
+// Timeline node icons, matched by index to timelineData.
+const TIMELINE_ICONS: ReactNode[] = [
+  // SWE Contract — code
+  <svg key="code" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="16 18 22 12 16 6" />
+    <polyline points="8 6 2 12 8 18" />
+  </svg>,
+  // MLE Trainee — cpu
+  <svg key="cpu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="5" y="5" width="14" height="14" rx="2" />
+    <rect x="9.5" y="9.5" width="5" height="5" />
+    <line x1="9" y1="2" x2="9" y2="5" />
+    <line x1="15" y1="2" x2="15" y2="5" />
+    <line x1="9" y1="19" x2="9" y2="22" />
+    <line x1="15" y1="19" x2="15" y2="22" />
+    <line x1="2" y1="9" x2="5" y2="9" />
+    <line x1="2" y1="15" x2="5" y2="15" />
+    <line x1="19" y1="9" x2="22" y2="9" />
+    <line x1="19" y1="15" x2="22" y2="15" />
+  </svg>,
+  // Research Assistant — flask
+  <svg key="flask" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10 2v7.5L4.7 19a2 2 0 0 0 1.8 3h11a2 2 0 0 0 1.8-3L14 9.5V2" />
+    <line x1="8.5" y1="2" x2="15.5" y2="2" />
+    <line x1="7" y1="16" x2="17" y2="16" />
+  </svg>,
+  // SWE Undergrad — graduation cap
+  <svg key="cap" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 10 12 5 2 10l10 5 10-5z" />
+    <path d="M6 12.5V17c0 1.66 2.69 3 6 3s6-1.34 6-3v-4.5" />
+  </svg>,
 ];
 
 function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaItem[]; prefix: string }) {
@@ -411,16 +440,16 @@ export default function AboutPage({ active }: { active: boolean }) {
               About Me
             </h2>
             <p style={{ marginTop: 22, fontSize: 18, lineHeight: 1.7, color: 'rgba(255,255,255,0.6)' }}>
-              Zahin Ukasyah here! This is not a portfolio website, so let's keep things casual
+              Hi, Zahin Ukasyah here! This is not a portfolio website, so let's keep things casual
               haha. I think I'm best described as a Puzzle Gamer? since I loved deck-building and
-              roguelikes games. However, I do loves abstract ideas as well, I have been long
-              fascinated by long studies of fundamental consciousness, especially with the current
-              rise of AI.
+              rogue-likes games. However, I do equally loves wrestling with abstract ideas as
+              well, as I have been long fascinated by the long studies of fundamental
+              consciousness, especially now with the current rise of AI.
             </p>
             <p style={{ marginTop: 16, fontSize: 18, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)' }}>
               Oh, I'm a SWE based in KL. I work on web/ mobile application dev mostly, and I likes
-              to design too. This is getting too long, anyway, I'm glad that you're here. Let's be
-              friends!
+              to design too: flat vector art and UI/UX elements. This is getting too long haha,
+              anyway, I'm glad that you're here. Let's be friends!
             </p>
           </div>
 
@@ -467,7 +496,7 @@ export default function AboutPage({ active }: { active: boolean }) {
                         border: '1px solid rgba(255,255,255,0.12)',
                       }}
                     >
-                      <div style={{ width: 12, height: 12, borderRadius: 3, background: ACCENT, transform: 'rotate(45deg)' }} />
+                      <div style={{ color: ACCENT, display: 'flex' }}>{TIMELINE_ICONS[idx]}</div>
                     </div>
                     <div
                       style={{
@@ -518,24 +547,98 @@ export default function AboutPage({ active }: { active: boolean }) {
             >
               My Hobbies
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 18, marginTop: 28 }}>
-              {HOBBIES.map((h) => (
+            <div style={{ position: 'relative', height: 420, marginTop: 24 }}>
+              {/* connectors */}
+              <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+                {HOBBY_NODES.map((n) => (
+                  <line
+                    key={n.label}
+                    x1={`${HOBBY_HUB.x}%`}
+                    y1={`${HOBBY_HUB.y}%`}
+                    x2={`${n.x}%`}
+                    y2={`${n.y}%`}
+                    stroke="rgba(255,255,255,0.14)"
+                    strokeWidth="1.5"
+                  />
+                ))}
+              </svg>
+              {/* accent dots riding the connectors */}
+              {HOBBY_NODES.map((n) =>
+                HOBBY_DOTS.map((f) => (
+                  <div
+                    key={`${n.label}-${f}`}
+                    style={{
+                      position: 'absolute',
+                      left: `${HOBBY_HUB.x + (n.x - HOBBY_HUB.x) * f}%`,
+                      top: `${HOBBY_HUB.y + (n.y - HOBBY_HUB.y) * f}%`,
+                      width: 7,
+                      height: 7,
+                      borderRadius: '50%',
+                      background: ACCENT,
+                      boxShadow: `0 0 8px ${hexToRgba(ACCENT, 0.75)}`,
+                      transform: 'translate(-50%, -50%)',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                )),
+              )}
+              {/* hub */}
+              <div
+                style={{
+                  position: 'absolute',
+                  left: `${HOBBY_HUB.x}%`,
+                  top: `${HOBBY_HUB.y}%`,
+                  transform: 'translate(-50%, -50%)',
+                  width: 60,
+                  height: 60,
+                  borderRadius: 18,
+                  background: hexToRgba(ACCENT, 0.14),
+                  border: `1px solid ${hexToRgba(ACCENT, 0.55)}`,
+                  boxShadow: `0 0 34px -6px ${hexToRgba(ACCENT, 0.45)}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <img src={logo} alt="" draggable={false} style={{ height: 30, width: 'auto' }} />
+              </div>
+              {/* hobby nodes */}
+              {HOBBY_NODES.map((n) => (
                 <div
-                  key={h.label}
-                  className="lift-6 bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] hover:border-[rgba(255,255,255,0.2)]"
+                  key={n.label}
+                  className="lift-2"
                   style={{
-                    borderRadius: 999,
+                    position: 'absolute',
+                    left: `${n.x}%`,
+                    top: `${n.y}%`,
+                    transform: 'translate(-24px, -50%)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 16,
-                    padding: '16px 26px',
+                    gap: 12,
                     cursor: 'default',
-                    transition:
-                      'transform .28s cubic-bezier(.34,1.4,.64,1), background .28s ease, border-color .28s ease',
+                    transition: 'transform .28s cubic-bezier(.34,1.4,.64,1)',
                   }}
                 >
-                  <div style={{ color: ACCENT, display: 'flex', flexShrink: 0 }}>{h.icon}</div>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>{h.label}</div>
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: 14,
+                      flexShrink: 0,
+                      background: '#1a1a1d',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      boxShadow: '0 14px 30px -14px rgba(0,0,0,0.7)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: ACCENT,
+                    }}
+                  >
+                    {n.icon}
+                  </div>
+                  <div style={{ fontSize: 14.5, fontWeight: 600, color: 'rgba(255,255,255,0.88)', whiteSpace: 'nowrap' }}>
+                    {n.label}
+                  </div>
                 </div>
               ))}
             </div>
@@ -543,17 +646,17 @@ export default function AboutPage({ active }: { active: boolean }) {
 
           {/* ROW 3 Â· full width â€” games */}
           <div style={{ gridColumn: '1 / -1', gridRow: 3, marginTop: 8, ...bioRise(0.58) }}>
-            <MediaGrid heading="Games I've been liking recently" items={gamesData} prefix="game" />
+            <MediaGrid heading="Games I've been obsessing recently" items={gamesData} prefix="game" />
           </div>
 
           {/* ROW 4 Â· full width â€” books */}
           <div style={{ gridColumn: '1 / -1', gridRow: 4, marginTop: 8, ...bioRise(0.66) }}>
-            <MediaGrid heading="Books I've been liking recently" items={booksData} prefix="book" />
+            <MediaGrid heading="Books I've been obsessing recently" items={booksData} prefix="book" />
           </div>
 
           {/* ROW 5 Â· full width â€” movies */}
           <div style={{ gridColumn: '1 / -1', gridRow: 5, marginTop: 8, ...bioRise(0.74) }}>
-            <MediaGrid heading="Movies I've been liking recently" items={moviesData} prefix="movie" />
+            <MediaGrid heading="Movies I've been obsessing recently" items={moviesData} prefix="movie" />
           </div>
         </div>
       </div>
