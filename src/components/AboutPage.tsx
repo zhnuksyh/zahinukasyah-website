@@ -111,7 +111,8 @@ const TIMELINE_ICONS: ReactNode[] = [
 
 function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaItem[]; prefix: string }) {
   const vp = useViewport();
-  const cols = vp === 'mobile' ? 2 : vp === 'tablet' ? 3 : 4;
+  const mobile = vp === 'mobile';
+  const cols = mobile ? 2 : vp === 'tablet' ? 3 : 4;
   return (
     <>
       <div style={{ fontSize: 'clamp(20px,2.2vw,28px)', fontWeight: 700, letterSpacing: '-0.02em', color: '#fefefe' }}>
@@ -232,13 +233,7 @@ function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaIt
   );
 }
 
-export default function AboutPage({
-  active,
-  onScroll,
-}: {
-  active: boolean;
-  onScroll?: (top: number) => void;
-}) {
+export default function AboutPage({ active }: { active: boolean }) {
   const [up, setUp] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [showTop, setShowTop] = useState(false);
@@ -301,11 +296,7 @@ export default function AboutPage({
           scrollRef.current = el;
           dragScroll(el);
         }}
-        onScroll={(e) => {
-          const top = e.currentTarget.scrollTop;
-          onScroll?.(top);
-          setShowTop(top > 320);
-        }}
+        onScroll={(e) => setShowTop(e.currentTarget.scrollTop > 320)}
         style={{
           position: 'absolute',
           inset: 0,

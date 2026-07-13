@@ -14,18 +14,6 @@ export default function App() {
   const [designSel, setDesignSel] = useState<number | null>(null);
   const [designAnim, setDesignAnim] = useState(false);
   const designTimers = useRef<number[]>([]);
-  const headerRef = useRef<HTMLDivElement>(null);
-
-  // The header isn't sticky: it slides away in step with the page scroll.
-  const moveHeader = (top: number) => {
-    if (headerRef.current) {
-      headerRef.current.style.transform = `translateY(${-Math.min(top, 160)}px)`;
-    }
-  };
-
-  useEffect(() => {
-    moveHeader(0);
-  }, [active]);
 
   const clearDesignTimers = () => {
     designTimers.current.forEach(clearTimeout);
@@ -99,9 +87,7 @@ export default function App() {
         }}
       />
 
-      <div ref={headerRef} style={{ flexShrink: 0, position: 'relative', zIndex: 20 }}>
-        <Header active={active} onSelect={setActive} onOpenSocial={() => setSocialOpen(true)} />
-      </div>
+      <Header active={active} onSelect={setActive} onOpenSocial={() => setSocialOpen(true)} />
 
       {/* HOME (cross-fades out when another page is active) */}
       <div
@@ -121,7 +107,7 @@ export default function App() {
         <CardFan onOpenDesign={openDesign} />
       </div>
 
-      <AboutPage active={active === 1} onScroll={moveHeader} />
+      <AboutPage active={active === 1} />
       <JournalPage active={active === 2} />
       <CollabPage active={active === 3} />
 
