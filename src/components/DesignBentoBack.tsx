@@ -27,7 +27,7 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
 
   return (
     <>
-      <div style={{ flex: '0 0 auto', padding: mobile ? '76px 24px 0' : '46px 54px 4px' }}>
+      <div style={{ flex: '0 0 auto', padding: mobile ? '0 26px 6px' : '46px 54px 4px' }}>
         <div
           style={{
             fontSize: 13,
@@ -51,13 +51,12 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
       <div
         ref={dragScroll}
         style={{
-          flex: '1 1 auto',
+          flex: mobile ? '0 0 auto' : '1 1 auto',
           minHeight: 0,
           overflowX: 'auto',
           overflowY: 'hidden',
-          padding: mobile ? '16px 20px 28px' : '22px 54px 54px',
+          padding: mobile ? '12px 20px 0' : '22px 54px 54px',
           cursor: 'grab',
-          ...(mobile ? { display: 'flex', alignItems: 'center' } : {}),
         }}
       >
         <div
