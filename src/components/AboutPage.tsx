@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import portrait from '../assets/syah-portrait.jpg';
 import portraitBack from '../assets/syah-portrait-back.jpg';
@@ -14,7 +14,7 @@ const CARD_SHADOW = '0 44px 90px -24px rgba(0,0,0,0.85), 0 10px 30px -12px rgba(
 
 const HOBBIES: { label: string; icon: ReactNode }[] = [
   {
-    label: 'Video Games',
+    label: 'Play Video Games',
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M6 8h12a4 4 0 0 1 4 4v3a3 3 0 0 1-5.3 1.9L15 15H9l-1.7 1.9A3 3 0 0 1 2 15v-3a4 4 0 0 1 4-4z" />
@@ -36,7 +36,7 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Sudoku',
+    label: 'Play Sudoku',
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -48,7 +48,7 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Philosophy',
+    label: 'Read Philosophy',
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 18h6" />
@@ -66,7 +66,7 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Chess Puzzles',
+    label: 'Solve Chess Puzzles',
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="6.5" r="2.8" />
@@ -86,7 +86,7 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
     ),
   },
   {
-    label: 'Psychology',
+    label: 'Read Psychology',
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12.5 3a6.5 6.5 0 0 1 6.5 6.5c0 1.3-.4 2.5-1 3.5l1.5 3h-2.5v2.5a2 2 0 0 1-2 2H12v2.5H7.5V18c-1.9-1.3-3-3.4-3-5.7A6.8 6.8 0 0 1 12.5 3z" />
@@ -300,7 +300,7 @@ export default function AboutPage({ active }: { active: boolean }) {
             alignContent: 'start',
           }}
         >
-          {/* ROW 1 · COL 1 — portrait card (rises, then flips) */}
+          {/* ROW 1 Â· COL 1 â€” portrait card (rises, then flips) */}
           <div style={{ position: 'relative', width: 330, height: 460, perspective: 1600, gridColumn: 1, gridRow: 1 }}>
             <div
               style={{
@@ -379,13 +379,13 @@ export default function AboutPage({ active }: { active: boolean }) {
                     color: 'rgba(255,255,255,0.5)',
                   }}
                 >
-                  Zahin · About
+                  Zahin Â· About
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ROW 1 · COL 2 — About Me heading + description */}
+          {/* ROW 1 Â· COL 2 â€” About Me heading + description */}
           <div
             style={{
               gridColumn: 2,
@@ -424,7 +424,7 @@ export default function AboutPage({ active }: { active: boolean }) {
             </p>
           </div>
 
-          {/* ROW 2 · COL 1 — career timeline (most recent on top) */}
+          {/* ROW 2 Â· COL 1 â€” career timeline (most recent on top) */}
           <div style={{ gridColumn: 1, gridRow: 2, ...bioRise(0.4) }}>
             <div
               style={{
@@ -435,7 +435,7 @@ export default function AboutPage({ active }: { active: boolean }) {
                 marginBottom: 26,
               }}
             >
-              Career/ Academic
+              Career<span style={{ fontWeight: 400 }}>/</span> Academic
             </div>
             {timelineData.map((ti, idx) => {
               const last = idx === timelineData.length - 1;
@@ -505,7 +505,7 @@ export default function AboutPage({ active }: { active: boolean }) {
             })}
           </div>
 
-          {/* ROW 2 · COL 2 — My Hobbies */}
+          {/* ROW 2 Â· COL 2 â€” My Hobbies */}
           <div style={{ gridColumn: 2, gridRow: 2, alignSelf: 'start', ...bioRise(0.5) }}>
             <div
               style={{
@@ -518,42 +518,40 @@ export default function AboutPage({ active }: { active: boolean }) {
             >
               My Hobbies
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,minmax(0,1fr))', gap: 18, marginTop: 28 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 18, marginTop: 28 }}>
               {HOBBIES.map((h) => (
                 <div
                   key={h.label}
                   className="lift-6 bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] hover:border-[rgba(255,255,255,0.2)]"
                   style={{
-                    aspectRatio: '1 / 1',
-                    borderRadius: 22,
+                    borderRadius: 999,
                     display: 'flex',
-                    flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 14,
+                    gap: 16,
+                    padding: '16px 26px',
                     cursor: 'default',
                     transition:
                       'transform .28s cubic-bezier(.34,1.4,.64,1), background .28s ease, border-color .28s ease',
                   }}
                 >
-                  <div style={{ color: ACCENT, display: 'flex' }}>{h.icon}</div>
+                  <div style={{ color: ACCENT, display: 'flex', flexShrink: 0 }}>{h.icon}</div>
                   <div style={{ fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>{h.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* ROW 3 · full width — games */}
+          {/* ROW 3 Â· full width â€” games */}
           <div style={{ gridColumn: '1 / -1', gridRow: 3, marginTop: 8, ...bioRise(0.58) }}>
             <MediaGrid heading="Games I've been liking recently" items={gamesData} prefix="game" />
           </div>
 
-          {/* ROW 4 · full width — books */}
+          {/* ROW 4 Â· full width â€” books */}
           <div style={{ gridColumn: '1 / -1', gridRow: 4, marginTop: 8, ...bioRise(0.66) }}>
             <MediaGrid heading="Books I've been liking recently" items={booksData} prefix="book" />
           </div>
 
-          {/* ROW 5 · full width — movies */}
+          {/* ROW 5 Â· full width â€” movies */}
           <div style={{ gridColumn: '1 / -1', gridRow: 5, marginTop: 8, ...bioRise(0.74) }}>
             <MediaGrid heading="Movies I've been liking recently" items={moviesData} prefix="movie" />
           </div>
