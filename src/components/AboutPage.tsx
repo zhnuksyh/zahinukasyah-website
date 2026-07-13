@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import portrait from '../assets/syah-portrait.jpg';
 import { booksData, gamesData, timelineData } from '../data/content';
 import type { MediaItem } from '../data/content';
 import { hexToRgba, shade, tint } from '../lib/colors';
@@ -10,44 +11,69 @@ import ImagePlaceholder from './ImagePlaceholder';
 
 const CARD_SHADOW = '0 44px 90px -24px rgba(0,0,0,0.85), 0 10px 30px -12px rgba(0,0,0,0.5)';
 
-const HOBBY_ICONS: ReactNode[] = [
-  <svg key="camera" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="6" width="20" height="14" rx="3" />
-    <circle cx="12" cy="13" r="4" />
-    <path d="M8 6l1.4-2.4a1 1 0 0 1 .9-.6h3.4a1 1 0 0 1 .9.6L16 6" />
-  </svg>,
-  <svg key="music" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="6.5" cy="18" r="2.5" />
-    <circle cx="18" cy="16" r="2.5" />
-    <path d="M9 18V6l11.5-2v12" />
-  </svg>,
-  <svg key="book" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="4" y="4" width="16" height="16" rx="2" />
-    <line x1="12" y1="4" x2="12" y2="20" />
-  </svg>,
-  <svg key="globe" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="9" />
-    <line x1="3" y1="12" x2="21" y2="12" />
-    <ellipse cx="12" cy="12" rx="4" ry="9" />
-  </svg>,
-  <svg key="coffee" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z" />
-    <path d="M17 9h2a2 2 0 0 1 0 4h-2" />
-    <line x1="7" y1="2.5" x2="7" y2="4.5" />
-    <line x1="11" y1="2.5" x2="11" y2="4.5" />
-  </svg>,
-  <svg key="barbell" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="4" y1="12" x2="20" y2="12" />
-    <rect x="2" y="8" width="3" height="8" rx="1" />
-    <rect x="19" y="8" width="3" height="8" rx="1" />
-  </svg>,
-  <svg key="pencil" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 20l3-1 11-11-2-2L5 17z" />
-    <line x1="14" y1="6" x2="18" y2="10" />
-  </svg>,
-  <svg key="heart" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 20s-7-4.5-7-9.5a3.5 3.5 0 0 1 7-1 3.5 3.5 0 0 1 7 1c0 5-7 9.5-7 9.5z" />
-  </svg>,
+const HOBBIES: { label: string; icon: ReactNode }[] = [
+  {
+    label: 'Video Games',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 8h12a4 4 0 0 1 4 4v3a3 3 0 0 1-5.3 1.9L15 15H9l-1.7 1.9A3 3 0 0 1 2 15v-3a4 4 0 0 1 4-4z" />
+        <line x1="7" y1="11" x2="10" y2="11" />
+        <line x1="8.5" y1="9.5" x2="8.5" y2="12.5" />
+        <circle cx="16" cy="10.5" r="0.6" fill="currentColor" stroke="none" />
+        <circle cx="18" cy="12.5" r="0.6" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Make Games',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M15 12l-8.5 8.5a2.12 2.12 0 1 1-3-3L12 9" />
+        <path d="M17.64 15 22 10.64" />
+        <path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Sudoku',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <line x1="9.33" y1="4" x2="9.33" y2="20" />
+        <line x1="14.66" y1="4" x2="14.66" y2="20" />
+        <line x1="4" y1="9.33" x2="20" y2="9.33" />
+        <line x1="4" y1="14.66" x2="20" y2="14.66" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Philosophy',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 18h6" />
+        <path d="M10 21h4" />
+        <path d="M12 3a6 6 0 0 0-4 10.5c.6.55 1 1.3 1 2.05V16h6v-.45c0-.75.4-1.5 1-2.05A6 6 0 0 0 12 3z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Modding Games',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Chess Puzzles',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="6.5" r="2.8" />
+        <path d="M10 9.2c.3 1.8-.5 3.4-1.5 4.8h7c-1-1.4-1.8-3-1.5-4.8" />
+        <path d="M7.5 20h9l-1.2-4.5H8.7z" />
+      </svg>
+    ),
+  },
 ];
 
 function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaItem[]; prefix: string }) {
@@ -324,20 +350,12 @@ export default function AboutPage({ active }: { active: boolean }) {
                   transition: 'opacity .05s linear .34s',
                 }}
               >
-                <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    background: 'repeating-linear-gradient(45deg,#242428 0 16px,#1d1d20 16px 32px)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <span style={{ fontFamily: 'monospace', fontSize: 14, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.4)' }}>
-                    [ PORTRAIT ]
-                  </span>
-                </div>
+                <img
+                  src={portrait}
+                  alt="Portrait of Zahin Ukasyah"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  draggable={false}
+                />
                 <div
                   style={{
                     position: 'absolute',
@@ -370,9 +388,6 @@ export default function AboutPage({ active }: { active: boolean }) {
               ...bioRise(0.28),
             }}
           >
-            <div style={{ fontSize: 14, fontWeight: 600, letterSpacing: '0.3em', textTransform: 'uppercase', color: ACCENT }}>
-              Zahin Ukasyah
-            </div>
             <h2
               style={{
                 marginTop: 16,
@@ -406,7 +421,7 @@ export default function AboutPage({ active }: { active: boolean }) {
                 marginBottom: 26,
               }}
             >
-              Career
+              Career/ Academic
             </div>
             {timelineData.map((ti, idx) => {
               const last = idx === timelineData.length - 1;
@@ -456,7 +471,7 @@ export default function AboutPage({ active }: { active: boolean }) {
                     <div style={{ fontSize: 19, fontWeight: 600, color: '#fefefe', letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>
                       {ti.role}
                     </div>
-                    <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)', marginTop: 4, whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)', marginTop: 4 }}>
                       {ti.org}
                     </div>
                   </div>
@@ -489,10 +504,10 @@ export default function AboutPage({ active }: { active: boolean }) {
             >
               My Hobbies
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,minmax(0,1fr))', gap: 18, marginTop: 28 }}>
-              {HOBBY_ICONS.map((icon, i) => (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 18, marginTop: 28 }}>
+              {HOBBIES.map((h) => (
                 <div
-                  key={i}
+                  key={h.label}
                   className="lift-6 bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] hover:border-[rgba(255,255,255,0.2)]"
                   style={{
                     aspectRatio: '1 / 1',
@@ -507,8 +522,8 @@ export default function AboutPage({ active }: { active: boolean }) {
                       'transform .28s cubic-bezier(.34,1.4,.64,1), background .28s ease, border-color .28s ease',
                   }}
                 >
-                  <div style={{ color: ACCENT, display: 'flex' }}>{icon}</div>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>Placeholder</div>
+                  <div style={{ color: ACCENT, display: 'flex' }}>{h.icon}</div>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>{h.label}</div>
                 </div>
               ))}
             </div>
