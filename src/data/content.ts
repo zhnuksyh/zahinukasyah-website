@@ -173,20 +173,21 @@ export const newsParas = [
 export interface SocialItem {
   name: string;
   handle: string;
-  mono: string;
   c: string;
   txt: string;
+  /** Profile URL; omitted for platforms without public profile links. */
+  href?: string;
 }
 
 export const socials: SocialItem[] = [
-  { name: 'Discord', handle: '@zahin', mono: 'D', c: '#5865f2', txt: '#ffffff' },
-  { name: 'Steam', handle: 'zahin', mono: 'S', c: '#66c0f4', txt: '#0a0a0b' },
-  { name: 'Instagram', handle: '@zahin', mono: 'I', c: '#e1306c', txt: '#ffffff' },
-  { name: 'LinkedIn', handle: 'in/zahin', mono: 'in', c: '#0a66c2', txt: '#ffffff' },
-  { name: 'Substack', handle: 'zahin', mono: 'S', c: '#ff6719', txt: '#ffffff' },
-  { name: 'X', handle: '@zahin', mono: 'X', c: '#e7e7ea', txt: '#0a0a0b' },
-  { name: 'TikTok', handle: '@zahin', mono: 'T', c: '#ff0050', txt: '#ffffff' },
-  { name: 'GitHub', handle: 'zahin', mono: 'G', c: '#e7e7ea', txt: '#0a0a0b' },
+  { name: 'Discord', handle: 'zhnuksyh', c: '#5865f2', txt: '#ffffff' },
+  { name: 'Steam', handle: 'Daimon', c: '#66c0f4', txt: '#0a0a0b', href: 'https://steamcommunity.com/id/Daimon' },
+  { name: 'Instagram', handle: '@zhnuksyh', c: '#e1306c', txt: '#ffffff', href: 'https://www.instagram.com/zhnuksyh/' },
+  { name: 'LinkedIn', handle: 'in/zhnuksyh', c: '#0a66c2', txt: '#ffffff', href: 'https://www.linkedin.com/in/zhnuksyh' },
+  { name: 'Substack', handle: '@zhnuksyh', c: '#ff6719', txt: '#ffffff', href: 'https://substack.com/@zhnuksyh' },
+  { name: 'X', handle: '@zhnuksyh', c: '#e7e7ea', txt: '#0a0a0b', href: 'https://x.com/zhnuksyh' },
+  { name: 'TikTok', handle: '@zhnuksyh', c: '#ff0050', txt: '#ffffff', href: 'https://www.tiktok.com/@zhnuksyh' },
+  { name: 'GitHub', handle: 'zhnuksyh', c: '#e7e7ea', txt: '#0a0a0b', href: 'https://github.com/zhnuksyh' },
 ];
 
 export const collabEmail = 'hello@zahin.studio';
@@ -220,14 +221,14 @@ const bookDesc =
   'Placeholder note — a couple of lines on what this book is about and the idea from it that stuck with me.';
 
 export const gamesData: MediaItem[] = [
-  { title: 'Placeholder Title', meta: 'PC · 24 hrs', tag: 'Playing', c: '#a78bfa', desc: gameDesc },
-  { title: 'Placeholder Title', meta: 'Console · 12 hrs', tag: 'Playing', c: '#4f8ef7', desc: gameDesc },
-  { title: 'Placeholder Title', meta: 'PC · 40 hrs', tag: 'Beat it', c: '#35c95a', desc: gameDesc },
-  { title: 'Placeholder Title', meta: 'Handheld · 8 hrs', tag: 'Playing', c: '#f2603c', desc: gameDesc },
-  { title: 'Placeholder Title', meta: 'PC · 60 hrs', tag: 'Replay', c: '#ffcf33', desc: gameDesc },
-  { title: 'Placeholder Title', meta: 'Console · 15 hrs', tag: 'Playing', c: '#f472b6', desc: gameDesc },
-  { title: 'Placeholder Title', meta: 'PC · 30 hrs', tag: 'Backlog', c: '#2dd4bf', desc: gameDesc },
-  { title: 'Placeholder Title', meta: 'Handheld · 5 hrs', tag: 'Playing', c: '#8b7cf6', desc: gameDesc },
+  { title: 'Wildfrost', meta: 'Deadpan Games', tag: 'Playing', c: '#a78bfa', desc: gameDesc },
+  { title: 'Inscryption', meta: 'Daniel Mullins Games', tag: 'Beat it', c: '#4f8ef7', desc: gameDesc },
+  { title: 'PvZ: Gardenless', meta: 'Fangame', tag: 'Playing', c: '#35c95a', desc: gameDesc },
+  { title: 'Minecraft', meta: 'Mojang Studios', tag: 'Replay', c: '#f2603c', desc: gameDesc },
+  { title: 'Slay the Spire II', meta: 'Mega Crit', tag: 'Playing', c: '#ffcf33', desc: gameDesc },
+  { title: 'Detective Query', meta: 'Zahin Ukasyah', tag: 'My game', c: '#f472b6', desc: gameDesc },
+  { title: 'Sudotiles', meta: 'Zahin Ukasyah', tag: 'My game', c: '#2dd4bf', desc: gameDesc },
+  { title: 'Bloons TD 6', meta: 'Ninja Kiwi', tag: 'Playing', c: '#8b7cf6', desc: gameDesc },
 ];
 
 export const booksData: MediaItem[] = [
@@ -248,8 +249,8 @@ export interface TimelineItem {
 }
 
 export const timelineData: TimelineItem[] = [
-  { role: 'Placeholder Role', org: 'Placeholder Company', date: '2024 — Now' },
-  { role: 'Placeholder Role', org: 'Placeholder Company', date: '2022 — 2024' },
-  { role: 'Placeholder Role', org: 'Placeholder Company', date: '2020 — 2022' },
-  { role: 'Placeholder Role', org: 'Placeholder Company', date: '2018 — 2020' },
+  { role: 'SWE Engineer', org: 'MIMOS Berhad, MY', date: '2026 — Now' },
+  { role: 'ML Engineer Trainee', org: 'MIMOS Berhad, MY', date: '2025 — 2026' },
+  { role: 'Research Assistant', org: 'Universiti Teknologi Malaysia (UTM)', date: '2025' },
+  { role: 'SWE Student', org: 'Universiti Teknologi Malaysia (UTM)', date: '2023 — 2026' },
 ];
