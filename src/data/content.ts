@@ -213,6 +213,8 @@ export interface MediaItem {
   tag: string;
   c: string;
   desc: string;
+  /** Cover image under public/covers; cards without one show a placeholder. */
+  img?: string;
 }
 
 const gameDesc =
@@ -221,25 +223,25 @@ const bookDesc =
   'Placeholder note — a couple of lines on what this book is about and the idea from it that stuck with me.';
 
 export const gamesData: MediaItem[] = [
-  { title: 'Wildfrost', meta: 'Deadpan Games', tag: 'Playing', c: '#a78bfa', desc: gameDesc },
-  { title: 'Inscryption', meta: 'Daniel Mullins Games', tag: 'Beat it', c: '#4f8ef7', desc: gameDesc },
+  { title: 'Wildfrost', meta: 'Deadpan Games', tag: 'Playing', c: '#a78bfa', desc: gameDesc, img: '/covers/game-wildfrost.jpg' },
+  { title: 'Inscryption', meta: 'Daniel Mullins Games', tag: 'Beat it', c: '#4f8ef7', desc: gameDesc, img: '/covers/game-inscryption.jpg' },
   { title: 'PvZ: Gardenless', meta: 'Fangame', tag: 'Playing', c: '#35c95a', desc: gameDesc },
-  { title: 'Minecraft', meta: 'Mojang Studios', tag: 'Replay', c: '#f2603c', desc: gameDesc },
-  { title: 'Slay the Spire II', meta: 'Mega Crit', tag: 'Playing', c: '#ffcf33', desc: gameDesc },
+  { title: 'Minecraft', meta: 'Mojang Studios', tag: 'Replay', c: '#f2603c', desc: gameDesc, img: '/covers/game-minecraft.png' },
+  { title: 'Slay the Spire II', meta: 'Mega Crit', tag: 'Playing', c: '#ffcf33', desc: gameDesc, img: '/covers/game-slay-the-spire-2.jpg' },
   { title: 'Detective Query', meta: 'Zahin Ukasyah', tag: 'My game', c: '#f472b6', desc: gameDesc },
   { title: 'Sudotiles', meta: 'Zahin Ukasyah', tag: 'My game', c: '#2dd4bf', desc: gameDesc },
-  { title: 'Bloons TD 6', meta: 'Ninja Kiwi', tag: 'Playing', c: '#8b7cf6', desc: gameDesc },
+  { title: 'Bloons TD 6', meta: 'Ninja Kiwi', tag: 'Playing', c: '#8b7cf6', desc: gameDesc, img: '/covers/game-btd6.jpg' },
 ];
 
 export const booksData: MediaItem[] = [
-  { title: 'Placeholder Title', meta: 'Fiction · 320 pp', tag: 'Reading', c: '#4f8ef7', desc: bookDesc },
-  { title: 'Placeholder Title', meta: 'Non-fiction · 264 pp', tag: 'Reading', c: '#35c95a', desc: bookDesc },
-  { title: 'Placeholder Title', meta: 'Essays · 190 pp', tag: 'Finished', c: '#ffcf33', desc: bookDesc },
-  { title: 'Placeholder Title', meta: 'Sci-fi · 410 pp', tag: 'Reading', c: '#a78bfa', desc: bookDesc },
-  { title: 'Placeholder Title', meta: 'Memoir · 288 pp', tag: 'Re-read', c: '#f2603c', desc: bookDesc },
-  { title: 'Placeholder Title', meta: 'Design · 176 pp', tag: 'Reading', c: '#2dd4bf', desc: bookDesc },
-  { title: 'Placeholder Title', meta: 'History · 512 pp', tag: 'Backlog', c: '#f472b6', desc: bookDesc },
-  { title: 'Placeholder Title', meta: 'Poetry · 120 pp', tag: 'Reading', c: '#8b7cf6', desc: bookDesc },
+  { title: 'Sonic IDW Main Series', meta: 'Ian Flynn · IDW', tag: 'Reading', c: '#4f8ef7', desc: bookDesc, img: '/covers/book-sonic-idw.jpg' },
+  { title: 'Ideology of the Future', meta: 'Muhammad Rafiuddin', tag: 'Reading', c: '#35c95a', desc: bookDesc },
+  { title: 'As a Man Thinketh', meta: 'James Allen', tag: 'Finished', c: '#ffcf33', desc: bookDesc, img: '/covers/book-as-a-man-thinketh.jpg' },
+  { title: 'The Metamorphosis', meta: 'Franz Kafka', tag: 'Finished', c: '#a78bfa', desc: bookDesc, img: '/covers/book-metamorphosis.jpg' },
+  { title: 'Crime and Punishment', meta: 'Fyodor Dostoevsky', tag: 'Reading', c: '#f2603c', desc: bookDesc, img: '/covers/book-crime-punishment.jpg' },
+  { title: 'The Courage to Be Disliked', meta: 'Kishimi & Koga', tag: 'Finished', c: '#2dd4bf', desc: bookDesc, img: '/covers/book-courage-disliked.jpg' },
+  { title: 'Slow Productivity', meta: 'Cal Newport', tag: 'Reading', c: '#f472b6', desc: bookDesc, img: '/covers/book-slow-productivity.jpg' },
+  { title: 'Muhammad', meta: 'Martin Lings', tag: 'Reading', c: '#8b7cf6', desc: bookDesc, img: '/covers/book-muhammad-lings.jpg' },
 ];
 
 export interface TimelineItem {
