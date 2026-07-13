@@ -106,7 +106,7 @@ export default function App() {
         }}
       >
         <Hero />
-        <div style={mobile ? { flex: '0 0 18px' } : { flex: '1 1 auto', minHeight: 16 }} />
+        <div style={mobile ? { flex: '0 0 44px' } : { flex: '1 1 auto', minHeight: 16 }} />
         <CardFan onOpenDesign={openDesign} />
       </div>
 
