@@ -19,6 +19,8 @@ export function useDragScroll() {
 
     el.addEventListener('pointerdown', (e: PointerEvent) => {
       if (e.button !== 0) return;
+      // mouse users scroll with the wheel; dragging is touch-only
+      if (e.pointerType === 'mouse') return;
       const target = e.target as HTMLElement | null;
       if (target?.closest('a,button,input,textarea,select,[role="button"]')) return;
       const canX = el.scrollWidth > el.clientWidth + 1;
