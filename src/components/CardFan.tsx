@@ -47,12 +47,17 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
   // features on the back faces stay live only between open-start and close-start
   const [featureSel, setFeatureSel] = useState<number | null>(null);
   const [vw, setVw] = useState(() => window.innerWidth);
+  // mobile: the fan becomes a swipe carousel and cards open as a simple overlay
+  const [mobileSel, setMobileSel] = useState<number | null>(null);
+  const [mobileAnim, setMobileAnim] = useState(false);
 
   useEffect(() => {
     const onResize = () => setVw(window.innerWidth);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
+
+  const mobile = vw < 768;
 
   // scale the whole fan down on narrow screens so it always fits the viewport
   const s = Math.min(1, Math.max(0.34, (vw - 24) / 1030));
@@ -323,6 +328,97 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
       plainBack: true,
     },
   ];
+
+  const openMobile = (i: number) => {
+    clearTimers();
+    setMobileSel(i);
+    setFeatureSel(i);
+    setMobileAnim(false);
+    setShowClose(false);
+    timers.current.push(window.setTimeout(() => setMobileAnim(true), 30));
+    timers.current.push(window.setTimeout(() => setShowClose(true), 380));
+  };
+
+  const closeMobile = () => {
+    clearTimers();
+    setShowClose(false);
+    setMobileAnim(false);
+    setFeatureSel(null);
+    timers.current.push(window.setTimeout(() => setMobileSel(null), 420));
+  };
+
+  if (mobile) {
+    const mc = mobileSel !== null ? cards[mobileSel] : null;
+    return (
+      <>
+        {showClose ? <CloseButton onClick={closeMobile} zIndex={350} animateIn /> : null}
+        <div style={{ flexShrink: 0, position: 'relative', zIndex: 5 }}>
+          <div
+            style={{
+              display: 'flex',
+              gap: 14,
+              overflowX: 'auto',
+              padding: '10px 24px 26px',
+              scrollSnapType: 'x mandatory',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            {cards.map((c, i) => (
+              <a
+                key={i}
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  openMobile(i);
+                }}
+                style={{
+                  position: 'relative',
+                  flex: '0 0 auto',
+                  width: 'min(58vw, 240px)',
+                  aspectRatio: '33 / 46',
+                  scrollSnapAlign: 'center',
+                  borderRadius: 24,
+                  overflow: 'hidden',
+                  background: 'linear-gradient(180deg,#1c1c20,#131315)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  boxShadow: '0 30px 60px -24px rgba(0,0,0,0.8)',
+                }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: `radial-gradient(120% 60% at 50% 0%, ${accentGlow}, transparent 60%)`,
+                  }}
+                />
+                <div style={{ position: 'relative', padding: '18px 18px', textAlign: c.alignRight ? 'right' : 'left' }}>
+                  <div style={{ fontSize: 17, fontWeight: 600, color: '#f4f4f4' }}>{c.title}</div>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{c.sub}</div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* fullscreen card content */}
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 300,
+            background: mc?.plainBack ? '#0a0a0b' : 'linear-gradient(180deg,#161618,#0e0e10)',
+            opacity: mobileAnim ? 1 : 0,
+            transform: mobileAnim ? 'scale(1)' : 'scale(0.96)',
+            pointerEvents: mobileSel !== null ? 'auto' : 'none',
+            transition: 'opacity .4s ease, transform .45s cubic-bezier(.34,1.2,.64,1)',
+            ...(mc && !mc.plainBack ? { display: 'flex', flexDirection: 'column' } : {}),
+          }}
+        >
+          {mc ? mc.back : null}
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

@@ -7,6 +7,7 @@ import JournalPage from './components/JournalPage';
 import CollabPage from './components/CollabPage';
 import SocialOverlay from './components/SocialOverlay';
 import DesignDetail from './components/DesignDetail';
+import { useViewport } from './lib/useViewport';
 
 export default function App() {
   const [active, setActive] = useState(0);
@@ -14,6 +15,7 @@ export default function App() {
   const [designSel, setDesignSel] = useState<number | null>(null);
   const [designAnim, setDesignAnim] = useState(false);
   const designTimers = useRef<number[]>([]);
+  const mobile = useViewport() === 'mobile';
 
   const clearDesignTimers = () => {
     designTimers.current.forEach(clearTimeout);
@@ -97,13 +99,14 @@ export default function App() {
           flex: '1 1 auto',
           minHeight: 0,
           position: 'relative',
+          justifyContent: mobile ? 'center' : undefined,
           opacity: homeHidden ? 0 : 1,
           transition: 'opacity .45s ease',
           pointerEvents: homeHidden ? 'none' : 'auto',
         }}
       >
         <Hero />
-        <div style={{ flex: '1 1 auto', minHeight: 16 }} />
+        <div style={mobile ? { flex: '0 0 18px' } : { flex: '1 1 auto', minHeight: 16 }} />
         <CardFan onOpenDesign={openDesign} />
       </div>
 
