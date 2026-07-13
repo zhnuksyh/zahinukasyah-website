@@ -614,7 +614,8 @@ export default function AboutPage({ active }: { active: boolean }) {
                   key={h.label}
                   className="lift-6 bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] hover:border-[rgba(255,255,255,0.2)]"
                   style={{
-                    padding: '20px 10px',
+                    height: mobile ? 116 : 148,
+                    padding: '14px 10px',
                     borderRadius: 20,
                     display: 'flex',
                     flexDirection: 'column',
