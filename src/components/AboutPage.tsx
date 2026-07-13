@@ -357,7 +357,7 @@ export default function AboutPage({ active }: { active: boolean }) {
             width: '100%',
             maxWidth: 1140,
             display: 'grid',
-            gridTemplateColumns: mobile ? '1fr' : '330px minmax(0, 1fr)',
+            gridTemplateColumns: mobile ? 'minmax(0, 1fr)' : '330px minmax(0, 1fr)',
             gridTemplateRows: mobile ? 'none' : '460px auto auto auto auto',
             columnGap: tablet ? 40 : 64,
             rowGap: mobile ? 44 : 56,
