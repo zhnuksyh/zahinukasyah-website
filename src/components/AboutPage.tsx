@@ -74,6 +74,26 @@ const HOBBIES: { label: string; icon: ReactNode }[] = [
       </svg>
     ),
   },
+  {
+    label: 'Modding Games',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Sudoku/ Chess',
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <line x1="9.33" y1="4" x2="9.33" y2="20" />
+        <line x1="14.66" y1="4" x2="14.66" y2="20" />
+        <line x1="4" y1="9.33" x2="20" y2="9.33" />
+        <line x1="4" y1="14.66" x2="20" y2="14.66" />
+      </svg>
+    ),
+  },
 ];
 
 // Timeline node icons, matched by index to timelineData.
@@ -574,13 +594,13 @@ export default function AboutPage({ active }: { active: boolean }) {
                   key={h.label}
                   className="lift-6 bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] hover:border-[rgba(255,255,255,0.2)]"
                   style={{
-                    aspectRatio: '1 / 1',
-                    borderRadius: 22,
+                    padding: '20px 10px',
+                    borderRadius: 20,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: 14,
+                    gap: 10,
                     cursor: 'default',
                     transition:
                       'transform .28s cubic-bezier(.34,1.4,.64,1), background .28s ease, border-color .28s ease',
