@@ -296,14 +296,15 @@ export default function ArcadeBack({ open }: { open: boolean }) {
                   position: 'absolute',
                   bottom: '78%',
                   left: '50%',
-                  transform: 'translateX(-50%)',
+                  transform: `translateX(-50%) translateY(${on ? 0 : 6}px) scale(${on ? 1 : 0.9})`,
                   whiteSpace: 'nowrap',
                   fontSize: 12,
                   fontWeight: 600,
                   letterSpacing: '0.02em',
-                  color: on ? '#ffffff' : 'rgba(255,255,255,0.6)',
+                  color: '#ffffff',
                   textShadow: '0 2px 12px rgba(0,0,0,0.7)',
-                  transition: 'color .2s ease',
+                  opacity: on ? 1 : 0,
+                  transition: 'opacity .22s ease, transform .28s cubic-bezier(.34,1.4,.64,1)',
                   pointerEvents: 'none',
                 }}
               >
