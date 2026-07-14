@@ -79,36 +79,41 @@ a:hover {
  * can't neutralize (that shifted fullscreen cards on hover). These use
  * `transform`, so inline transforms set during animations win over them.
  */
-.lift-2:hover {
-  transform: translateY(-2px);
-}
-.lift-6:hover {
-  transform: translateY(-6px);
-}
-.lift-8:hover {
-  transform: translateY(-8px);
-}
-.lift-12:hover {
-  transform: translateY(-12px);
-}
-.lift-16:hover {
-  transform: translateY(-16px);
-}
-.lift-18:hover {
-  transform: translateY(-18px);
-}
-.pop:hover {
-  transform: translateY(-2px) scale(1.04);
-}
-.pop-sm:hover {
-  transform: translateY(-2px) scale(1.03);
+/* Only on devices with real hover (mouse/trackpad) — on touch screens taps
+   trigger sticky :hover, which made cards jump upward (and stack on top of
+   the carousels' scroll-driven center lift). */
+@media (hover: hover) {
+  .lift-2:hover {
+    transform: translateY(-2px);
+  }
+  .lift-6:hover {
+    transform: translateY(-6px);
+  }
+  .lift-8:hover {
+    transform: translateY(-8px);
+  }
+  .lift-12:hover {
+    transform: translateY(-12px);
+  }
+  .lift-16:hover {
+    transform: translateY(-16px);
+  }
+  .lift-18:hover {
+    transform: translateY(-18px);
+  }
+  .pop:hover {
+    transform: translateY(-2px) scale(1.04);
+  }
+  .pop-sm:hover {
+    transform: translateY(-2px) scale(1.03);
+  }
+  .cta-lift:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.08);
+  }
 }
 .scale-up:hover {
   transform: scale(1.08);
-}
-.cta-lift:hover {
-  transform: translateY(-3px);
-  filter: brightness(1.08);
 }
 
 @keyframes caret-blink {
