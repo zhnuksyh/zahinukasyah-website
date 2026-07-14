@@ -233,15 +233,11 @@ export default function CollabPage({ active }: { active: boolean }) {
                         <div
                           style={{
                             position: 'absolute',
-                            top: 14,
-                            left: 14,
-                            fontSize: 11,
+                            top: 16,
+                            left: 18,
+                            fontSize: 15,
                             fontWeight: 600,
-                            padding: '4px 11px',
-                            borderRadius: 999,
                             color: '#f2f2f2',
-                            background: 'rgba(255,255,255,0.08)',
-                            border: '1px solid rgba(255,255,255,0.18)',
                           }}
                         >
                           {cc.cat}
