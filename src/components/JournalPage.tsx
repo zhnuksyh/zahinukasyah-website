@@ -65,15 +65,36 @@ export default function JournalPage({ active }: { active: boolean }) {
 
   const nd = newsData[sel] ?? newsData[0];
 
-  const share = () => {
+  // entries matching the search text, keeping their original index for selection
+  const query = searchText.trim().toLowerCase();
+  const visible = newsData
+    .map((it, idx) => ({ it, idx }))
+    .filter(
+      ({ it }) =>
+        !query ||
+        it.title.toLowerCase().includes(query) ||
+        it.cat.toLowerCase().includes(query) ||
+        it.author.toLowerCase().includes(query),
+    );
+
+  const share = async () => {
     const url = window.location.href;
     if (typeof navigator.share === 'function') {
-      void navigator.share({ title: document.title, url }).catch(() => {});
-    } else if (navigator.clipboard) {
-      void navigator.clipboard.writeText(url);
+      try {
+        await navigator.share({ title: nd.title, url });
+        return;
+      } catch (err) {
+        // user dismissed the native sheet — nothing else to do
+        if (err instanceof DOMException && err.name === 'AbortError') return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
       setShareLabel('Copied!');
       clearTimeout(shareTimer.current);
       shareTimer.current = window.setTimeout(() => setShareLabel('Share'), 1600);
+    } catch {
+      // clipboard unavailable — leave the label untouched
     }
   };
 
@@ -146,7 +167,7 @@ export default function JournalPage({ active }: { active: boolean }) {
                 }}
                 style={filterTabStyle(0)}
               >
-                Latest
+                Recent
               </a>
               <a
                 href="#"
@@ -156,7 +177,7 @@ export default function JournalPage({ active }: { active: boolean }) {
                 }}
                 style={filterTabStyle(1)}
               >
-                Popular
+                Inbox
               </a>
             </div>
             <div
@@ -246,7 +267,12 @@ export default function JournalPage({ active }: { active: boolean }) {
             >
               {newsYear}
             </div>
-            {newsData.map((it, idx) => {
+            {visible.length === 0 ? (
+              <div style={{ padding: '22px 6px', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+                No entries match "{searchText.trim()}"
+              </div>
+            ) : null}
+            {visible.map(({ it, idx }, vi) => {
               const selected = idx === sel;
               return (
                 <a
@@ -272,7 +298,7 @@ export default function JournalPage({ active }: { active: boolean }) {
                     boxShadow: selected ? '0 18px 40px -24px rgba(0,0,0,0.7)' : 'none',
                     opacity: up ? 1 : 0,
                     transform: up ? 'translateY(0)' : 'translateY(16px)',
-                    transition: `opacity .5s ease ${0.12 + idx * 0.05}s, transform .55s cubic-bezier(.34,1.2,.64,1) ${0.12 + idx * 0.05}s, background .25s ease, border-color .25s ease`,
+                    transition: `opacity .5s ease ${0.12 + vi * 0.05}s, transform .55s cubic-bezier(.34,1.2,.64,1) ${0.12 + vi * 0.05}s, background .25s ease, border-color .25s ease`,
                   }}
                 >
                   <div
@@ -344,7 +370,7 @@ export default function JournalPage({ active }: { active: boolean }) {
                         WebkitBoxOrient: 'vertical',
                       }}
                     >
-                      Placeholder headline that runs onto a second line
+                      {it.title}
                     </div>
                   </div>
                   <div
@@ -488,16 +514,14 @@ export default function JournalPage({ active }: { active: boolean }) {
             >
               <span
                 style={{
-                  fontFamily: 'monospace',
-                  fontSize: 12,
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 600,
                   letterSpacing: '0.22em',
-                  color: 'rgba(255,255,255,0.55)',
-                  background: 'rgba(0,0,0,0.18)',
-                  padding: '6px 12px',
-                  borderRadius: 999,
+                  color: '#0a0a0b',
                 }}
               >
-                [ COVER IMAGE ]
+                COMING SOON
               </span>
             </div>
 
@@ -531,14 +555,13 @@ export default function JournalPage({ active }: { active: boolean }) {
                 lineHeight: 1.12,
                 letterSpacing: '-0.025em',
                 color: '#fefefe',
-                maxWidth: 640,
                 textWrap: 'pretty',
               }}
             >
-              Placeholder headline for the most recent thing I worked on
+              {nd.title}
             </h2>
 
-            <div style={{ marginTop: 22, maxWidth: 640, display: 'flex', flexDirection: 'column', gap: 18 }}>
+            <div style={{ marginTop: 22, display: 'flex', flexDirection: 'column', gap: 18 }}>
               {newsParas.map((p, i) => (
                 <p key={i} style={{ fontSize: 16, lineHeight: 1.7, color: 'rgba(255,255,255,0.55)' }}>
                   {p}
