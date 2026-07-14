@@ -5,6 +5,7 @@ import { shade } from '../lib/colors';
 import { ACCENT } from '../lib/theme';
 import FlipCard from './FlipCard';
 import ImagePlaceholder from './ImagePlaceholder';
+import { useCenterLift } from '../lib/useCenterLift';
 
 const TXT_DARK = '#17171c';
 const STAG = [0, 22, 8, 22, 0];
@@ -25,6 +26,9 @@ export default function CollabPage({ active }: { active: boolean }) {
     const el = rail?.children[Math.floor(collabData.length / 2)] as HTMLElement | undefined;
     if (rail && el) rail.scrollLeft = el.offsetLeft - (rail.clientWidth - el.clientWidth) / 2;
   }, [mobile, active]);
+
+  // whichever card scrolls through the center of the rail rises
+  useCenterLift(railRef, mobile);
 
   const clearTimers = () => {
     timers.current.forEach(clearTimeout);
@@ -162,8 +166,11 @@ export default function CollabPage({ active }: { active: boolean }) {
                 gap: mobile ? 14 : 22,
                 alignItems: 'flex-start',
                 justifyContent: mobile ? 'flex-start' : 'center',
-                padding: mobile ? '0 4px 16px' : '0 40px',
-                width: '100%',
+                // mobile: bleed to the screen edge and pad back in to match the
+                // home carousel's 26px gutters; top headroom keeps the lifted
+                // card from clipping
+                padding: mobile ? '22px 26px 16px' : '0 40px',
+                ...(mobile ? { margin: '0 -26px', width: 'calc(100% + 52px)' } : { width: '100%' }),
                 overflowX: mobile ? 'auto' : 'visible',
                 ...(mobile ? { scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' } : {}),
               }}
@@ -184,13 +191,7 @@ export default function CollabPage({ active }: { active: boolean }) {
                       height: 250,
                       perspective: 1000,
                       cursor: 'pointer',
-                      // mobile: sink the outer cards so the centered one reads as lifted
-                      // without the raised card escaping upward into the content above
-                      marginTop: mobile
-                        ? idx === Math.floor(collabData.length / 2)
-                          ? 0
-                          : 16
-                        : STAG[idx % STAG.length],
+                      marginTop: mobile ? 0 : STAG[idx % STAG.length],
                       opacity: up ? 1 : 0,
                       // no inline transform once risen — it would override the hover lift
                       ...(up ? {} : { transform: 'translateY(40px)' }),

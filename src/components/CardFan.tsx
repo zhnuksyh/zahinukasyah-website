@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { MouseEvent, ReactNode } from 'react';
 import { accentGlow, glowSoft } from '../lib/theme';
+import { useCenterLift } from '../lib/useCenterLift';
 import CloseButton from './CloseButton';
 import DesignBentoBack from './DesignBentoBack';
 import ApplicationBack from './ApplicationBack';
@@ -67,6 +68,9 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     const el = rail?.children[2] as HTMLElement | undefined;
     if (rail && el) rail.scrollLeft = el.offsetLeft - (rail.clientWidth - el.clientWidth) / 2;
   }, [mobile]);
+
+  // whichever card scrolls through the center of the rail rises
+  useCenterLift(railRef, mobile);
 
   // scale the whole fan down on narrow screens so it always fits the viewport
   const s = Math.min(1, Math.max(0.34, (vw - 24) / 1030));
@@ -364,7 +368,8 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
               display: 'flex',
               gap: 14,
               overflowX: 'auto',
-              padding: '10px 26px 26px',
+              // top headroom so the center-lifted card never clips
+              padding: '26px 26px 26px',
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
             }}
@@ -382,8 +387,6 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
                   flex: '0 0 auto',
                   width: 'min(58vw, 240px)',
                   aspectRatio: '33 / 46',
-                  // sink the outer cards so the centered one reads as lifted
-                  marginTop: i === 2 ? 0 : 16,
                   scrollSnapAlign: 'center',
                   borderRadius: 24,
                   overflow: 'hidden',
