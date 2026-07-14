@@ -7,9 +7,9 @@ import CloseButton from './CloseButton';
 
 // Odd counts so the board has a true center cell — the character's home
 // square lands exactly on the middle of the screen.
-const COLS = 15;
-const ROWS = 9;
-const HOME = { x: 7, y: 4 };
+const COLS = 13;
+const ROWS = 5;
+const HOME = { x: 6, y: 2 };
 const KEYCAP_FONT = "'Poppins', sans-serif";
 
 interface WalkTarget {
@@ -150,7 +150,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
     }));
   };
 
-  // Click anywhere on the floor: walk to that cell (clamped to the board).
+  // Click a cell on the board: walk to it. Clicks outside the grid do nothing.
   const onFloorClick = (e: ReactMouseEvent<HTMLDivElement>) => {
     const grid = gridRef.current;
     if (!grid) return;
@@ -248,24 +248,24 @@ export default function ArcadeBack({ open }: { open: boolean }) {
 
         {/* FLOOR — aspect-locked so cells stay square */}
         <div
-          onClick={onFloorClick}
           style={{
             position: 'absolute',
             inset: 0,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: mobile ? '128px 14px 196px' : '90px 20px 150px',
-            cursor: 'pointer',
+            padding: mobile ? '112px 12px 172px' : '90px 16px 132px',
           }}
         >
           <div
             ref={gridRef}
+            onClick={onFloorClick}
             style={{
               position: 'relative',
               height: '100%',
               aspectRatio: `${dCols} / ${dRows}`,
               maxWidth: '100%',
+              cursor: 'pointer',
               backgroundImage:
                 'linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),' +
                 'linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)',

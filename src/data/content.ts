@@ -123,12 +123,12 @@ export interface ArcadeGame {
 }
 
 export const gamesArcadeData: ArcadeGame[] = [
-  { title: 'Locked', cat: 'Arcade', meta: '2026 · unlocks soon', c: '#c9f24d', x: 4, y: 4, href: '#' },
-  { title: 'Locked', cat: 'Puzzle', meta: '2025 · unlocks soon', c: '#5ec8f0', x: 10, y: 4, href: '#' },
-  { title: 'Locked', cat: 'Platformer', meta: '2025 · unlocks soon', c: '#ff8a7a', x: 4, y: 6, href: '#' },
-  { title: 'Locked', cat: 'Adventure', meta: '2024 · unlocks soon', c: '#8b7cff', x: 10, y: 6, href: '#' },
-  { title: 'Sudotiles', cat: 'Puzzle', meta: '2026 · in development', c: '#ffd166', x: 4, y: 2, href: '#' },
-  { title: 'Detective Query', cat: 'Mystery', meta: '2026 · in development', c: '#6ee7b7', x: 10, y: 2, href: '#' },
+  { title: 'Locked', cat: 'Arcade', meta: '2026 · unlocks soon', c: '#c9f24d', x: 3, y: 2, href: '#' },
+  { title: 'Locked', cat: 'Puzzle', meta: '2025 · unlocks soon', c: '#5ec8f0', x: 9, y: 2, href: '#' },
+  { title: 'Locked', cat: 'Platformer', meta: '2025 · unlocks soon', c: '#ff8a7a', x: 3, y: 4, href: '#' },
+  { title: 'Locked', cat: 'Adventure', meta: '2024 · unlocks soon', c: '#8b7cff', x: 9, y: 4, href: '#' },
+  { title: 'Sudotiles', cat: 'Puzzle', meta: '2026 · in development', c: '#ffd166', x: 3, y: 0, href: '#' },
+  { title: 'Detective Query', cat: 'Mystery', meta: '2026 · in development', c: '#6ee7b7', x: 9, y: 0, href: '#' },
 ];
 
 export const gameParas = [
