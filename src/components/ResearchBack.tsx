@@ -320,16 +320,14 @@ export default function ResearchBack({ open }: { open: boolean }) {
             >
               <span
                 style={{
-                  fontFamily: 'monospace',
-                  fontSize: 12,
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 600,
                   letterSpacing: '0.22em',
-                  color: 'rgba(255,255,255,0.55)',
-                  background: 'rgba(0,0,0,0.18)',
-                  padding: '6px 12px',
-                  borderRadius: 999,
+                  color: '#0a0a0b',
                 }}
               >
-                [ FIGURE / COVER ]
+                COMING SOON
               </span>
             </div>
 
@@ -361,7 +359,6 @@ export default function ResearchBack({ open }: { open: boolean }) {
                 lineHeight: 1.12,
                 letterSpacing: '-0.025em',
                 color: '#fefefe',
-                maxWidth: 640,
                 textWrap: 'pretty',
               }}
             >
@@ -375,7 +372,6 @@ export default function ResearchBack({ open }: { open: boolean }) {
             <div
               style={{
                 marginTop: 22,
-                maxWidth: 640,
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 18,

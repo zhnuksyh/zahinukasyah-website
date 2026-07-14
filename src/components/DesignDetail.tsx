@@ -58,16 +58,14 @@ export default function DesignDetail({ sel, anim, onClose }: DesignDetailProps) 
           >
             <span
               style={{
-                fontFamily: 'monospace',
-                fontSize: 13,
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: 15,
+                fontWeight: 600,
                 letterSpacing: '0.24em',
-                color: 'rgba(255,255,255,0.62)',
-                background: 'rgba(0,0,0,0.22)',
-                padding: '7px 14px',
-                borderRadius: 999,
+                color: '#0a0a0b',
               }}
             >
-              [ COVER IMAGE ]
+              COMING SOON
             </span>
           </div>
           <div
@@ -95,13 +93,12 @@ export default function DesignDetail({ sel, anim, onClose }: DesignDetailProps) 
               lineHeight: 1.08,
               letterSpacing: '-0.03em',
               color: '#fefefe',
-              maxWidth: 760,
               textWrap: 'pretty',
             }}
           >
             {dd.title}
           </h2>
-          <div style={{ marginTop: 24, maxWidth: 680, display: 'flex', flexDirection: 'column', gap: 18 }}>
+          <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 18 }}>
             {designParas.map((p, i) => (
               <p key={i} style={{ fontSize: 16, lineHeight: 1.7, color: 'rgba(255,255,255,0.55)' }}>
                 {p}

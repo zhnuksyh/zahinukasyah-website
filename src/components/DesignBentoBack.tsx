@@ -1,9 +1,10 @@
 import type { MouseEvent } from 'react';
 import { designData } from '../data/content';
-import { hexToRgba } from '../lib/colors';
 import { useDragScroll } from '../lib/useDragScroll';
 import { useViewport } from '../lib/useViewport';
-import ImagePlaceholder from './ImagePlaceholder';
+
+const TXT_DARK = '#17171c';
+const TXT_LIGHT = '#f4f4f6';
 
 interface DesignBentoBackProps {
   label: string;
@@ -70,45 +71,28 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
             width: 'max-content',
           }}
         >
-          {designData.map((d, i) => (
-            <div
-              key={i}
-              onClick={(e) => openTile(e, i)}
-              className="lift-8 shadow-[0_16px_34px_-18px_rgba(0,0,0,0.55)] hover:shadow-[0_34px_60px_-22px_rgba(0,0,0,0.85)]"
-              style={{
-                position: 'relative',
-                gridRow: 'span 1',
-                gridColumn: d.wide ? 'span 2' : 'span 1',
-                borderRadius: 20,
-                overflow: 'hidden',
-                cursor: 'pointer',
-                padding: 18,
-                display: 'flex',
-                flexDirection: 'column',
-                background: d.c,
-                color: '#fff',
-                transition: 'transform .3s cubic-bezier(.34,1.4,.64,1), box-shadow .3s ease',
-              }}
-            >
-              <ImagePlaceholder />
+          {designData.map((d, i) => {
+            const t = d.dark ? TXT_LIGHT : TXT_DARK;
+            return (
               <div
+                key={i}
+                onClick={(e) => openTile(e, i)}
+                className="lift-8 shadow-[0_16px_34px_-18px_rgba(0,0,0,0.55)] hover:shadow-[0_34px_60px_-22px_rgba(0,0,0,0.85)]"
                 style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: `radial-gradient(120% 90% at 12% 0%, ${hexToRgba(d.c, 0.32)}, transparent 62%)`,
-                  pointerEvents: 'none',
+                  position: 'relative',
+                  gridRow: 'span 1',
+                  gridColumn: d.wide ? 'span 2' : 'span 1',
+                  borderRadius: 20,
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  padding: 18,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  background: d.c,
+                  color: t,
+                  transition: 'transform .3s cubic-bezier(.34,1.4,.64,1), box-shadow .3s ease',
                 }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background:
-                    'linear-gradient(to bottom, rgba(0,0,0,0.34) 0%, transparent 26%, transparent 48%, rgba(0,0,0,0.68) 100%)',
-                  pointerEvents: 'none',
-                }}
-              />
-              <div style={{ position: 'relative', zIndex: 2, display: 'flex', pointerEvents: 'none' }}>
+              >
                 <span
                   style={{
                     alignSelf: 'flex-start',
@@ -116,43 +100,29 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
                     fontWeight: 600,
                     padding: '5px 12px',
                     borderRadius: 999,
-                    background: hexToRgba(d.c, 0.9),
-                    color: '#fff',
-                    letterSpacing: '0.02em',
-                    border: '1px solid rgba(255,255,255,0.28)',
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.35)',
+                    background: d.dark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.14)',
+                    color: t,
                   }}
                 >
                   {d.cat}
                 </span>
-              </div>
-              <div style={{ position: 'relative', flex: '1 1 auto' }} />
-              <div style={{ position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
-                <div
-                  style={{
-                    fontSize: 17,
-                    fontWeight: 600,
-                    lineHeight: 1.28,
-                    color: '#fff',
-                    letterSpacing: '-0.01em',
-                    textShadow: '0 2px 10px rgba(0,0,0,0.55)',
-                  }}
-                >
-                  {d.title}
-                </div>
-                <div
-                  style={{
-                    fontSize: 12,
-                    marginTop: 3,
-                    color: 'rgba(255,255,255,0.82)',
-                    textShadow: '0 1px 6px rgba(0,0,0,0.5)',
-                  }}
-                >
-                  {d.meta}
+                <div style={{ flex: '1 1 auto' }} />
+                <div>
+                  <div
+                    style={{
+                      fontSize: 17,
+                      fontWeight: 600,
+                      lineHeight: 1.28,
+                      color: t,
+                      letterSpacing: '-0.01em',
+                    }}
+                  >
+                    {d.title}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </>

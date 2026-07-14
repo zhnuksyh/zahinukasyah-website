@@ -26,16 +26,20 @@ export default function ApplicationBack() {
         >
           Selected work
         </div>
-        <div
-          style={{
-            fontSize: mobile ? 30 : 38,
-            fontWeight: 700,
-            letterSpacing: '-0.02em',
-            color: '#f4f4f6',
-            marginTop: 6,
-          }}
-        >
-          Application
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginTop: 6 }}>
+          <div
+            style={{
+              fontSize: mobile ? 30 : 38,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              color: '#f4f4f6',
+            }}
+          >
+            Application
+          </div>
+          <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.34)', letterSpacing: '0.02em' }}>
+            scroll right &rarr;
+          </div>
         </div>
       </div>
       <div
@@ -129,7 +133,7 @@ export default function ApplicationBack() {
                         letterSpacing: '-0.01em',
                       }}
                     >
-                      Placeholder Title
+                      Coming Soon
                     </div>
                   </>
                 }
@@ -149,8 +153,8 @@ export default function ApplicationBack() {
                       Description
                     </div>
                     <div style={{ fontSize: 13.5, lineHeight: 1.5, color: 'rgba(255,255,255,0.9)' }}>
-                      Placeholder description — a short summary of what this project was about goes
-                      here.
+                      This project card hasn't been unlocked yet — a proper summary will appear
+                      here once it ships.
                     </div>
                   </>
                 }

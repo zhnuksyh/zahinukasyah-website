@@ -301,37 +301,33 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
   const cards: CardSpec[] = [
     {
       title: 'Design',
-      sub: 'placeholder',
+      sub: 'Click here to view',
       back: (
-        <DesignBentoBack label="Everything I've ever designed" title="Design" onOpenTile={onOpenDesign} />
+        <DesignBentoBack label="Selected work" title="Design" onOpenTile={onOpenDesign} />
       ),
     },
     {
       title: 'Animation',
-      sub: 'placeholder',
+      sub: 'Click here to view',
       back: (
-        <DesignBentoBack
-          label="Everything I've ever animated"
-          title="Animation"
-          onOpenTile={onOpenDesign}
-        />
+        <DesignBentoBack label="Selected work" title="Animation" onOpenTile={onOpenDesign} />
       ),
     },
     {
       title: 'Application',
-      sub: 'placeholder',
+      sub: 'Click here to view',
       back: <ApplicationBack />,
     },
     {
       title: 'Research',
-      sub: 'placeholder',
+      sub: 'Click here to view',
       alignRight: true,
       back: <ResearchBack open={featureSel === 3} />,
       plainBack: true,
     },
     {
       title: 'Games',
-      sub: 'enter the arcade',
+      sub: 'Click here to view',
       alignRight: true,
       back: <ArcadeBack open={featureSel === 4} />,
       plainBack: true,
@@ -386,6 +382,8 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
                   flex: '0 0 auto',
                   width: 'min(58vw, 240px)',
                   aspectRatio: '33 / 46',
+                  // sink the outer cards so the centered one reads as lifted
+                  marginTop: i === 2 ? 0 : 16,
                   scrollSnapAlign: 'center',
                   borderRadius: 24,
                   overflow: 'hidden',

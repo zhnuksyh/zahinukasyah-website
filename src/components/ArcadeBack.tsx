@@ -319,16 +319,8 @@ export default function ArcadeBack({ open }: { open: boolean }) {
                     ? '0 0 0 5px rgba(255,255,255,0.12), 0 0 40px 12px rgba(255,255,255,0.45)'
                     : '0 0 22px 5px rgba(255,255,255,0.16)',
                   transition: 'all .22s cubic-bezier(.34,1.4,.64,1)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  color: '#232327',
                 }}
-              >
-                {idx + 1}
-              </div>
+              />
             </div>
           );
         })}
@@ -509,10 +501,9 @@ export default function ArcadeBack({ open }: { open: boolean }) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <path d="m12 19-7-7 7-7" />
-                <path d="M19 12H5" />
+                <path d="m15 18-6-6 6-6" />
               </svg>
-              Back to the game space
+              Back
             </button>
             <div
               style={{
@@ -530,16 +521,14 @@ export default function ArcadeBack({ open }: { open: boolean }) {
             >
               <span
                 style={{
-                  fontFamily: KEYCAP_FONT,
-                  fontSize: 13,
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: 15,
+                  fontWeight: 600,
                   letterSpacing: '0.24em',
-                  color: 'rgba(255,255,255,0.62)',
-                  background: 'rgba(0,0,0,0.22)',
-                  padding: '7px 14px',
-                  borderRadius: 999,
+                  color: '#0a0a0b',
                 }}
               >
-                [ COVER IMAGE ]
+                COMING SOON
               </span>
             </div>
             <div
@@ -567,14 +556,13 @@ export default function ArcadeBack({ open }: { open: boolean }) {
                 lineHeight: 1.08,
                 letterSpacing: '-0.03em',
                 color: '#fefefe',
-                maxWidth: 760,
                 textWrap: 'pretty',
               }}
             >
               {gg.title}
             </h2>
             <div
-              style={{ marginTop: 24, maxWidth: 680, display: 'flex', flexDirection: 'column', gap: 18 }}
+              style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 18 }}
             >
               {gameParas.map((p, i) => (
                 <p key={i} style={{ fontSize: 16, lineHeight: 1.7, color: 'rgba(255,255,255,0.55)' }}>
