@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { collabData, collabEmail } from '../data/content';
 import { useViewport } from '../lib/useViewport';
-import { hexToRgba, shade, tint } from '../lib/colors';
+import { shade } from '../lib/colors';
 import { ACCENT, accentGlow } from '../lib/theme';
 import FlipCard from './FlipCard';
 import { useCenterLift } from '../lib/useCenterLift';
@@ -239,9 +239,9 @@ export default function CollabPage({ active }: { active: boolean }) {
                             fontWeight: 600,
                             padding: '4px 11px',
                             borderRadius: 999,
-                            color: tint(cc.c, 0.25),
-                            background: hexToRgba(cc.c, 0.14),
-                            border: '1px solid ' + hexToRgba(cc.c, 0.32),
+                            color: '#f2f2f2',
+                            background: 'rgba(255,255,255,0.08)',
+                            border: '1px solid rgba(255,255,255,0.18)',
                           }}
                         >
                           {cc.cat}
