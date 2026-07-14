@@ -60,7 +60,8 @@ export default function ArcadeBack({ open }: { open: boolean }) {
 
   useEffect(() => () => clearTimers(), []);
 
-  // Show the key hints briefly each time the card opens, then fade them out.
+  // Show the key hints briefly when the card opens, then hide them for good
+  // (they only come back on the next open).
   useEffect(() => {
     if (!open) {
       setShowKeys(true);
@@ -69,6 +70,13 @@ export default function ArcadeBack({ open }: { open: boolean }) {
     const id = window.setTimeout(() => setShowKeys(false), 4000);
     return () => clearTimeout(id);
   }, [open]);
+
+  // Standing on a game swaps the hint slot for the visit prompt — treat that
+  // as the hints having been seen so they don't reappear afterwards.
+  const onGame = gamesArcadeData.some((o) => o.x === pos.x && o.y === pos.y);
+  useEffect(() => {
+    if (open && onGame) setShowKeys(false);
+  }, [open, onGame]);
 
   // Auto-walk: step one square at a time toward a clicked cell; if the cell
   // holds a game, open it on arrival.
