@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { collabData, collabEmail } from '../data/content';
 import { useViewport } from '../lib/useViewport';
-import { shade } from '../lib/colors';
-import { ACCENT } from '../lib/theme';
+import { hexToRgba, shade, tint } from '../lib/colors';
+import { ACCENT, accentGlow } from '../lib/theme';
 import FlipCard from './FlipCard';
-import ImagePlaceholder from './ImagePlaceholder';
 import { useCenterLift } from '../lib/useCenterLift';
 
-const TXT_DARK = '#17171c';
 const STAG = [0, 22, 8, 22, 0];
 
 export default function CollabPage({ active }: { active: boolean }) {
@@ -203,9 +201,9 @@ export default function CollabPage({ active }: { active: boolean }) {
                       borderRadius: 20,
                       overflow: 'hidden',
                       backfaceVisibility: 'hidden',
-                      background: cc.c,
-                      color: TXT_DARK,
-                      boxShadow: '0 14px 30px -14px rgba(0,0,0,0.35)',
+                      background: 'linear-gradient(180deg,#1c1c20,#131315)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      boxShadow: '0 30px 60px -24px rgba(0,0,0,0.8)',
                     }}
                     backStyle={{
                       position: 'absolute',
@@ -224,17 +222,14 @@ export default function CollabPage({ active }: { active: boolean }) {
                     }}
                     front={
                       <>
-                        {/* full-bleed visual (swap the cover file for real art later) */}
-                        {cc.img ? (
-                          <img
-                            src={cc.img}
-                            alt={`${cc.cat} visual`}
-                            draggable={false}
-                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-                          />
-                        ) : (
-                          <ImagePlaceholder label="visual" />
-                        )}
+                        <div
+                          style={{
+                            position: 'absolute',
+                            inset: 0,
+                            background: `radial-gradient(120% 60% at 50% 0%, ${accentGlow}, transparent 60%)`,
+                            pointerEvents: 'none',
+                          }}
+                        />
                         <div
                           style={{
                             position: 'absolute',
@@ -244,8 +239,9 @@ export default function CollabPage({ active }: { active: boolean }) {
                             fontWeight: 600,
                             padding: '4px 11px',
                             borderRadius: 999,
-                            background: 'rgba(0,0,0,0.16)',
-                            color: TXT_DARK,
+                            color: tint(cc.c, 0.25),
+                            background: hexToRgba(cc.c, 0.14),
+                            border: '1px solid ' + hexToRgba(cc.c, 0.32),
                           }}
                         >
                           {cc.cat}
@@ -365,50 +361,49 @@ export default function CollabPage({ active }: { active: boolean }) {
           <p style={{ marginTop: 12, fontSize: 15, lineHeight: 1.6, color: 'rgba(255,255,255,0.55)' }}>
             Tell me what you have in mind and I'll get back to you soon.
           </p>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              marginTop: 26,
-              padding: '14px 18px',
-              borderRadius: 16,
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.1)',
-            }}
-          >
-            <span
+          <div style={{ position: 'relative', marginTop: 26 }}>
+            {/* the email itself is the copy button */}
+            <button
+              onClick={copyEmail}
+              className="hover:bg-white/[0.08] hover:border-[rgba(255,255,255,0.2)]"
               style={{
-                flex: '1 1 auto',
+                width: '100%',
+                padding: '14px 18px',
+                borderRadius: 16,
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)',
                 fontFamily: "'Poppins',sans-serif",
                 fontSize: 15,
                 fontWeight: 500,
                 letterSpacing: '0.01em',
                 color: '#f2f2f2',
-                textAlign: 'left',
+                cursor: 'pointer',
+                transition: 'background .2s ease, border-color .2s ease',
               }}
             >
               {collabEmail}
-            </span>
-            <button
-              onClick={copyEmail}
-              className={copied ? undefined : 'bg-white/[0.08] hover:bg-white/[0.16]'}
+            </button>
+            {/* copied toast */}
+            <div
               style={{
-                flexShrink: 0,
-                padding: '9px 16px',
-                borderRadius: 10,
-                fontFamily: "'Poppins', sans-serif",
+                position: 'absolute',
+                left: '50%',
+                top: -14,
+                transform: `translate(-50%, ${copied ? '-100%' : 'calc(-100% + 6px)'})`,
+                padding: '7px 16px',
+                borderRadius: 999,
                 fontSize: 13,
                 fontWeight: 600,
-                cursor: 'pointer',
-                color: copied ? '#0a0a0b' : '#fefefe',
-                ...(copied ? { background: ACCENT } : {}),
-                border: '1px solid ' + (copied ? ACCENT : 'rgba(255,255,255,0.14)'),
-                transition: 'background .2s ease, color .2s ease, border-color .2s ease',
+                color: '#0a0a0b',
+                background: ACCENT,
+                boxShadow: '0 12px 26px -10px rgba(0,0,0,0.6)',
+                opacity: copied ? 1 : 0,
+                pointerEvents: 'none',
+                transition: 'opacity .25s ease, transform .3s cubic-bezier(.34,1.4,.64,1)',
               }}
             >
-              {copied ? 'Copied!' : 'Copy'}
-            </button>
+              Copied!
+            </div>
           </div>
           <a
             href={`mailto:${collabEmail}`}
