@@ -224,26 +224,28 @@ const bookDesc =
 const movieDesc =
   'Placeholder note — a couple of lines on what this one is about and the moment that made it stick with me.';
 
+const cover = (file: string) => `${import.meta.env.BASE_URL}covers/${file}`;
+
 export const gamesData: MediaItem[] = [
-  { title: 'Wildfrost', meta: 'Deadpan Games', tag: 'Playing', c: '#a78bfa', desc: gameDesc, img: '/covers/game-wildfrost.jpg' },
-  { title: 'Inscryption', meta: 'Daniel Mullins Games', tag: 'Beat it', c: '#4f8ef7', desc: gameDesc, img: '/covers/game-inscryption.jpg' },
+  { title: 'Wildfrost', meta: 'Deadpan Games', tag: 'Playing', c: '#a78bfa', desc: gameDesc, img: cover('game-wildfrost.jpg') },
+  { title: 'Inscryption', meta: 'Daniel Mullins Games', tag: 'Beat it', c: '#4f8ef7', desc: gameDesc, img: cover('game-inscryption.jpg') },
   { title: 'PvZ: Gardenless', meta: 'Fangame', tag: 'Playing', c: '#35c95a', desc: gameDesc },
-  { title: 'Minecraft', meta: 'Mojang Studios', tag: 'Replay', c: '#f2603c', desc: gameDesc, img: '/covers/game-minecraft.png' },
-  { title: 'Slay the Spire II', meta: 'Mega Crit', tag: 'Playing', c: '#ffcf33', desc: gameDesc, img: '/covers/game-slay-the-spire-2.jpg' },
+  { title: 'Minecraft', meta: 'Mojang Studios', tag: 'Replay', c: '#f2603c', desc: gameDesc, img: cover('game-minecraft.png') },
+  { title: 'Slay the Spire II', meta: 'Mega Crit', tag: 'Playing', c: '#ffcf33', desc: gameDesc, img: cover('game-slay-the-spire-2.jpg') },
   { title: 'Detective Query', meta: 'Zahin Ukasyah', tag: 'My game', c: '#f472b6', desc: gameDesc },
   { title: 'Sudotiles', meta: 'Zahin Ukasyah', tag: 'My game', c: '#2dd4bf', desc: gameDesc },
-  { title: 'Bloons TD 6', meta: 'Ninja Kiwi', tag: 'Playing', c: '#8b7cf6', desc: gameDesc, img: '/covers/game-btd6.jpg' },
+  { title: 'Bloons TD 6', meta: 'Ninja Kiwi', tag: 'Playing', c: '#8b7cf6', desc: gameDesc, img: cover('game-btd6.jpg') },
 ];
 
 export const booksData: MediaItem[] = [
-  { title: 'Sonic IDW Main Series', meta: 'Ian Flynn · IDW', tag: 'Reading', c: '#4f8ef7', desc: bookDesc, img: '/covers/book-sonic-idw.jpg' },
+  { title: 'Sonic IDW Main Series', meta: 'Ian Flynn · IDW', tag: 'Reading', c: '#4f8ef7', desc: bookDesc, img: cover('book-sonic-idw.jpg') },
   { title: 'Ideology of the Future', meta: 'Muhammad Rafiuddin', tag: 'Reading', c: '#35c95a', desc: bookDesc },
-  { title: 'As a Man Thinketh', meta: 'James Allen', tag: 'Finished', c: '#ffcf33', desc: bookDesc, img: '/covers/book-as-a-man-thinketh.jpg' },
-  { title: 'The Metamorphosis', meta: 'Franz Kafka', tag: 'Finished', c: '#a78bfa', desc: bookDesc, img: '/covers/book-metamorphosis.jpg' },
-  { title: 'Crime and Punishment', meta: 'Fyodor Dostoevsky', tag: 'Reading', c: '#f2603c', desc: bookDesc, img: '/covers/book-crime-punishment.jpg' },
-  { title: 'The Courage to Be Disliked', meta: 'Kishimi & Koga', tag: 'Finished', c: '#2dd4bf', desc: bookDesc, img: '/covers/book-courage-disliked.jpg' },
-  { title: 'Slow Productivity', meta: 'Cal Newport', tag: 'Reading', c: '#f472b6', desc: bookDesc, img: '/covers/book-slow-productivity.jpg' },
-  { title: 'Muhammad', meta: 'Martin Lings', tag: 'Reading', c: '#8b7cf6', desc: bookDesc, img: '/covers/book-muhammad-lings.jpg' },
+  { title: 'As a Man Thinketh', meta: 'James Allen', tag: 'Finished', c: '#ffcf33', desc: bookDesc, img: cover('book-as-a-man-thinketh.jpg') },
+  { title: 'The Metamorphosis', meta: 'Franz Kafka', tag: 'Finished', c: '#a78bfa', desc: bookDesc, img: cover('book-metamorphosis.jpg') },
+  { title: 'Crime and Punishment', meta: 'Fyodor Dostoevsky', tag: 'Reading', c: '#f2603c', desc: bookDesc, img: cover('book-crime-punishment.jpg') },
+  { title: 'The Courage to Be Disliked', meta: 'Kishimi & Koga', tag: 'Finished', c: '#2dd4bf', desc: bookDesc, img: cover('book-courage-disliked.jpg') },
+  { title: 'Slow Productivity', meta: 'Cal Newport', tag: 'Reading', c: '#f472b6', desc: bookDesc, img: cover('book-slow-productivity.jpg') },
+  { title: 'Muhammad', meta: 'Martin Lings', tag: 'Reading', c: '#8b7cf6', desc: bookDesc, img: cover('book-muhammad-lings.jpg') },
 ];
 
 export const moviesData: MediaItem[] = [
