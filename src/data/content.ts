@@ -79,7 +79,7 @@ const researchParas = [
   'Consider it a save point. The full field notes will be waiting here on your next visit.',
 ];
 
-export const researchData: ResearchItem[] = [
+const allResearchData: ResearchItem[] = [
   {
     mon: 'XXX', date: 'XX', status: 'Locked', cat: 'Paper', venue: 'Coming Soon', c: '#a78bfa',
     title: 'New paper notes unlock soon — annotations in progress',
@@ -111,6 +111,9 @@ export const researchData: ResearchItem[] = [
     paras: researchParas,
   },
 ];
+
+// Only the first entry is live for now; the rest stay hidden until they're ready.
+export const researchData: ResearchItem[] = allResearchData.slice(0, 1);
 
 export interface ArcadeGame {
   title: string;
@@ -147,7 +150,7 @@ export interface NewsItem {
   title: string;
 }
 
-export const newsData: NewsItem[] = [
+const allNewsData: NewsItem[] = [
   { mon: 'XXX', date: 'XX', ago: 'X hours ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#a78bfa', title: 'New entry unlocks soon — the ink is still drying' },
   { mon: 'XXX', date: 'XX', ago: 'X hours ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#f2603c', title: 'A small win worth writing down, arriving shortly' },
   { mon: 'XXX', date: 'XX', ago: 'X hours ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#4f8ef7', title: 'Side quest in progress — notes drop when it clears' },
@@ -156,6 +159,9 @@ export const newsData: NewsItem[] = [
   { mon: 'XXX', date: 'XX', ago: 'X days ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#2dd4bf', title: 'Patch notes from a slow week, coming soon' },
   { mon: 'XXX', date: 'XX', ago: 'X days ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#f472b6', title: 'Month-end recap queued up for this very slot' },
 ];
+
+// Only the first entry is live for now; the rest stay hidden until they're ready.
+export const newsData: NewsItem[] = allNewsData.slice(0, 1);
 
 export const newsYear = '2026';
 
