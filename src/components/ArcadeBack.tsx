@@ -22,7 +22,6 @@ interface WalkTarget {
 export default function ArcadeBack({ open }: { open: boolean }) {
   const [pos, setPos] = useState({ x: HOME.x, y: HOME.y });
   const [walkTarget, setWalkTarget] = useState<WalkTarget | null>(null);
-  const [showKeys, setShowKeys] = useState(true);
   const [gameSel, setGameSel] = useState<number | null>(null);
   const [gameAnim, setGameAnim] = useState(false);
   const timers = useRef<number[]>([]);
@@ -59,24 +58,6 @@ export default function ArcadeBack({ open }: { open: boolean }) {
   }, [open]);
 
   useEffect(() => () => clearTimers(), []);
-
-  // Show the key hints briefly when the card opens, then hide them for good
-  // (they only come back on the next open).
-  useEffect(() => {
-    if (!open) {
-      setShowKeys(true);
-      return;
-    }
-    const id = window.setTimeout(() => setShowKeys(false), 4000);
-    return () => clearTimeout(id);
-  }, [open]);
-
-  // Standing on a game swaps the hint slot for the visit prompt — treat that
-  // as the hints having been seen so they don't reappear afterwards.
-  const onGame = gamesArcadeData.some((o) => o.x === pos.x && o.y === pos.y);
-  useEffect(() => {
-    if (open && onGame) setShowKeys(false);
-  }, [open, onGame]);
 
   // Auto-walk: step one square at a time toward a clicked cell; if the cell
   // holds a game, open it on arrival.
@@ -253,95 +234,8 @@ export default function ArcadeBack({ open }: { open: boolean }) {
               >
                 {hint.title}
               </span>
-              <span
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 5,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  lineHeight: 1,
-                  color: '#fafafa',
-                }}
-              >
-                visit
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-              </span>
             </div>
-          ) : mobile ? (
-            <div
-              style={{
-                marginTop: 4,
-                fontSize: 12.5,
-                color: 'rgba(255,255,255,0.42)',
-                opacity: showKeys ? 1 : 0,
-                transition: 'opacity 1s ease',
-              }}
-            >
-              use the pad to walk · step on a game to visit
-            </div>
-          ) : (
-            <div
-              style={{
-                marginTop: 4,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 18,
-                fontSize: 12.5,
-                color: 'rgba(255,255,255,0.42)',
-                opacity: showKeys ? 1 : 0,
-                transition: 'opacity 1s ease',
-              }}
-            >
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                <span
-                  style={{
-                    fontFamily: KEYCAP_FONT,
-                    fontSize: 11,
-                    fontWeight: 600,
-                    letterSpacing: '0.14em',
-                    color: 'rgba(255,255,255,0.8)',
-                    padding: '4px 9px',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: 7,
-                    background: 'rgba(255,255,255,0.05)',
-                  }}
-                >
-                  WASD
-                </span>
-                move
-              </span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                <span
-                  style={{
-                    fontFamily: KEYCAP_FONT,
-                    fontSize: 11,
-                    fontWeight: 600,
-                    letterSpacing: '0.06em',
-                    color: 'rgba(255,255,255,0.8)',
-                    padding: '4px 9px',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: 7,
-                    background: 'rgba(255,255,255,0.05)',
-                  }}
-                >
-                  Enter
-                </span>
-                visit
-              </span>
-            </div>
-          )}
+          ) : null}
         </div>
 
         {/* FLOOR — aspect-locked so cells stay square */}
