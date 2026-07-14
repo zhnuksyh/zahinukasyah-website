@@ -7,6 +7,7 @@ import JournalPage from './components/JournalPage';
 import CollabPage from './components/CollabPage';
 import SocialOverlay from './components/SocialOverlay';
 import DesignDetail from './components/DesignDetail';
+import CustomCursor from './components/CustomCursor';
 import { useViewport } from './lib/useViewport';
 
 export default function App() {
@@ -132,6 +133,7 @@ export default function App() {
 
       <SocialOverlay open={socialOpen} onClose={() => setSocialOpen(false)} />
       <DesignDetail sel={designSel} anim={designAnim} onClose={closeDesign} />
+      <CustomCursor />
     </div>
   );
 }
