@@ -135,6 +135,8 @@ export const gamesArcadeData: ArcadeGame[] = [
   { title: 'Placeholder Game 2', cat: 'Puzzle', meta: '2025 · placeholder', c: '#5ec8f0', x: 10, y: 3, href: '#' },
   { title: 'Placeholder Game 3', cat: 'Platformer', meta: '2025 · placeholder', c: '#ff8a7a', x: 4, y: 5, href: '#' },
   { title: 'Placeholder Game 4', cat: 'Adventure', meta: '2024 · placeholder', c: '#8b7cff', x: 10, y: 5, href: '#' },
+  { title: 'Sudotiles', cat: 'Puzzle', meta: '2026 · placeholder', c: '#ffd166', x: 4, y: 1, href: '#' },
+  { title: 'Detective Query', cat: 'Mystery', meta: '2026 · placeholder', c: '#6ee7b7', x: 10, y: 1, href: '#' },
 ];
 
 export const gameParas = [
