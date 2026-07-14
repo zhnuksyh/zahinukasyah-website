@@ -108,6 +108,22 @@ export default function App() {
         <Hero />
         <div style={mobile ? { flex: '0 0 44px' } : { flex: '1 1 auto', minHeight: 16 }} />
         <CardFan onOpenDesign={openDesign} />
+        {mobile ? (
+          // bottom vignette — the lower half of the carousel cards blends fully
+          // into the page black, with a soft fade above it
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: 'calc(min(40vw, 170px) + 130px)',
+              zIndex: 6,
+              pointerEvents: 'none',
+              background: 'linear-gradient(180deg, rgba(10,10,11,0) 0px, #0a0a0b 110px)',
+            }}
+          />
+        ) : null}
       </div>
 
       <AboutPage active={active === 1} />
