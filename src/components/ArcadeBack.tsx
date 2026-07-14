@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
-import { gameParas, gamesArcadeData } from '../data/content';
+import { gameParas, gamesArcadeData, type ArcadeGame } from '../data/content';
 import { hexToRgba, shade, tint } from '../lib/colors';
 import { useDragScroll } from '../lib/useDragScroll';
 import { useViewport } from '../lib/useViewport';
@@ -123,6 +123,11 @@ export default function ArcadeBack({ open }: { open: boolean }) {
   }, [open, pos, gameSel]);
 
   const hint = gamesArcadeData.find((o) => o.x === pos.x && o.y === pos.y);
+  // Remember the last game stood on so the pill can animate out with its
+  // title still visible.
+  const lastHint = useRef<ArcadeGame | null>(null);
+  if (hint) lastHint.current = hint;
+  const shownHint = hint ?? lastHint.current;
   const gg = gamesArcadeData[gameSel ?? 0] ?? gamesArcadeData[0];
 
   // The floor keeps square cells everywhere; on phones it turns portrait
@@ -200,7 +205,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
           >
             Have a look around!
           </div>
-          {hint ? (
+          {shownHint ? (
             <div
               onClick={() => {
                 const hit = gamesArcadeData.findIndex((o) => o.x === pos.x && o.y === pos.y);
@@ -208,11 +213,10 @@ export default function ArcadeBack({ open }: { open: boolean }) {
               }}
               style={{
                 marginTop: 4,
-                pointerEvents: 'auto',
+                pointerEvents: hint ? 'auto' : 'none',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 20,
                 padding: '12px 22px',
                 borderRadius: 999,
                 background: 'rgba(14,14,17,0.84)',
@@ -220,6 +224,10 @@ export default function ArcadeBack({ open }: { open: boolean }) {
                 backdropFilter: 'blur(8px)',
                 WebkitBackdropFilter: 'blur(8px)',
                 boxShadow: '0 14px 36px -12px rgba(0,0,0,0.7)',
+                opacity: hint ? 1 : 0,
+                transform: hint ? 'scale(1) translateY(0)' : 'scale(0.8) translateY(-8px)',
+                transition:
+                  'opacity .22s ease, transform .3s cubic-bezier(.34,1.4,.64,1)',
               }}
             >
               <span
@@ -232,7 +240,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
                   color: 'rgba(255,255,255,0.55)',
                 }}
               >
-                {hint.title}
+                {shownHint.title}
               </span>
             </div>
           ) : null}
