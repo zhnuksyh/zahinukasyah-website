@@ -211,7 +211,67 @@ export default function ArcadeBack({ open }: { open: boolean }) {
           >
             Have a look around!
           </div>
-          {mobile ? (
+          {hint ? (
+            <div
+              onClick={() => {
+                const hit = gamesArcadeData.findIndex((o) => o.x === pos.x && o.y === pos.y);
+                if (hit >= 0) openGame(hit);
+              }}
+              style={{
+                marginTop: 4,
+                pointerEvents: 'auto',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 20,
+                padding: '12px 22px',
+                borderRadius: 999,
+                background: 'rgba(14,14,17,0.84)',
+                border: '1px solid rgba(255,255,255,0.16)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                boxShadow: '0 14px 36px -12px rgba(0,0,0,0.7)',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  lineHeight: 1,
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.55)',
+                }}
+              >
+                {hint.title}
+              </span>
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  lineHeight: 1,
+                  color: '#fafafa',
+                }}
+              >
+                visit
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </span>
+            </div>
+          ) : mobile ? (
             <div
               style={{
                 marginTop: 4,
@@ -274,57 +334,6 @@ export default function ArcadeBack({ open }: { open: boolean }) {
               </span>
             </div>
           )}
-          {/* INTERACT PROMPT */}
-          {hint ? (
-            <div
-              onClick={() => {
-                const hit = gamesArcadeData.findIndex((o) => o.x === pos.x && o.y === pos.y);
-                if (hit >= 0) openGame(hit);
-              }}
-              style={{
-                marginTop: 6,
-                pointerEvents: 'auto',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 20,
-                padding: '12px 22px',
-                borderRadius: 999,
-                background: 'rgba(14,14,17,0.84)',
-                border: '1px solid rgba(255,255,255,0.16)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                boxShadow: '0 14px 36px -12px rgba(0,0,0,0.7)',
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 12,
-                  fontWeight: 600,
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.55)',
-                }}
-              >
-                {hint.title}
-              </span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 13, fontWeight: 600, color: '#fafafa' }}>
-                visit
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-              </span>
-            </div>
-          ) : null}
         </div>
 
         {/* FLOOR — aspect-locked so cells stay square */}
