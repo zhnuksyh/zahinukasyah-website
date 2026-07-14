@@ -216,10 +216,10 @@ export const gamesData: MediaItem[] = [
   { title: 'Wildfrost', meta: 'Deadpan Games', c: '#a78bfa', desc: 'A snowy deck-builder that punishes greed. Every run I swear I have the perfect combo, and every run the frost humbles me.', img: cover('game-wildfrost.jpg') },
   { title: 'Inscryption', meta: 'Daniel Mullins Games', c: '#4f8ef7', desc: 'A card game inside an escape room inside something much stranger. The less you know going in, the better it hits.', img: cover('game-inscryption.jpg') },
   { title: 'PvZ: Gardenless', meta: 'Open Source Fangame', c: '#35c95a', desc: 'A fan-made spin on Plants vs. Zombies that remixes the classic lanes into something fresh. Fangame passion at its best.', img: cover('game-pvz-gardenless.jpg') },
-  { title: 'Minecraft', meta: 'Mojang Studios', c: '#f2603c', desc: 'The forever game. Every replay starts with a dirt hut and somehow ends with a megabase I never planned to build.', img: cover('game-minecraft.png') },
+  { title: 'Minecraft', meta: 'Mojang Studios', c: '#f2603c', desc: 'The forever game. Every replay starts with a dirt hut and somehow ends with a megabase I never planned to build.', img: cover('game-minecraft.jpg') },
   { title: 'Slay the Spire II', meta: 'Mega Crit', c: '#ffcf33', desc: 'The sequel to the roguelike that defined the genre. New cards, new floors, same "one more run" problem at 2am.', img: cover('game-slay-the-spire-2.jpg') },
   { title: 'Detective Query', meta: 'Zahin Ukasyah', c: '#f472b6', desc: 'My own mystery game — you crack cases by digging through data like a real detective. Made with love and red herrings.', img: cover('game-detective-query.jpg') },
-  { title: 'Sudotiles', meta: 'Zahin Ukasyah', c: '#2dd4bf', desc: 'My take on sudoku with a tile-laying twist. Small, cozy, and exactly the kind of puzzle I want on a slow evening.', img: cover('game-sudotiles.jpg') },
+  { title: 'Sudotiles', meta: 'Zahin Ukasyah', c: '#2dd4bf', desc: 'My take on sudoku with a tile-laying twist. Small, cozy, and exactly the kind of puzzle I want on a slow evening.', img: cover('game-sudotiles.png') },
   { title: 'Bloons TD 6', meta: 'Ninja Kiwi', c: '#8b7cf6', desc: 'Monkeys versus balloons, endlessly. The perfect second-monitor game that quietly eats entire weekends.', img: cover('game-btd6.jpg') },
 ];
 
@@ -236,7 +236,7 @@ export const booksData: MediaItem[] = [
 
 export const moviesData: MediaItem[] = [
   { title: 'To Your Eternity: S3', meta: 'Yoshitoki Ōima', c: '#a78bfa', desc: 'An immortal being keeps learning what it means to be human, one loss at a time. No show makes me tear up this reliably.', img: cover('movie-to-your-eternity-s3.jpg') },
-  { title: 'Boboiboy: Baraju Arc', meta: 'Monsta', c: '#f2603c', desc: 'Malaysian superhero animation going bigger than ever. Proud to watch local animation hit this level.', img: cover('movie-boboiboy-baraju.jpg') },
+  { title: 'Boboiboy: Baraju Arc', meta: 'Monsta', c: '#f2603c', desc: 'Malaysian superhero animation going bigger than ever. Proud to watch local animation hit this level.', img: cover('movie-boboiboy-baraju.png') },
   { title: 'Yozakura Family Spy: S2', meta: 'Hitsuji Gondaira', c: '#f472b6', desc: 'A family of spies, endless chaos, and a surprising amount of heart under all the action gags.', img: cover('movie-yozakura-family-s2.jpg') },
   { title: 'Bungou Stray Dogs: S3', meta: 'Bones', c: '#4f8ef7', desc: 'Literary legends reborn with supernatural skills. The Dazai and Chuuya backstory episodes carry this whole season.', img: cover('movie-bungou-stray-dogs-s3.jpg') },
   { title: 'Ejen Ali Movie 2', meta: 'WAU Animation', c: '#35c95a', desc: 'The Malaysian spy-kid saga on the big screen again. Slick action and a story that respects its young audience.', img: cover('movie-ejen-ali-movie-2.jpg') },
