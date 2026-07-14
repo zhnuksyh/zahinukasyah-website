@@ -119,6 +119,35 @@ a:hover {
   }
 }
 
+@keyframes eye-look {
+  0%,
+  22%,
+  78%,
+  100% {
+    transform: translateX(0);
+  }
+  30%,
+  44% {
+    transform: translateX(9%);
+  }
+  54%,
+  70% {
+    transform: translateX(-9%);
+  }
+}
+
+@keyframes eye-blink {
+  0%,
+  91%,
+  97%,
+  100% {
+    transform: scaleY(1);
+  }
+  94% {
+    transform: scaleY(0.08);
+  }
+}
+
 @keyframes close-btn-in {
   0% {
     opacity: 0;

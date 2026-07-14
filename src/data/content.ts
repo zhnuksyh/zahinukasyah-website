@@ -131,10 +131,10 @@ export interface ArcadeGame {
 }
 
 export const gamesArcadeData: ArcadeGame[] = [
-  { title: 'Placeholder Game', cat: 'Arcade', meta: '2026 · placeholder', c: '#c9f24d', x: 3, y: 2, href: '#' },
-  { title: 'Placeholder Game', cat: 'Puzzle', meta: '2025 · placeholder', c: '#5ec8f0', x: 12, y: 3, href: '#' },
-  { title: 'Placeholder Game', cat: 'Platformer', meta: '2025 · placeholder', c: '#ff8a7a', x: 6, y: 6, href: '#' },
-  { title: 'Placeholder Game', cat: 'Adventure', meta: '2024 · placeholder', c: '#8b7cff', x: 12, y: 6, href: '#' },
+  { title: 'Placeholder Game 1', cat: 'Arcade', meta: '2026 · placeholder', c: '#c9f24d', x: 4, y: 3, href: '#' },
+  { title: 'Placeholder Game 2', cat: 'Puzzle', meta: '2025 · placeholder', c: '#5ec8f0', x: 10, y: 3, href: '#' },
+  { title: 'Placeholder Game 3', cat: 'Platformer', meta: '2025 · placeholder', c: '#ff8a7a', x: 4, y: 5, href: '#' },
+  { title: 'Placeholder Game 4', cat: 'Adventure', meta: '2024 · placeholder', c: '#8b7cff', x: 10, y: 5, href: '#' },
 ];
 
 export const gameParas = [

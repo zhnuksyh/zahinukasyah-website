@@ -1,19 +1,32 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
 import { gameParas, gamesArcadeData } from '../data/content';
 import { hexToRgba, shade, tint } from '../lib/colors';
 import { useDragScroll } from '../lib/useDragScroll';
 import { useViewport } from '../lib/useViewport';
 import CloseButton from './CloseButton';
 
-const COLS = 16;
+// Odd counts so the board has a true center cell — the character's home
+// square lands exactly on the middle of the screen.
+const COLS = 15;
 const ROWS = 9;
+const HOME = { x: 7, y: 4 };
+const KEYCAP_FONT = "'Poppins', sans-serif";
+
+interface WalkTarget {
+  x: number;
+  y: number;
+  game: number | null;
+}
 
 /** Back face for the Games card: a walkable arcade floor plus a fullscreen game detail. */
 export default function ArcadeBack({ open }: { open: boolean }) {
-  const [pos, setPos] = useState({ x: 8, y: 7 });
+  const [pos, setPos] = useState({ x: HOME.x, y: HOME.y });
+  const [walkTarget, setWalkTarget] = useState<WalkTarget | null>(null);
+  const [showKeys, setShowKeys] = useState(true);
   const [gameSel, setGameSel] = useState<number | null>(null);
   const [gameAnim, setGameAnim] = useState(false);
   const timers = useRef<number[]>([]);
+  const gridRef = useRef<HTMLDivElement>(null);
   const dragScroll = useDragScroll();
   const mobile = useViewport() === 'mobile';
 
@@ -40,10 +53,42 @@ export default function ArcadeBack({ open }: { open: boolean }) {
       clearTimers();
       setGameSel(null);
       setGameAnim(false);
+      setWalkTarget(null);
+      setPos({ x: HOME.x, y: HOME.y });
     }
   }, [open]);
 
   useEffect(() => () => clearTimers(), []);
+
+  // Show the key hints briefly each time the card opens, then fade them out.
+  useEffect(() => {
+    if (!open) {
+      setShowKeys(true);
+      return;
+    }
+    const id = window.setTimeout(() => setShowKeys(false), 4000);
+    return () => clearTimeout(id);
+  }, [open]);
+
+  // Auto-walk: step one square at a time toward a clicked cell; if the cell
+  // holds a game, open it on arrival.
+  useEffect(() => {
+    if (walkTarget === null) return;
+    if (pos.x === walkTarget.x && pos.y === walkTarget.y) {
+      const g = walkTarget.game;
+      setWalkTarget(null);
+      if (g !== null) openGame(g);
+      return;
+    }
+    const id = window.setTimeout(() => {
+      setPos((p) => {
+        const dx = Math.sign(walkTarget.x - p.x);
+        if (dx !== 0) return { ...p, x: p.x + dx };
+        return { ...p, y: p.y + Math.sign(walkTarget.y - p.y) };
+      });
+    }, 150);
+    return () => clearTimeout(id);
+  }, [walkTarget, pos]);
 
   useEffect(() => {
     if (!open) return;
@@ -80,6 +125,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
       }
       if (moved) {
         e.preventDefault();
+        setWalkTarget(null);
         setPos({ x, y });
       }
     };
@@ -103,10 +149,27 @@ export default function ArcadeBack({ open }: { open: boolean }) {
   const step = (dc: number, dr: number) => {
     const mx = mobile ? dr : dc;
     const my = mobile ? dc : dr;
+    setWalkTarget(null);
     setPos((p) => ({
       x: Math.min(COLS - 1, Math.max(0, p.x + mx)),
       y: Math.min(ROWS - 1, Math.max(0, p.y + my)),
     }));
+  };
+
+  // Click anywhere on the floor: walk to that cell (clamped to the board).
+  const onFloorClick = (e: ReactMouseEvent<HTMLDivElement>) => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const r = grid.getBoundingClientRect();
+    const dc = Math.min(dCols - 1, Math.max(0, Math.floor(((e.clientX - r.left) / r.width) * dCols)));
+    const dr = Math.min(dRows - 1, Math.max(0, Math.floor(((e.clientY - r.top) / r.height) * dRows)));
+    const cell = mobile ? { x: dr, y: dc } : { x: dc, y: dr };
+    const game = gamesArcadeData.findIndex((o) => o.x === cell.x && o.y === cell.y);
+    if (game >= 0 && cell.x === pos.x && cell.y === pos.y) {
+      openGame(game);
+      return;
+    }
+    setWalkTarget({ x: cell.x, y: cell.y, game: game >= 0 ? game : null });
   };
 
   return (
@@ -140,27 +203,24 @@ export default function ArcadeBack({ open }: { open: boolean }) {
         >
           <div
             style={{
-              fontSize: 12,
-              fontWeight: 600,
-              letterSpacing: '0.4em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.4)',
-            }}
-          >
-            Arcade
-          </div>
-          <div
-            style={{
               fontSize: 'clamp(22px,2.6vw,34px)',
               fontWeight: 700,
               letterSpacing: '-0.02em',
               color: '#fafafa',
             }}
           >
-            Walk the space · visit a game
+            Have a look around!
           </div>
           {mobile ? (
-            <div style={{ marginTop: 4, fontSize: 12.5, color: 'rgba(255,255,255,0.42)' }}>
+            <div
+              style={{
+                marginTop: 4,
+                fontSize: 12.5,
+                color: 'rgba(255,255,255,0.42)',
+                opacity: showKeys ? 1 : 0,
+                transition: 'opacity 1s ease',
+              }}
+            >
               use the pad to walk · step on a game to visit
             </div>
           ) : (
@@ -172,12 +232,14 @@ export default function ArcadeBack({ open }: { open: boolean }) {
                 gap: 18,
                 fontSize: 12.5,
                 color: 'rgba(255,255,255,0.42)',
+                opacity: showKeys ? 1 : 0,
+                transition: 'opacity 1s ease',
               }}
             >
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                 <span
                   style={{
-                    fontFamily: 'monospace',
+                    fontFamily: KEYCAP_FONT,
                     fontSize: 11,
                     fontWeight: 600,
                     letterSpacing: '0.14em',
@@ -195,7 +257,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                 <span
                   style={{
-                    fontFamily: 'monospace',
+                    fontFamily: KEYCAP_FONT,
                     fontSize: 11,
                     fontWeight: 600,
                     letterSpacing: '0.06em',
@@ -212,20 +274,74 @@ export default function ArcadeBack({ open }: { open: boolean }) {
               </span>
             </div>
           )}
+          {/* INTERACT PROMPT */}
+          {hint ? (
+            <div
+              onClick={() => {
+                const hit = gamesArcadeData.findIndex((o) => o.x === pos.x && o.y === pos.y);
+                if (hit >= 0) openGame(hit);
+              }}
+              style={{
+                marginTop: 6,
+                pointerEvents: 'auto',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 20,
+                padding: '12px 22px',
+                borderRadius: 999,
+                background: 'rgba(14,14,17,0.84)',
+                border: '1px solid rgba(255,255,255,0.16)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                boxShadow: '0 14px 36px -12px rgba(0,0,0,0.7)',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.55)',
+                }}
+              >
+                {hint.title}
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 13, fontWeight: 600, color: '#fafafa' }}>
+                visit
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </span>
+            </div>
+          ) : null}
         </div>
 
         {/* FLOOR — aspect-locked so cells stay square */}
         <div
+          onClick={onFloorClick}
           style={{
             position: 'absolute',
             inset: 0,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: mobile ? '128px 14px 196px' : '90px 20px 80px',
+            padding: mobile ? '128px 14px 196px' : '90px 20px 150px',
+            cursor: 'pointer',
           }}
         >
           <div
+            ref={gridRef}
             style={{
               position: 'relative',
               height: '100%',
@@ -243,7 +359,6 @@ export default function ArcadeBack({ open }: { open: boolean }) {
           return (
             <div
               key={idx}
-              onClick={() => openGame(idx)}
               style={{
                 position: 'absolute',
                 left: `${colOf(o) * cw}%`,
@@ -285,8 +400,16 @@ export default function ArcadeBack({ open }: { open: boolean }) {
                     ? '0 0 0 5px rgba(255,255,255,0.12), 0 0 40px 12px rgba(255,255,255,0.45)'
                     : '0 0 22px 5px rgba(255,255,255,0.16)',
                   transition: 'all .22s cubic-bezier(.34,1.4,.64,1)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: '#232327',
                 }}
-              />
+              >
+                {idx + 1}
+              </div>
             </div>
           );
         })}
@@ -320,96 +443,42 @@ export default function ArcadeBack({ open }: { open: boolean }) {
             <div
               style={{
                 position: 'absolute',
-                top: '36%',
-                left: '26%',
-                width: '13%',
-                aspectRatio: '1',
-                borderRadius: '50%',
-                background: '#17171a',
-              }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                top: '36%',
-                right: '26%',
-                width: '13%',
-                aspectRatio: '1',
-                borderRadius: '50%',
-                background: '#17171a',
-              }}
-            />
-          </div>
-        </div>
-          </div>
-        </div>
-
-        {/* INTERACT PROMPT */}
-        {hint ? (
-          <div
-            onClick={() => {
-              const hit = gamesArcadeData.findIndex((o) => o.x === pos.x && o.y === pos.y);
-              if (hit >= 0) openGame(hit);
-            }}
-            style={{
-              position: 'absolute',
-              bottom: mobile ? 132 : 34,
-              cursor: 'pointer',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              zIndex: 8,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 14,
-              padding: '12px 22px',
-              borderRadius: 999,
-              background: 'rgba(14,14,17,0.84)',
-              border: '1px solid rgba(255,255,255,0.16)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              boxShadow: '0 14px 36px -12px rgba(0,0,0,0.7)',
-            }}
-          >
-            <span
-              style={{
-                fontSize: 12,
-                fontWeight: 600,
-                letterSpacing: '0.16em',
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.55)',
+                inset: 0,
+                animation: 'eye-look 7s ease-in-out infinite',
               }}
             >
-              {hint.title}
-            </span>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontSize: 13, color: '#fafafa' }}>
-              {mobile ? (
-                'tap to visit'
-              ) : (
-                <>
-                  <span
-                    style={{
-                      fontFamily: 'monospace',
-                      fontSize: 11,
-                      fontWeight: 600,
-                      letterSpacing: '0.06em',
-                      padding: '4px 9px',
-                      border: '1px solid rgba(255,255,255,0.24)',
-                      borderRadius: 7,
-                      background: 'rgba(255,255,255,0.06)',
-                    }}
-                  >
-                    Enter
-                  </span>
-                  visit
-                </>
-              )}
-            </span>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '36%',
+                  left: '26%',
+                  width: '13%',
+                  aspectRatio: '1',
+                  borderRadius: '50%',
+                  background: '#17171a',
+                  animation: 'eye-blink 4.4s infinite',
+                }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '36%',
+                  right: '26%',
+                  width: '13%',
+                  aspectRatio: '1',
+                  borderRadius: '50%',
+                  background: '#17171a',
+                  animation: 'eye-blink 4.4s infinite',
+                }}
+              />
+            </div>
           </div>
-        ) : null}
+        </div>
+          </div>
+        </div>
 
-        {/* D-PAD (mobile) */}
-        {mobile ? (
-          <div
+        {/* D-PAD */}
+        <div
             style={{
               position: 'absolute',
               bottom: 20,
@@ -462,8 +531,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
                 </svg>
               </button>
             ))}
-          </div>
-        ) : null}
+        </div>
       </div>
 
       {/* GAME DETAIL (orb → full screen) */}
@@ -494,6 +562,39 @@ export default function ArcadeBack({ open }: { open: boolean }) {
           }}
         >
           <div style={{ maxWidth: 1080, margin: '0 auto', padding: mobile ? '88px 24px 64px' : '96px 40px 90px' }}>
+            <button
+              onClick={closeGame}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                marginBottom: 28,
+                padding: '10px 18px',
+                borderRadius: 999,
+                border: '1px solid rgba(255,255,255,0.16)',
+                background: 'rgba(255,255,255,0.05)',
+                color: '#fafafa',
+                fontFamily: KEYCAP_FONT,
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m12 19-7-7 7-7" />
+                <path d="M19 12H5" />
+              </svg>
+              Back to the game space
+            </button>
             <div
               style={{
                 position: 'relative',
@@ -510,7 +611,7 @@ export default function ArcadeBack({ open }: { open: boolean }) {
             >
               <span
                 style={{
-                  fontFamily: 'monospace',
+                  fontFamily: KEYCAP_FONT,
                   fontSize: 13,
                   letterSpacing: '0.24em',
                   color: 'rgba(255,255,255,0.62)',
