@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import logo from '../assets/syah-logo-white.svg';
 import { useViewport } from '../lib/useViewport';
 
-const TABS = ['Home', 'About', 'Journal', 'Collab'];
+const TABS = ['Home', 'About', 'Article', 'Collab'];
 const MUTED = 'rgba(255,255,255,0.72)';
 
 interface HeaderProps {
