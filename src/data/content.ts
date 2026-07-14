@@ -1,5 +1,7 @@
-// Central content data for the portfolio. Everything here is placeholder
-// copy meant to be swapped for real content later.
+// Central content data for the portfolio. Entries marked "coming soon" are
+// stand-ins meant to be swapped for real content later.
+
+const cover = (file: string) => `${import.meta.env.BASE_URL}covers/${file}`;
 
 export interface DesignItem {
   cat: string;
@@ -11,27 +13,27 @@ export interface DesignItem {
 }
 
 export const designParas = [
-  'Placeholder paragraph — a short note about this design, the brief behind it, and the direction I chose to explore.',
-  'Placeholder paragraph — a little more on the process, the details worth remembering, and the moment it finally clicked.',
-  'Placeholder paragraph — a closing line on the outcome, what I learned, and where the idea might go next.',
+  "This card hasn't been unlocked yet. The full write-up — the brief, the direction, and the messy middle — is still in the vault.",
+  'Progress on this quest line is underway. Process shots, drafts, and the story behind the work will appear here once it ships.',
+  'Until then, treat this page as a locked chest. The loot inside is real — it just needs a little more time to drop.',
 ];
 
 export const designData: DesignItem[] = [
-  { cat: 'Branding', c: '#a78bfa', title: 'Placeholder Title', meta: '2026 · placeholder', wide: true },
-  { cat: 'Web', c: '#4f8ef7', title: 'Placeholder Title', meta: '2025 · placeholder' },
-  { cat: 'Poster', c: '#f2603c', title: 'Placeholder Title', meta: '2025 · placeholder' },
-  { cat: 'Product', c: '#20222c', dark: true, title: 'Placeholder Title', meta: '2025 · placeholder' },
-  { cat: 'Editorial', c: '#ffcf33', title: 'Placeholder Title', meta: '2024 · placeholder' },
-  { cat: 'Icon Set', c: '#35c95a', title: 'Placeholder Title', meta: '2024 · placeholder', wide: true },
-  { cat: 'Motion', c: '#f472b6', title: 'Placeholder Title', meta: '2024 · placeholder' },
-  { cat: 'Type', c: '#8b7cf6', title: 'Placeholder Title', meta: '2023 · placeholder' },
-  { cat: 'Campaign', c: '#ff9a4d', title: 'Placeholder Title', meta: '2023 · placeholder' },
-  { cat: 'UI Kit', c: '#3fa9f5', title: 'Placeholder Title', meta: '2023 · placeholder', wide: true },
-  { cat: 'Illustration', c: '#22c55e', title: 'Placeholder Title', meta: '2022 · placeholder' },
-  { cat: 'Layout', c: '#262a38', dark: true, title: 'Placeholder Title', meta: '2022 · placeholder' },
-  { cat: '3D', c: '#2dd4bf', title: 'Placeholder Title', meta: '2021 · placeholder' },
-  { cat: 'Packaging', c: '#6366f1', dark: true, title: 'Placeholder Title', meta: '2021 · placeholder' },
-  { cat: 'Signage', c: '#ffc233', title: 'Placeholder Title', meta: '2020 · placeholder' },
+  { cat: 'Categories', c: '#a78bfa', title: 'Coming Soon', meta: '2026 · locked', wide: true },
+  { cat: 'Categories', c: '#4f8ef7', title: 'Coming Soon', meta: '2025 · locked' },
+  { cat: 'Categories', c: '#f2603c', title: 'Coming Soon', meta: '2025 · locked' },
+  { cat: 'Categories', c: '#20222c', dark: true, title: 'Coming Soon', meta: '2025 · locked' },
+  { cat: 'Categories', c: '#ffcf33', title: 'Coming Soon', meta: '2024 · locked' },
+  { cat: 'Categories', c: '#35c95a', title: 'Coming Soon', meta: '2024 · locked', wide: true },
+  { cat: 'Categories', c: '#f472b6', title: 'Coming Soon', meta: '2024 · locked' },
+  { cat: 'Categories', c: '#8b7cf6', title: 'Coming Soon', meta: '2023 · locked' },
+  { cat: 'Categories', c: '#ff9a4d', title: 'Coming Soon', meta: '2023 · locked' },
+  { cat: 'Categories', c: '#3fa9f5', title: 'Coming Soon', meta: '2023 · locked', wide: true },
+  { cat: 'Categories', c: '#22c55e', title: 'Coming Soon', meta: '2022 · locked' },
+  { cat: 'Categories', c: '#262a38', dark: true, title: 'Coming Soon', meta: '2022 · locked' },
+  { cat: 'Categories', c: '#2dd4bf', title: 'Coming Soon', meta: '2021 · locked' },
+  { cat: 'Categories', c: '#6366f1', dark: true, title: 'Coming Soon', meta: '2021 · locked' },
+  { cat: 'Categories', c: '#ffc233', title: 'Coming Soon', meta: '2020 · locked' },
 ];
 
 export interface ProjItem {
@@ -40,19 +42,23 @@ export interface ProjItem {
   wide: boolean;
 }
 
+// Mirrors the design/animation bento layout: same card count and wide spans.
 export const projData: ProjItem[] = [
-  { c: '#a78bfa', dark: false, wide: false },
-  { c: '#35c95a', dark: false, wide: true },
-  { c: '#20222c', dark: true, wide: false },
-  { c: '#ff9a4d', dark: false, wide: false },
-  { c: '#4f8ef7', dark: false, wide: true },
+  { c: '#a78bfa', dark: false, wide: true },
+  { c: '#4f8ef7', dark: false, wide: false },
   { c: '#f2603c', dark: false, wide: false },
-  { c: '#8b7cf6', dark: false, wide: false },
+  { c: '#20222c', dark: true, wide: false },
   { c: '#ffcf33', dark: false, wide: false },
-  { c: '#2dd4bf', dark: false, wide: true },
-  { c: '#262a38', dark: true, wide: false },
+  { c: '#35c95a', dark: false, wide: true },
   { c: '#f472b6', dark: false, wide: false },
+  { c: '#8b7cf6', dark: false, wide: false },
+  { c: '#ff9a4d', dark: false, wide: false },
+  { c: '#3fa9f5', dark: false, wide: true },
+  { c: '#22c55e', dark: false, wide: false },
+  { c: '#262a38', dark: true, wide: false },
+  { c: '#2dd4bf', dark: false, wide: false },
   { c: '#6366f1', dark: true, wide: false },
+  { c: '#ffc233', dark: false, wide: false },
 ];
 
 export interface ResearchItem {
@@ -67,56 +73,42 @@ export interface ResearchItem {
   paras: string[];
 }
 
+const researchParas = [
+  "This entry hasn't been unlocked yet — the paper is still on the reading desk and the margin notes are mid-scribble.",
+  'Once it clears, this space fills with the core claim, the parts worth re-deriving, and the questions left in the margins.',
+  'Consider it a save point. The full field notes will be waiting here on your next visit.',
+];
+
 export const researchData: ResearchItem[] = [
   {
-    mon: 'Feb', date: '14', status: 'Annotating', cat: 'Paper', venue: 'NeurIPS 2025', c: '#a78bfa',
-    title: 'Scaling laws for multimodal representation learning',
-    authors: 'L. Chen, A. Okafor, R. Nakamura et al.',
-    paras: [
-      'The core claim is that a single joint embedding scales predictably across text, image and audio as long as the pre-training mixture stays balanced. Worth re-deriving the loss curve myself.',
-      'Their ablation on modality dropout is the interesting part — knocking out one stream at train time makes the others more robust rather than less. I want to try this on a smaller budget.',
-      'Open question I noted in the margin: does the predicted floor still hold once you add a fourth modality, or is three a lucky number for their setup?',
-    ],
+    mon: 'XXX', date: 'XX', status: 'Locked', cat: 'Paper', venue: 'Coming Soon', c: '#a78bfa',
+    title: 'New paper notes unlock soon — annotations in progress',
+    authors: 'Authors revealed on unlock',
+    paras: researchParas,
   },
   {
-    mon: 'Feb', date: '09', status: 'To read', cat: 'Preprint', venue: 'arXiv', c: '#4f8ef7',
-    title: 'Sparse attention without the accuracy tax',
-    authors: 'M. Alvarez, S. Bhatt',
-    paras: [
-      'Queued this after it kept coming up in citations. The pitch is a learned routing gate that keeps roughly 12% of attention edges and loses almost nothing downstream.',
-      'Skimmed the method section — the gate is trained with a straight-through estimator, so the numbers might be fragile at longer context. Flagging to verify.',
-      'If it holds, this is the cheapest win in my current reading list. Pairing it with the KV-cache notes below.',
-    ],
+    mon: 'XXX', date: 'XX', status: 'In queue', cat: 'Preprint', venue: 'Coming Soon', c: '#4f8ef7',
+    title: 'A preprint is queued for this slot — reading run pending',
+    authors: 'Authors revealed on unlock',
+    paras: researchParas,
   },
   {
-    mon: 'Jan', date: '28', status: 'Notes', cat: 'Survey', venue: 'ACM Computing Surveys', c: '#35c95a',
-    title: 'A field guide to retrieval-augmented generation',
-    authors: 'P. Idris, Y. Wen, K. Solé',
-    paras: [
-      'Best map of the space I have found so far. Split into indexing, retrieval and fusion strategies, with a clean taxonomy I have started borrowing for my own notes.',
-      'Their honest section on failure modes — stale indexes, retriever/reader mismatch — matches what I keep running into. Copied the checklist into my project doc.',
-      'Marked three of the cited papers as follow-ups; two are already in this list.',
-    ],
+    mon: 'XXX', date: 'XX', status: 'Locked', cat: 'Survey', venue: 'Coming Soon', c: '#35c95a',
+    title: 'Survey notes drop here once the map is drawn',
+    authors: 'Authors revealed on unlock',
+    paras: researchParas,
   },
   {
-    mon: 'Jan', date: '15', status: 'Replicated', cat: 'Paper', venue: 'ICLR 2025', c: '#f2603c',
-    title: 'Small models, long memory: state-space recall',
-    authors: 'T. Varga, N. Dube',
-    paras: [
-      'Reproduced the headline recall benchmark on a 130M model over a weekend — results within a point of the paper, which is reassuring.',
-      'The trick is a decaying state kernel that is cheap to roll forward. I wrote up the derivation in my own words to make sure I actually understood it.',
-      'Next step is to see whether the recall holds under noisy inputs, which the paper conveniently does not test.',
-    ],
+    mon: 'XXX', date: 'XX', status: 'In queue', cat: 'Paper', venue: 'Coming Soon', c: '#f2603c',
+    title: 'Replication attempt loading — results unlock soon',
+    authors: 'Authors revealed on unlock',
+    paras: researchParas,
   },
   {
-    mon: 'Jan', date: '06', status: 'Archived', cat: 'Reading', venue: 'Distill-style writeup', c: '#f472b6',
-    title: 'Why gradient noise helps generalization',
-    authors: 'Community writeup',
-    paras: [
-      'Not a formal paper but the clearest intuition-first explanation I have read on why a little SGD noise acts like a regularizer.',
-      'Kept it here mostly for the diagrams, which I want to redraw in my own style for a future note.',
-      'Low priority now, but a good one to hand to someone just getting started.',
-    ],
+    mon: 'XXX', date: 'XX', status: 'Locked', cat: 'Reading', venue: 'Coming Soon', c: '#f472b6',
+    title: 'An archived favorite gets its write-up at this save point',
+    authors: 'Authors revealed on unlock',
+    paras: researchParas,
   },
 ];
 
@@ -131,18 +123,18 @@ export interface ArcadeGame {
 }
 
 export const gamesArcadeData: ArcadeGame[] = [
-  { title: 'Placeholder Game 1', cat: 'Arcade', meta: '2026 · placeholder', c: '#c9f24d', x: 4, y: 4, href: '#' },
-  { title: 'Placeholder Game 2', cat: 'Puzzle', meta: '2025 · placeholder', c: '#5ec8f0', x: 10, y: 4, href: '#' },
-  { title: 'Placeholder Game 3', cat: 'Platformer', meta: '2025 · placeholder', c: '#ff8a7a', x: 4, y: 6, href: '#' },
-  { title: 'Placeholder Game 4', cat: 'Adventure', meta: '2024 · placeholder', c: '#8b7cff', x: 10, y: 6, href: '#' },
-  { title: 'Sudotiles', cat: 'Puzzle', meta: '2026 · placeholder', c: '#ffd166', x: 4, y: 2, href: '#' },
-  { title: 'Detective Query', cat: 'Mystery', meta: '2026 · placeholder', c: '#6ee7b7', x: 10, y: 2, href: '#' },
+  { title: 'Locked', cat: 'Arcade', meta: '2026 · unlocks soon', c: '#c9f24d', x: 4, y: 4, href: '#' },
+  { title: 'Locked', cat: 'Puzzle', meta: '2025 · unlocks soon', c: '#5ec8f0', x: 10, y: 4, href: '#' },
+  { title: 'Locked', cat: 'Platformer', meta: '2025 · unlocks soon', c: '#ff8a7a', x: 4, y: 6, href: '#' },
+  { title: 'Locked', cat: 'Adventure', meta: '2024 · unlocks soon', c: '#8b7cff', x: 10, y: 6, href: '#' },
+  { title: 'Sudotiles', cat: 'Puzzle', meta: '2026 · in development', c: '#ffd166', x: 4, y: 2, href: '#' },
+  { title: 'Detective Query', cat: 'Mystery', meta: '2026 · in development', c: '#6ee7b7', x: 10, y: 2, href: '#' },
 ];
 
 export const gameParas = [
-  'Placeholder paragraph — a short note on what this game is, the idea behind it, and the feeling I wanted to leave players with.',
-  'Placeholder paragraph — a little more on how it plays, the systems under the hood, and the moment it started to feel alive.',
-  'Placeholder paragraph — a closing line on where it went, what I would change, and what is coming next.',
+  'This cabinet is still being wired up — the story of what the game is and the feeling it chases will load here soon.',
+  'The systems under the hood are in playtesting: mechanics, balance, and the moment it all starts to feel alive.',
+  'Insert coin later. A proper look at where this one goes next drops as soon as it leaves the workshop.',
 ];
 
 export interface NewsItem {
@@ -152,24 +144,25 @@ export interface NewsItem {
   cat: string;
   author: string;
   c: string;
+  title: string;
 }
 
 export const newsData: NewsItem[] = [
-  { mon: 'Jul', date: '20', ago: '1 hour ago', cat: 'Placeholder', author: 'Placeholder Name', c: '#a78bfa' },
-  { mon: 'Jul', date: '18', ago: '2 hours ago', cat: 'Placeholder', author: 'Placeholder Name', c: '#f2603c' },
-  { mon: 'Jul', date: '15', ago: '3 hours ago', cat: 'Placeholder', author: 'Placeholder Name', c: '#4f8ef7' },
-  { mon: 'Jul', date: '11', ago: '5 hours ago', cat: 'Placeholder', author: 'Placeholder Name', c: '#35c95a' },
-  { mon: 'Jun', date: '28', ago: '8 hours ago', cat: 'Placeholder', author: 'Placeholder Name', c: '#ffcf33' },
-  { mon: 'Jun', date: '19', ago: '1 day ago', cat: 'Placeholder', author: 'Placeholder Name', c: '#2dd4bf' },
-  { mon: 'May', date: '30', ago: '2 days ago', cat: 'Placeholder', author: 'Placeholder Name', c: '#f472b6' },
+  { mon: 'XXX', date: 'XX', ago: 'X hours ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#a78bfa', title: 'New entry unlocks soon — the ink is still drying' },
+  { mon: 'XXX', date: 'XX', ago: 'X hours ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#f2603c', title: 'A small win worth writing down, arriving shortly' },
+  { mon: 'XXX', date: 'XX', ago: 'X hours ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#4f8ef7', title: 'Side quest in progress — notes drop when it clears' },
+  { mon: 'XXX', date: 'XX', ago: 'X hours ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#35c95a', title: 'This chapter is locked until the story is ready' },
+  { mon: 'XXX', date: 'XX', ago: 'X hours ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#ffcf33', title: 'An idea is brewing here — check back for the reveal' },
+  { mon: 'XXX', date: 'XX', ago: 'X days ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#2dd4bf', title: 'Patch notes from a slow week, coming soon' },
+  { mon: 'XXX', date: 'XX', ago: 'X days ago', cat: 'Quest Log', author: 'Zahin Ukasyah', c: '#f472b6', title: 'Month-end recap queued up for this very slot' },
 ];
 
 export const newsYear = '2026';
 
 export const newsParas = [
-  'Placeholder paragraph — a short note about what this recent thing was and why it mattered goes right here, filling the top of the story with a comfortable line length.',
-  'Placeholder paragraph — a second beat continues the thought with a little more detail, the kind of context you would jot down while it is still fresh in your mind.',
-  'Placeholder paragraph — a closing line wraps things up and hints at whatever is coming next, leaving the reader with somewhere to go from here.',
+  "This entry hasn't been unlocked yet — the story is still in draft, sitting comfortably in the quest log until it's ready.",
+  "Once it drops, the full context lands right here: what happened, why it mattered, and the details worth remembering.",
+  'Consider this a save point. Come back soon and the rest of the chapter will be waiting for you.',
 ];
 
 export interface SocialItem {
@@ -197,68 +190,66 @@ export const collabEmail = 'zhnuksyh03@gmail.com';
 export interface CollabItem {
   cat: string;
   c: string;
-  title: string;
   desc: string;
+  /** Cover image under public/covers; cards without one show a placeholder. */
+  img?: string;
 }
 
 export const collabData: CollabItem[] = [
-  { cat: 'Mobile App', c: '#f2603c', title: 'Placeholder Title', desc: 'Placeholder description — a short note about the mobile app work and what we could build together in this space.' },
-  { cat: 'UI/UX Design', c: '#8b7cf6', title: 'Placeholder Title', desc: 'Placeholder description — a short note about the design work and the kind of problems worth solving together.' },
-  { cat: 'Game Design', c: '#35c95a', title: 'Placeholder Title', desc: 'Placeholder description — a short note about the game design work and where a collaboration might go.' },
-  { cat: 'Web App', c: '#4f8ef7', title: 'Placeholder Title', desc: 'Placeholder description — a short note about the web work and what a team-up could look like.' },
-  { cat: 'Branding', c: '#ffcf33', title: 'Placeholder Title', desc: 'Placeholder description — a short note about the branding work and the ideas worth chasing together.' },
+  { cat: 'Mobile App', c: '#f2603c', desc: 'Apps that feel at home on a phone — smooth, snappy, and built end to end from idea to store release.', img: cover('collab-mobile-app.jpg') },
+  { cat: 'UI/UX Design', c: '#8b7cf6', desc: 'Interfaces that feel obvious to use. I sweat the flows, the spacing, and the little moments of delight.', img: cover('collab-ui-ux-design.jpg') },
+  { cat: 'Game Design', c: '#35c95a', desc: 'Small games with big ideas — puzzles, deck-builders, and mechanics that make you go "one more try".', img: cover('collab-game-design.jpg') },
+  { cat: 'Web App', c: '#4f8ef7', desc: 'Fast, modern web apps built with React and friends. From landing page to full product, I can ship it.', img: cover('collab-web-app.jpg') },
+  { cat: 'System Dev', c: '#ffcf33', desc: 'The plumbing behind the product — APIs, databases, and back-end systems that stay reliable under load.', img: cover('collab-system-dev.jpg') },
 ];
 
 export interface MediaItem {
   title: string;
   meta: string;
-  tag: string;
   c: string;
   desc: string;
   /** Cover image under public/covers; cards without one show a placeholder. */
   img?: string;
 }
 
-const gameDesc =
-  'Placeholder note — a couple of lines on why this one has my attention right now and what keeps pulling me back in.';
-const bookDesc =
-  'Placeholder note — a couple of lines on what this book is about and the idea from it that stuck with me.';
-const movieDesc =
-  'Placeholder note — a couple of lines on what this one is about and the moment that made it stick with me.';
-
-const cover = (file: string) => `${import.meta.env.BASE_URL}covers/${file}`;
-
 export const gamesData: MediaItem[] = [
-  { title: 'Wildfrost', meta: 'Deadpan Games', tag: 'Playing', c: '#a78bfa', desc: gameDesc, img: cover('game-wildfrost.jpg') },
-  { title: 'Inscryption', meta: 'Daniel Mullins Games', tag: 'Beat it', c: '#4f8ef7', desc: gameDesc, img: cover('game-inscryption.jpg') },
-  { title: 'PvZ: Gardenless', meta: 'Fangame', tag: 'Playing', c: '#35c95a', desc: gameDesc },
-  { title: 'Minecraft', meta: 'Mojang Studios', tag: 'Replay', c: '#f2603c', desc: gameDesc, img: cover('game-minecraft.png') },
-  { title: 'Slay the Spire II', meta: 'Mega Crit', tag: 'Playing', c: '#ffcf33', desc: gameDesc, img: cover('game-slay-the-spire-2.jpg') },
-  { title: 'Detective Query', meta: 'Zahin Ukasyah', tag: 'My game', c: '#f472b6', desc: gameDesc },
-  { title: 'Sudotiles', meta: 'Zahin Ukasyah', tag: 'My game', c: '#2dd4bf', desc: gameDesc },
-  { title: 'Bloons TD 6', meta: 'Ninja Kiwi', tag: 'Playing', c: '#8b7cf6', desc: gameDesc, img: cover('game-btd6.jpg') },
+  { title: 'Wildfrost', meta: 'Deadpan Games', c: '#a78bfa', desc: 'A snowy deck-builder that punishes greed. Every run I swear I have the perfect combo, and every run the frost humbles me.', img: cover('game-wildfrost.jpg') },
+  { title: 'Inscryption', meta: 'Daniel Mullins Games', c: '#4f8ef7', desc: 'A card game inside an escape room inside something much stranger. The less you know going in, the better it hits.', img: cover('game-inscryption.jpg') },
+  { title: 'PvZ: Gardenless', meta: 'Open Source Fangame', c: '#35c95a', desc: 'A fan-made spin on Plants vs. Zombies that remixes the classic lanes into something fresh. Fangame passion at its best.', img: cover('game-pvz-gardenless.jpg') },
+  { title: 'Minecraft', meta: 'Mojang Studios', c: '#f2603c', desc: 'The forever game. Every replay starts with a dirt hut and somehow ends with a megabase I never planned to build.', img: cover('game-minecraft.png') },
+  { title: 'Slay the Spire II', meta: 'Mega Crit', c: '#ffcf33', desc: 'The sequel to the roguelike that defined the genre. New cards, new floors, same "one more run" problem at 2am.', img: cover('game-slay-the-spire-2.jpg') },
+  { title: 'Detective Query', meta: 'Zahin Ukasyah', c: '#f472b6', desc: 'My own mystery game — you crack cases by digging through data like a real detective. Made with love and red herrings.', img: cover('game-detective-query.jpg') },
+  { title: 'Sudotiles', meta: 'Zahin Ukasyah', c: '#2dd4bf', desc: 'My take on sudoku with a tile-laying twist. Small, cozy, and exactly the kind of puzzle I want on a slow evening.', img: cover('game-sudotiles.jpg') },
+  { title: 'Bloons TD 6', meta: 'Ninja Kiwi', c: '#8b7cf6', desc: 'Monkeys versus balloons, endlessly. The perfect second-monitor game that quietly eats entire weekends.', img: cover('game-btd6.jpg') },
 ];
 
 export const booksData: MediaItem[] = [
-  { title: 'Sonic IDW Main Series', meta: 'Ian Flynn · IDW', tag: 'Reading', c: '#4f8ef7', desc: bookDesc, img: cover('book-sonic-idw.jpg') },
-  { title: 'Ideology of the Future', meta: 'Muhammad Rafiuddin', tag: 'Reading', c: '#35c95a', desc: bookDesc },
-  { title: 'As a Man Thinketh', meta: 'James Allen', tag: 'Finished', c: '#ffcf33', desc: bookDesc, img: cover('book-as-a-man-thinketh.jpg') },
-  { title: 'The Metamorphosis', meta: 'Franz Kafka', tag: 'Finished', c: '#a78bfa', desc: bookDesc, img: cover('book-metamorphosis.jpg') },
-  { title: 'Crime and Punishment', meta: 'Fyodor Dostoevsky', tag: 'Reading', c: '#f2603c', desc: bookDesc, img: cover('book-crime-punishment.jpg') },
-  { title: 'The Courage to Be Disliked', meta: 'Kishimi & Koga', tag: 'Finished', c: '#2dd4bf', desc: bookDesc, img: cover('book-courage-disliked.jpg') },
-  { title: 'Slow Productivity', meta: 'Cal Newport', tag: 'Reading', c: '#f472b6', desc: bookDesc, img: cover('book-slow-productivity.jpg') },
-  { title: 'Muhammad', meta: 'Martin Lings', tag: 'Reading', c: '#8b7cf6', desc: bookDesc, img: cover('book-muhammad-lings.jpg') },
+  { title: 'Sonic IDW Main Series', meta: 'Ian Flynn · IDW', c: '#4f8ef7', desc: 'The ongoing Sonic comic run, and honestly the best the blue blur has been written in years. Surge alone is worth it.', img: cover('book-sonic-idw.jpg') },
+  { title: 'Ideology of the Future', meta: 'Muhammad Rafiuddin', c: '#35c95a', desc: 'A dense read on consciousness and where humanity is heading. Pairs weirdly well with the current rise of AI.', img: cover('book-ideology-of-the-future.jpg') },
+  { title: 'As a Man Thinketh', meta: 'James Allen', c: '#ffcf33', desc: 'A tiny classic on how thought shapes character. You can finish it in an afternoon and chew on it for months.', img: cover('book-as-a-man-thinketh.jpg') },
+  { title: 'The Metamorphosis', meta: 'Franz Kafka', c: '#a78bfa', desc: 'A man wakes up as a bug and his family slowly stops seeing him as human. Short, absurd, and quietly devastating.', img: cover('book-metamorphosis.jpg') },
+  { title: 'Crime and Punishment', meta: 'Fyodor Dostoevsky', c: '#f2603c', desc: 'Guilt as a slow fever. Watching Raskolnikov unravel is the most stressful reading experience I keep coming back to.', img: cover('book-crime-punishment.jpg') },
+  { title: 'The Courage to Be Disliked', meta: 'Kishimi & Koga', c: '#2dd4bf', desc: 'Adlerian psychology as a dialogue between a youth and a philosopher. The idea that all problems are relationship problems stuck with me.', img: cover('book-courage-disliked.jpg') },
+  { title: 'Slow Productivity', meta: 'Cal Newport', c: '#f472b6', desc: 'Do fewer things, work at a natural pace, obsess over quality. A calm antidote to hustle culture that I needed.', img: cover('book-slow-productivity.jpg') },
+  { title: 'Muhammad', meta: 'Martin Lings', c: '#8b7cf6', desc: "Lings' biography of the Prophet ﷺ, drawn from the earliest sources. Reads like poetry while staying faithful to history.", img: cover('book-muhammad-lings.jpg') },
 ];
 
 export const moviesData: MediaItem[] = [
-  { title: 'To Your Eternity: S3', meta: 'Anime', tag: 'Watching', c: '#a78bfa', desc: movieDesc },
-  { title: 'Boboiboy: Baraju Arc', meta: 'Monsta', tag: 'Watching', c: '#f2603c', desc: movieDesc },
-  { title: 'Yozakura Family Spy: S2', meta: 'Anime', tag: 'Watching', c: '#f472b6', desc: movieDesc },
-  { title: 'Bungou Stray Dogs: S3', meta: 'Bones', tag: 'Finished', c: '#4f8ef7', desc: movieDesc },
-  { title: 'Ejen Ali Movie 2', meta: 'WAU Animation', tag: 'Finished', c: '#35c95a', desc: movieDesc },
-  { title: 'Papazola The Movie', meta: 'Malaysian animation', tag: 'Finished', c: '#ffcf33', desc: movieDesc },
-  { title: "Searching for a World that Doesn't Exist", meta: 'Film', tag: 'Finished', c: '#2dd4bf', desc: movieDesc },
-  { title: 'Solving the M4TCHB0X Mystery', meta: 'Documentary', tag: 'Watching', c: '#8b7cf6', desc: movieDesc },
+  { title: 'To Your Eternity: S3', meta: 'Yoshitoki Ōima', c: '#a78bfa', desc: 'An immortal being keeps learning what it means to be human, one loss at a time. No show makes me tear up this reliably.', img: cover('movie-to-your-eternity-s3.jpg') },
+  { title: 'Boboiboy: Baraju Arc', meta: 'Monsta', c: '#f2603c', desc: 'Malaysian superhero animation going bigger than ever. Proud to watch local animation hit this level.', img: cover('movie-boboiboy-baraju.jpg') },
+  { title: 'Yozakura Family Spy: S2', meta: 'Hitsuji Gondaira', c: '#f472b6', desc: 'A family of spies, endless chaos, and a surprising amount of heart under all the action gags.', img: cover('movie-yozakura-family-s2.jpg') },
+  { title: 'Bungou Stray Dogs: S3', meta: 'Bones', c: '#4f8ef7', desc: 'Literary legends reborn with supernatural skills. The Dazai and Chuuya backstory episodes carry this whole season.', img: cover('movie-bungou-stray-dogs-s3.jpg') },
+  { title: 'Ejen Ali Movie 2', meta: 'WAU Animation', c: '#35c95a', desc: 'The Malaysian spy-kid saga on the big screen again. Slick action and a story that respects its young audience.', img: cover('movie-ejen-ali-movie-2.jpg') },
+  { title: 'Papazola The Movie', meta: 'Monsta', c: '#ffcf33', desc: 'Pure Malaysian comedy chaos in animated form. Went in for the laughs, stayed for the surprisingly warm family beats.', img: cover('movie-papazola.jpg') },
+  { title: "Searching for a World that Doesn't Exist", meta: 'Wifies', c: '#2dd4bf', desc: 'A quiet film about chasing a place that may only exist in your head. The kind of story that lingers for days.', img: cover('movie-searching-world.jpg') },
+  { title: 'Solving the M4TCHB0X Mystery', meta: 'Wifies', c: '#8b7cf6', desc: 'A rabbit-hole documentary about an internet mystery and the people obsessed with cracking it. Catnip for puzzle brains.', img: cover('movie-m4tchb0x-mystery.jpg') },
+];
+
+export const podcastsData: MediaItem[] = [
+  { title: 'Within Reason', meta: 'Alex O\'Connor', c: '#4f8ef7', desc: 'Careful, good-faith debates on philosophy, religion, and ethics. The rare show where disagreeing feels productive.', img: cover('podcast-within-reason.jpg') },
+  { title: 'Modern Wisdom', meta: 'Chris Williamson', c: '#a78bfa', desc: 'Long conversations on psychology, habits, and the odd corners of being human. Always leaves me with one idea to chew on.', img: cover('podcast-modern-wisdom.jpg') },
+  { title: 'The Checkup', meta: 'Doctor Mike', c: '#35c95a', desc: 'A doctor cutting through health myths with actual evidence and good humor. Comfort listening that happens to be useful.', img: cover('podcast-the-checkup.jpg') },
+  { title: 'HUGE*', meta: 'Cleo Abram', c: '#f2603c', desc: 'Optimistic deep dives into the technology shaping the future. The asterisk is doing a lot of work, and I love it.', img: cover('podcast-huge.jpg') },
 ];
 
 export interface TimelineItem {
