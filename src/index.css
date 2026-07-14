@@ -18,6 +18,20 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Kill the browser's focus ring on click (Edge/Chrome draw a double outline
+   around the clicked element) and the mobile tap highlight. */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: none;
+}
+
 a {
   color: rgba(255, 255, 255, 0.72);
   text-decoration: none;
