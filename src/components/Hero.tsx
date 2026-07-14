@@ -12,7 +12,7 @@ const QUOTES = [
 
 const TYPE_MS = 45;
 const DELETE_MS = 22;
-const HOLD_MS = 10000;
+const HOLD_MS = 15000;
 const GAP_MS = 400;
 
 export default function Hero() {
