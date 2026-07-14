@@ -575,7 +575,7 @@ export default function AboutPage({ active }: { active: boolean }) {
         style={{
           position: 'absolute',
           right: mobile ? 18 : 36,
-          bottom: mobile ? 18 : 36,
+          bottom: mobile ? 34 : 36,
           width: 52,
           height: 52,
           borderRadius: '50%',
