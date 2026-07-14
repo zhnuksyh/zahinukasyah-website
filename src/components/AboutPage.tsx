@@ -547,22 +547,22 @@ export default function AboutPage({ active }: { active: boolean }) {
 
           {/* ROW 3 Â· full width â€” games */}
           <div style={{ ...cell('1 / -1', 3), marginTop: 8, ...bioRise(0.58) }}>
-            <MediaGrid heading="Games I've been playing recently" items={gamesData} prefix="game" />
+            <MediaGrid heading="Games I've been liking recently" items={gamesData} prefix="game" />
           </div>
 
           {/* ROW 4 Â· full width â€” books */}
           <div style={{ ...cell('1 / -1', 4), marginTop: 8, ...bioRise(0.66) }}>
-            <MediaGrid heading="Books I've been reading recently" items={booksData} prefix="book" />
+            <MediaGrid heading="Books I've been liking recently" items={booksData} prefix="book" />
           </div>
 
           {/* ROW 5 Â· full width â€” movies */}
           <div style={{ ...cell('1 / -1', 5), marginTop: 8, ...bioRise(0.74) }}>
-            <MediaGrid heading="Movies I've been watching recently" items={moviesData} prefix="movie" />
+            <MediaGrid heading="Movies I've been liking recently" items={moviesData} prefix="movie" />
           </div>
 
           {/* ROW 6 Â· full width â€” podcasts */}
           <div style={{ ...cell('1 / -1', 6), marginTop: 8, ...bioRise(0.82) }}>
-            <MediaGrid heading="Podcasts I've been listening to recently" items={podcastsData} prefix="podcast" />
+            <MediaGrid heading="Podcasts I've been liking recently" items={podcastsData} prefix="podcast" />
           </div>
         </div>
       </div>
