@@ -4,6 +4,7 @@ import { useViewport } from '../lib/useViewport';
 import { shade } from '../lib/colors';
 import { ACCENT } from '../lib/theme';
 import FlipCard from './FlipCard';
+import ImagePlaceholder from './ImagePlaceholder';
 
 const TXT_DARK = '#17171c';
 const STAG = [0, 22, 8, 22, 0];
@@ -61,7 +62,7 @@ export default function CollabPage({ active }: { active: boolean }) {
           zIndex: 12,
           display: 'flex',
           justifyContent: 'center',
-          padding: mobile ? '80px 26px 24px' : vp === 'tablet' ? '92px 44px 30px' : '92px 100px 30px',
+          padding: mobile ? '64px 26px 24px' : vp === 'tablet' ? '92px 44px 30px' : '92px 100px 30px',
           opacity: active ? 1 : 0,
           pointerEvents: active ? 'auto' : 'none',
           transition: 'opacity .45s ease',
@@ -112,12 +113,12 @@ export default function CollabPage({ active }: { active: boolean }) {
                 lineHeight: 1.65,
                 color: 'rgba(255,255,255,0.52)',
                 maxWidth: 540,
-                margin: '18px auto 0',
+                margin: mobile ? '26px auto 0' : '18px auto 0',
               }}
             >
               Feel free reach out. I'm always up for an interesting idea!
             </p>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginTop: 26 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginTop: mobile ? 34 : 26 }}>
               <button
                 onClick={() => setEmailOpen(true)}
                 className="pop-sm hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
@@ -183,7 +184,13 @@ export default function CollabPage({ active }: { active: boolean }) {
                       height: 250,
                       perspective: 1000,
                       cursor: 'pointer',
-                      marginTop: mobile ? 0 : STAG[idx % STAG.length],
+                      // mobile: sink the outer cards so the centered one reads as lifted
+                      // without the raised card escaping upward into the content above
+                      marginTop: mobile
+                        ? idx === Math.floor(collabData.length / 2)
+                          ? 0
+                          : 16
+                        : STAG[idx % STAG.length],
                       opacity: up ? 1 : 0,
                       // no inline transform once risen — it would override the hover lift
                       ...(up ? {} : { transform: 'translateY(40px)' }),
@@ -197,9 +204,6 @@ export default function CollabPage({ active }: { active: boolean }) {
                       backfaceVisibility: 'hidden',
                       background: cc.c,
                       color: TXT_DARK,
-                      padding: 18,
-                      display: 'flex',
-                      flexDirection: 'column',
                       boxShadow: '0 14px 30px -14px rgba(0,0,0,0.35)',
                     }}
                     backStyle={{
@@ -219,49 +223,31 @@ export default function CollabPage({ active }: { active: boolean }) {
                     }}
                     front={
                       <>
+                        {/* full-bleed visual (swap the cover file for real art later) */}
+                        {cc.img ? (
+                          <img
+                            src={cc.img}
+                            alt={`${cc.cat} visual`}
+                            draggable={false}
+                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        ) : (
+                          <ImagePlaceholder label="visual" />
+                        )}
                         <div
                           style={{
-                            alignSelf: 'flex-start',
+                            position: 'absolute',
+                            top: 14,
+                            left: 14,
                             fontSize: 11,
                             fontWeight: 600,
                             padding: '4px 11px',
                             borderRadius: 999,
-                            background: 'rgba(0,0,0,0.14)',
+                            background: 'rgba(0,0,0,0.16)',
                             color: TXT_DARK,
-                            marginBottom: 14,
                           }}
                         >
                           {cc.cat}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: 17,
-                            fontWeight: 600,
-                            lineHeight: 1.32,
-                            color: TXT_DARK,
-                            letterSpacing: '-0.01em',
-                          }}
-                        >
-                          {cc.title}
-                        </div>
-                        <div style={{ flex: '1 1 auto' }} />
-                        <div
-                          style={{
-                            marginTop: 14,
-                            height: 92,
-                            borderRadius: 13,
-                            border: '1px dashed rgba(0,0,0,0.16)',
-                            background: 'rgba(255,255,255,0.22)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontFamily: 'monospace',
-                            fontSize: 10,
-                            letterSpacing: '0.08em',
-                            color: 'rgba(0,0,0,0.35)',
-                          }}
-                        >
-                          visual
                         </div>
                       </>
                     }
@@ -278,7 +264,7 @@ export default function CollabPage({ active }: { active: boolean }) {
                             color: '#f3f3f5',
                           }}
                         >
-                          Description
+                          {cc.cat}
                         </div>
                         <div style={{ fontSize: 14, lineHeight: 1.55, color: 'rgba(255,255,255,0.9)' }}>
                           {cc.desc}
