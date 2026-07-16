@@ -159,6 +159,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     pos.style.perspective = '1200px';
     pos.style.opacity = '';
     pos.style.pointerEvents = '';
+    pos.style.willChange = '';
     card.style.transition = CARD_TRANSITION;
     card.style.transform = '';
     const r = i === 2 ? '28px' : '26px';
@@ -193,7 +194,9 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     // lift the fan out of its stacking context so the fixed card can cover the page
     fanRef.current.style.zIndex = '300';
 
-    // FREEZE the real card exactly where it sits, as a fixed element
+    // FREEZE the real card exactly where it sits, as a fixed element.
+    // The transform is written as the full translate/rotate/scale list so every
+    // later stage interpolates per-function instead of via matrix decomposition.
     pos.style.transition = 'none';
     pos.style.position = 'fixed';
     pos.style.left = rest.left + 'px';
@@ -202,9 +205,10 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     pos.style.height = H + 'px';
     pos.style.marginLeft = '0';
     pos.style.bottom = 'auto';
-    pos.style.transform = `rotate(${rot}deg)`;
+    pos.style.transform = `translate(0px, 0px) rotate(${rot}deg) scale(1)`;
     pos.style.perspective = '1200px';
     pos.style.zIndex = '10';
+    pos.style.willChange = 'transform';
     // drop any hover lift smoothly
     card.style.transition = 'transform .4s ease';
     card.style.transform = 'rotateY(0deg)';
@@ -219,13 +223,14 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     const ease = 'cubic-bezier(.6,0,.15,1)';
     const moveT = `left .62s ${ease}, top .62s ${ease}, width .62s ${ease}, height .62s ${ease}, transform .62s ${ease}, border-radius .62s ${ease}`;
 
-    // 1) glide to center
+    // 1) glide to center — transform only (left/top stay put), so the travel
+    // runs on the compositor instead of re-laying-out the card every frame
+    const dx = (vw - W) / 2 - rest.left;
+    const dy = (vh - H) / 2 - rest.top;
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
-        pos.style.transition = moveT;
-        pos.style.left = (vw - W) / 2 + 'px';
-        pos.style.top = (vh - H) / 2 + 'px';
-        pos.style.transform = 'rotate(0deg) scale(1.06)';
+        pos.style.transition = `transform .62s ${ease}`;
+        pos.style.transform = `translate(${dx}px, ${dy}px) rotate(0deg) scale(1.06)`;
       }),
     );
     // 2) flip to the back; swap faces at the edge-on midpoint (~90deg)
@@ -236,7 +241,8 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
       }, 760),
     );
     timers.current.push(window.setTimeout(() => showFace(faces, true), 760 + 280));
-    // 3) fill the screen
+    // 3) fill the screen — the one phase that must animate the real box, since
+    // the back face's fullscreen layout has to reflow as it grows
     timers.current.push(
       window.setTimeout(() => {
         pos.style.transition = moveT;
@@ -244,7 +250,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
         pos.style.top = '0px';
         pos.style.width = vw + 'px';
         pos.style.height = vh + 'px';
-        pos.style.transform = 'rotate(0deg) scale(1)';
+        pos.style.transform = 'translate(0px, 0px) rotate(0deg) scale(1)';
         faces.forEach((f) => {
           f.style.transition = 'border-radius .5s ease';
           f.style.borderRadius = '0px';
@@ -267,13 +273,14 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     setShowClose(false);
     setFeatureSel(null);
 
-    // 1) shrink back from full-screen to the centered card
+    // 1) shrink back from full-screen to the centered card (box morph — the
+    // back face's layout has to reflow down to card size)
     pos.style.transition = moveT;
     pos.style.left = (vw - W) / 2 + 'px';
     pos.style.top = (vh - H) / 2 + 'px';
     pos.style.width = W + 'px';
     pos.style.height = H + 'px';
-    pos.style.transform = 'rotate(0deg) scale(1.06)';
+    pos.style.transform = 'translate(0px, 0px) rotate(0deg) scale(1.06)';
     const r = i === 2 ? '28px' : '26px';
     faces.forEach((f) => {
       f.style.transition = 'border-radius .5s ease';
@@ -295,10 +302,10 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     timers.current.push(
       window.setTimeout(() => {
         pos.style.zIndex = String(ZS[i]);
-        pos.style.transition = `left .56s cubic-bezier(.34,1.1,.64,1), top .56s cubic-bezier(.34,1.1,.64,1), transform .56s ease`;
-        pos.style.left = rest.left + 'px';
-        pos.style.top = rest.top + 'px';
-        pos.style.transform = `rotate(${rot}deg) scale(1)`;
+        // transform-only travel: left/top stay at the centered values and the
+        // translate carries the card home on the compositor
+        pos.style.transition = 'transform .56s cubic-bezier(.34,1.1,.64,1)';
+        pos.style.transform = `translate(${rest.left - (vw - W) / 2}px, ${rest.top - (vh - H) / 2}px) rotate(${rot}deg) scale(1)`;
         restoreOthers(i);
       }, 760),
     );
