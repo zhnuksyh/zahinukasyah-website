@@ -54,9 +54,21 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
   const [mobileAnim, setMobileAnim] = useState(false);
 
   useEffect(() => {
-    const onResize = () => setVw(window.innerWidth);
+    // rAF-throttled: live window drag-resizing fires the event per pixel, and
+    // each setVw re-renders the whole fan
+    let raf = 0;
+    const onResize = () => {
+      if (!raf)
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          setVw(window.innerWidth);
+        });
+    };
     window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
 
   const mobile = vw < 768;

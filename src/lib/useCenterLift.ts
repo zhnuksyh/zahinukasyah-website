@@ -14,14 +14,19 @@ export function useCenterLift(rail: RefObject<HTMLElement | null>, enabled: bool
     let raf = 0;
     const apply = () => {
       raf = 0;
+      // read every rect before the first style write so no write can force a
+      // synchronous re-layout mid-loop
       const rect = el.getBoundingClientRect();
       const mid = rect.left + rect.width / 2;
-      for (const child of Array.from(el.children) as HTMLElement[]) {
+      const children = Array.from(el.children) as HTMLElement[];
+      const lifts = children.map((child) => {
         const r = child.getBoundingClientRect();
         const d = Math.abs(r.left + r.width / 2 - mid);
-        const t = Math.max(0, 1 - d / Math.max(1, r.width));
-        child.style.translate = `0 ${(-max * t).toFixed(1)}px`;
-      }
+        return Math.max(0, 1 - d / Math.max(1, r.width));
+      });
+      children.forEach((child, i) => {
+        child.style.translate = `0 ${(-max * lifts[i]).toFixed(1)}px`;
+      });
     };
     const schedule = () => {
       if (!raf) raf = requestAnimationFrame(apply);
