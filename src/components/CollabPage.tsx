@@ -66,8 +66,10 @@ export default function CollabPage({ active }: { active: boolean }) {
           justifyContent: 'center',
           padding: mobile ? '64px 26px 24px' : vp === 'tablet' ? '92px 44px 30px' : '92px 100px 30px',
           opacity: active ? 1 : 0,
+          // hidden pages drop out of rendering once the fade completes
+          visibility: active ? 'visible' : 'hidden',
           pointerEvents: active ? 'auto' : 'none',
-          transition: 'opacity .45s ease',
+          transition: 'opacity .45s ease, visibility .45s',
         }}
       >
         <div
@@ -289,8 +291,9 @@ export default function CollabPage({ active }: { active: boolean }) {
           backdropFilter: emailOpen ? 'blur(10px)' : 'none',
           WebkitBackdropFilter: emailOpen ? 'blur(10px)' : 'none',
           opacity: emailOpen ? 1 : 0,
+          visibility: emailOpen ? 'visible' : 'hidden',
           pointerEvents: emailOpen ? 'auto' : 'none',
-          transition: 'opacity .4s ease',
+          transition: 'opacity .4s ease, visibility .4s',
         }}
       >
         <div

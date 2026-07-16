@@ -121,8 +121,10 @@ export default function JournalPage({ active }: { active: boolean }) {
         justifyContent: 'center',
         padding: mobile ? '80px 22px 24px' : vp === 'tablet' ? '92px 44px 34px' : '92px 100px 34px',
         opacity: active ? 1 : 0,
+        // hidden pages drop out of rendering once the fade completes
+        visibility: active ? 'visible' : 'hidden',
         pointerEvents: active ? 'auto' : 'none',
-        transition: 'opacity .45s ease',
+        transition: 'opacity .45s ease, visibility .45s',
       }}
     >
       <div

@@ -128,6 +128,8 @@ function MediaGrid({ heading, items, prefix }: { heading: string; items: MediaIt
                       src={g.img}
                       alt={`${g.title} cover art`}
                       draggable={false}
+                      loading="lazy"
+                      decoding="async"
                       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   ) : (
@@ -249,7 +251,10 @@ export default function AboutPage({ active }: { active: boolean }) {
           justifyContent: 'center',
           padding: mobile ? '88px 26px 56px' : tablet ? '96px 44px 52px' : '104px 112px 56px',
           opacity: active ? 1 : 0,
-          transition: 'opacity .5s ease',
+          // visibility flips only after the fade completes, and lets the
+          // browser skip rendering the whole hidden page
+          visibility: active ? 'visible' : 'hidden',
+          transition: 'opacity .5s ease, visibility .5s',
           pointerEvents: active ? 'auto' : 'none',
         }}
       >
@@ -316,6 +321,7 @@ export default function AboutPage({ active }: { active: boolean }) {
                   src={portraitBack}
                   alt=""
                   draggable={false}
+                  decoding="async"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 />
                 <div
@@ -343,6 +349,7 @@ export default function AboutPage({ active }: { active: boolean }) {
                   alt="Portrait of Zahin Ukasyah"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   draggable={false}
+                  decoding="async"
                 />
                 <div
                   style={{

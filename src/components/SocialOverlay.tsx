@@ -22,8 +22,9 @@ export default function SocialOverlay({ open, onClose }: { open: boolean; onClos
         backdropFilter: open ? 'blur(10px)' : 'none',
         WebkitBackdropFilter: open ? 'blur(10px)' : 'none',
         opacity: open ? 1 : 0,
+        visibility: open ? 'visible' : 'hidden',
         pointerEvents: open ? 'auto' : 'none',
-        transition: 'opacity .4s ease',
+        transition: 'opacity .4s ease, visibility .4s',
       }}
     >
       <div onClick={onClose} style={{ position: 'absolute', inset: 0 }} />

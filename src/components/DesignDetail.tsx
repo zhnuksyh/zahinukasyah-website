@@ -22,8 +22,9 @@ export default function DesignDetail({ sel, anim, onClose }: DesignDetailProps) 
         zIndex: 460,
         background: '#0a0a0b',
         opacity: sel !== null ? 1 : 0,
+        visibility: sel !== null ? 'visible' : 'hidden',
         pointerEvents: sel !== null ? 'auto' : 'none',
-        transition: 'opacity .4s ease',
+        transition: 'opacity .4s ease, visibility .4s',
       }}
     >
       <div onClick={onClose} style={{ position: 'absolute', inset: 0 }} />
