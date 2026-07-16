@@ -202,11 +202,11 @@ export interface CollabItem {
 }
 
 export const collabData: CollabItem[] = [
-  { cat: 'Mobile App', c: '#f2603c', desc: 'Apps that feel at home on a phone — smooth, snappy, and built end to end from idea to store release.', img: cover('collab-mobile-app.jpg') },
-  { cat: 'UI/UX Design', c: '#8b7cf6', desc: 'Interfaces that feel obvious to use. I sweat the flows, the spacing, and the little moments of delight.', img: cover('collab-ui-ux-design.jpg') },
-  { cat: 'Game Design', c: '#35c95a', desc: 'Small games with big ideas — puzzles, deck-builders, and mechanics that make you go "one more try".', img: cover('collab-game-design.jpg') },
-  { cat: 'Web App', c: '#4f8ef7', desc: 'Fast, modern web apps built with React and friends. From landing page to full product, I can ship it.', img: cover('collab-web-app.jpg') },
-  { cat: 'System Dev', c: '#ffcf33', desc: 'The plumbing behind the product — APIs, databases, and back-end systems that stay reliable under load.', img: cover('collab-system-dev.jpg') },
+  { cat: 'Mobile App', c: '#f2603c', desc: 'Apps that feel at home on a phone — smooth, snappy, and built end to end from idea to store release.', img: cover('collab-mobile-app.webp') },
+  { cat: 'UI/UX Design', c: '#8b7cf6', desc: 'Interfaces that feel obvious to use. I sweat the flows, the spacing, and the little moments of delight.', img: cover('collab-ui-ux-design.webp') },
+  { cat: 'Game Design', c: '#35c95a', desc: 'Small games with big ideas — puzzles, deck-builders, and mechanics that make you go "one more try".', img: cover('collab-game-design.webp') },
+  { cat: 'Web App', c: '#4f8ef7', desc: 'Fast, modern web apps built with React and friends. From landing page to full product, I can ship it.', img: cover('collab-web-app.webp') },
+  { cat: 'System Dev', c: '#ffcf33', desc: 'The plumbing behind the product — APIs, databases, and back-end systems that stay reliable under load.', img: cover('collab-system-dev.webp') },
 ];
 
 export interface MediaItem {
@@ -219,43 +219,43 @@ export interface MediaItem {
 }
 
 export const gamesData: MediaItem[] = [
-  { title: 'Wildfrost', meta: 'Deadpan Games', c: '#a78bfa', desc: 'A snowy deck-builder that punishes greed. Every run I swear I have the perfect combo, and every run the frost humbles me.', img: cover('game-wildfrost.jpg') },
-  { title: 'Inscryption', meta: 'Daniel Mullins Games', c: '#4f8ef7', desc: 'A card game inside an escape room inside something much stranger. The less you know going in, the better it hits.', img: cover('game-inscryption.jpg') },
-  { title: 'PvZ: Gardenless', meta: 'Open Source Fangame', c: '#35c95a', desc: 'A fan-made spin on Plants vs. Zombies that remixes the classic lanes into something fresh. Fangame passion at its best.', img: cover('game-pvz-gardenless.jpg') },
-  { title: 'Minecraft', meta: 'Mojang Studios', c: '#f2603c', desc: 'The forever game. Every replay starts with a dirt hut and somehow ends with a megabase I never planned to build.', img: cover('game-minecraft.jpg') },
-  { title: 'Slay the Spire II', meta: 'Mega Crit', c: '#ffcf33', desc: 'The sequel to the roguelike that defined the genre. New cards, new floors, same "one more run" problem at 2am.', img: cover('game-slay-the-spire-2.jpg') },
-  { title: 'Detective Query', meta: 'Zahin Ukasyah', c: '#f472b6', desc: 'My own mystery game — you crack cases by digging through data like a real detective. Made with love and red herrings.', img: cover('game-detective-query.jpg') },
-  { title: 'Sudotiles', meta: 'Zahin Ukasyah', c: '#2dd4bf', desc: 'My take on sudoku with a tile-laying twist. Small, cozy, and exactly the kind of puzzle I want on a slow evening.', img: cover('game-sudotiles.png') },
-  { title: 'Bloons TD 6', meta: 'Ninja Kiwi', c: '#8b7cf6', desc: 'Monkeys versus balloons, endlessly. The perfect second-monitor game that quietly eats entire weekends.', img: cover('game-btd6.jpg') },
+  { title: 'Wildfrost', meta: 'Deadpan Games', c: '#a78bfa', desc: 'A snowy deck-builder that punishes greed. Every run I swear I have the perfect combo, and every run the frost humbles me.', img: cover('game-wildfrost.webp') },
+  { title: 'Inscryption', meta: 'Daniel Mullins Games', c: '#4f8ef7', desc: 'A card game inside an escape room inside something much stranger. The less you know going in, the better it hits.', img: cover('game-inscryption.webp') },
+  { title: 'PvZ: Gardenless', meta: 'Open Source Fangame', c: '#35c95a', desc: 'A fan-made spin on Plants vs. Zombies that remixes the classic lanes into something fresh. Fangame passion at its best.', img: cover('game-pvz-gardenless.webp') },
+  { title: 'Minecraft', meta: 'Mojang Studios', c: '#f2603c', desc: 'The forever game. Every replay starts with a dirt hut and somehow ends with a megabase I never planned to build.', img: cover('game-minecraft.webp') },
+  { title: 'Slay the Spire II', meta: 'Mega Crit', c: '#ffcf33', desc: 'The sequel to the roguelike that defined the genre. New cards, new floors, same "one more run" problem at 2am.', img: cover('game-slay-the-spire-2.webp') },
+  { title: 'Detective Query', meta: 'Zahin Ukasyah', c: '#f472b6', desc: 'My own mystery game — you crack cases by digging through data like a real detective. Made with love and red herrings.', img: cover('game-detective-query.webp') },
+  { title: 'Sudotiles', meta: 'Zahin Ukasyah', c: '#2dd4bf', desc: 'My take on sudoku with a tile-laying twist. Small, cozy, and exactly the kind of puzzle I want on a slow evening.', img: cover('game-sudotiles.webp') },
+  { title: 'Bloons TD 6', meta: 'Ninja Kiwi', c: '#8b7cf6', desc: 'Monkeys versus balloons, endlessly. The perfect second-monitor game that quietly eats entire weekends.', img: cover('game-btd6.webp') },
 ];
 
 export const booksData: MediaItem[] = [
-  { title: 'Sonic IDW Main Series', meta: 'Ian Flynn · IDW', c: '#4f8ef7', desc: 'The ongoing Sonic comic run, and honestly the best the blue blur has been written in years. Surge alone is worth it.', img: cover('book-sonic-idw.jpg') },
-  { title: 'Ideology of the Future', meta: 'Muhammad Rafiuddin', c: '#35c95a', desc: 'A dense read on consciousness and where humanity is heading. Pairs weirdly well with the current rise of AI.', img: cover('book-ideology-of-the-future.jpg') },
-  { title: 'As a Man Thinketh', meta: 'James Allen', c: '#ffcf33', desc: 'A tiny classic on how thought shapes character. You can finish it in an afternoon and chew on it for months.', img: cover('book-as-a-man-thinketh.jpg') },
-  { title: 'The Metamorphosis', meta: 'Franz Kafka', c: '#a78bfa', desc: 'A man wakes up as a bug and his family slowly stops seeing him as human. Short, absurd, and quietly devastating.', img: cover('book-metamorphosis.jpg') },
-  { title: 'Crime and Punishment', meta: 'Fyodor Dostoevsky', c: '#f2603c', desc: 'Guilt as a slow fever. Watching Raskolnikov unravel is the most stressful reading experience I keep coming back to.', img: cover('book-crime-punishment.jpg') },
-  { title: 'The Courage to Be Disliked', meta: 'Kishimi & Koga', c: '#2dd4bf', desc: 'Adlerian psychology as a dialogue between a youth and a philosopher. The idea that all problems are relationship problems stuck with me.', img: cover('book-courage-disliked.jpg') },
-  { title: 'Slow Productivity', meta: 'Cal Newport', c: '#f472b6', desc: 'Do fewer things, work at a natural pace, obsess over quality. A calm antidote to hustle culture that I needed.', img: cover('book-slow-productivity.jpg') },
-  { title: 'Muhammad', meta: 'Martin Lings', c: '#8b7cf6', desc: "Lings' biography of the Prophet ﷺ, drawn from the earliest sources. Reads like poetry while staying faithful to history.", img: cover('book-muhammad-lings.jpg') },
+  { title: 'Sonic IDW Main Series', meta: 'Ian Flynn · IDW', c: '#4f8ef7', desc: 'The ongoing Sonic comic run, and honestly the best the blue blur has been written in years. Surge alone is worth it.', img: cover('book-sonic-idw.webp') },
+  { title: 'Ideology of the Future', meta: 'Muhammad Rafiuddin', c: '#35c95a', desc: 'A dense read on consciousness and where humanity is heading. Pairs weirdly well with the current rise of AI.', img: cover('book-ideology-of-the-future.webp') },
+  { title: 'As a Man Thinketh', meta: 'James Allen', c: '#ffcf33', desc: 'A tiny classic on how thought shapes character. You can finish it in an afternoon and chew on it for months.', img: cover('book-as-a-man-thinketh.webp') },
+  { title: 'The Metamorphosis', meta: 'Franz Kafka', c: '#a78bfa', desc: 'A man wakes up as a bug and his family slowly stops seeing him as human. Short, absurd, and quietly devastating.', img: cover('book-metamorphosis.webp') },
+  { title: 'Crime and Punishment', meta: 'Fyodor Dostoevsky', c: '#f2603c', desc: 'Guilt as a slow fever. Watching Raskolnikov unravel is the most stressful reading experience I keep coming back to.', img: cover('book-crime-punishment.webp') },
+  { title: 'The Courage to Be Disliked', meta: 'Kishimi & Koga', c: '#2dd4bf', desc: 'Adlerian psychology as a dialogue between a youth and a philosopher. The idea that all problems are relationship problems stuck with me.', img: cover('book-courage-disliked.webp') },
+  { title: 'Slow Productivity', meta: 'Cal Newport', c: '#f472b6', desc: 'Do fewer things, work at a natural pace, obsess over quality. A calm antidote to hustle culture that I needed.', img: cover('book-slow-productivity.webp') },
+  { title: 'Muhammad', meta: 'Martin Lings', c: '#8b7cf6', desc: "Lings' biography of the Prophet ﷺ, drawn from the earliest sources. Reads like poetry while staying faithful to history.", img: cover('book-muhammad-lings.webp') },
 ];
 
 export const moviesData: MediaItem[] = [
-  { title: 'To Your Eternity: S3', meta: 'Yoshitoki Ōima', c: '#a78bfa', desc: 'An immortal being keeps learning what it means to be human, one loss at a time. No show makes me tear up this reliably.', img: cover('movie-to-your-eternity-s3.jpg') },
-  { title: 'Boboiboy: Baraju Arc', meta: 'Monsta', c: '#f2603c', desc: 'Malaysian superhero animation going bigger than ever. Proud to watch local animation hit this level.', img: cover('movie-boboiboy-baraju.png') },
-  { title: 'Yozakura Family Spy: S2', meta: 'Hitsuji Gondaira', c: '#f472b6', desc: 'A family of spies, endless chaos, and a surprising amount of heart under all the action gags.', img: cover('movie-yozakura-family-s2.jpg') },
-  { title: 'Bungou Stray Dogs: S3', meta: 'Bones', c: '#4f8ef7', desc: 'Literary legends reborn with supernatural skills. The Dazai and Chuuya backstory episodes carry this whole season.', img: cover('movie-bungou-stray-dogs-s3.jpg') },
-  { title: 'Ejen Ali Movie 2', meta: 'WAU Animation', c: '#35c95a', desc: 'The Malaysian spy-kid saga on the big screen again. Slick action and a story that respects its young audience.', img: cover('movie-ejen-ali-movie-2.jpg') },
-  { title: 'Papazola The Movie', meta: 'Monsta', c: '#ffcf33', desc: 'Pure Malaysian comedy chaos in animated form. Went in for the laughs, stayed for the surprisingly warm family beats.', img: cover('movie-papazola.jpg') },
-  { title: "Searching for a World that Doesn't Exist", meta: 'Wifies', c: '#2dd4bf', desc: 'A quiet film about chasing a place that may only exist in your head. The kind of story that lingers for days.', img: cover('movie-searching-world.jpg') },
-  { title: 'Solving the M4TCHB0X Mystery', meta: 'Wifies', c: '#8b7cf6', desc: 'A rabbit-hole documentary about an internet mystery and the people obsessed with cracking it. Catnip for puzzle brains.', img: cover('movie-m4tchb0x-mystery.jpg') },
+  { title: 'To Your Eternity: S3', meta: 'Yoshitoki Ōima', c: '#a78bfa', desc: 'An immortal being keeps learning what it means to be human, one loss at a time. No show makes me tear up this reliably.', img: cover('movie-to-your-eternity-s3.webp') },
+  { title: 'Boboiboy: Baraju Arc', meta: 'Monsta', c: '#f2603c', desc: 'Malaysian superhero animation going bigger than ever. Proud to watch local animation hit this level.', img: cover('movie-boboiboy-baraju.webp') },
+  { title: 'Yozakura Family Spy: S2', meta: 'Hitsuji Gondaira', c: '#f472b6', desc: 'A family of spies, endless chaos, and a surprising amount of heart under all the action gags.', img: cover('movie-yozakura-family-s2.webp') },
+  { title: 'Bungou Stray Dogs: S3', meta: 'Bones', c: '#4f8ef7', desc: 'Literary legends reborn with supernatural skills. The Dazai and Chuuya backstory episodes carry this whole season.', img: cover('movie-bungou-stray-dogs-s3.webp') },
+  { title: 'Ejen Ali Movie 2', meta: 'WAU Animation', c: '#35c95a', desc: 'The Malaysian spy-kid saga on the big screen again. Slick action and a story that respects its young audience.', img: cover('movie-ejen-ali-movie-2.webp') },
+  { title: 'Papazola The Movie', meta: 'Monsta', c: '#ffcf33', desc: 'Pure Malaysian comedy chaos in animated form. Went in for the laughs, stayed for the surprisingly warm family beats.', img: cover('movie-papazola.webp') },
+  { title: "Searching for a World that Doesn't Exist", meta: 'Wifies', c: '#2dd4bf', desc: 'A quiet film about chasing a place that may only exist in your head. The kind of story that lingers for days.', img: cover('movie-searching-world.webp') },
+  { title: 'Solving the M4TCHB0X Mystery', meta: 'Wifies', c: '#8b7cf6', desc: 'A rabbit-hole documentary about an internet mystery and the people obsessed with cracking it. Catnip for puzzle brains.', img: cover('movie-m4tchb0x-mystery.webp') },
 ];
 
 export const podcastsData: MediaItem[] = [
-  { title: 'Within Reason', meta: 'Alex O\'Connor', c: '#4f8ef7', desc: 'Careful, good-faith debates on philosophy, religion, and ethics. The rare show where disagreeing feels productive.', img: cover('podcast-within-reason.jpg') },
-  { title: 'Modern Wisdom', meta: 'Chris Williamson', c: '#a78bfa', desc: 'Long conversations on psychology, habits, and the odd corners of being human. Always leaves me with one idea to chew on.', img: cover('podcast-modern-wisdom.jpg') },
-  { title: 'The Checkup', meta: 'Doctor Mike', c: '#35c95a', desc: 'A doctor cutting through health myths with actual evidence and good humor. Comfort listening that happens to be useful.', img: cover('podcast-the-checkup.jpg') },
-  { title: 'HUGE*', meta: 'Cleo Abram', c: '#f2603c', desc: 'Optimistic deep dives into the technology shaping the future. The asterisk is doing a lot of work, and I love it.', img: cover('podcast-huge.jpg') },
+  { title: 'Within Reason', meta: 'Alex O\'Connor', c: '#4f8ef7', desc: 'Careful, good-faith debates on philosophy, religion, and ethics. The rare show where disagreeing feels productive.', img: cover('podcast-within-reason.webp') },
+  { title: 'Modern Wisdom', meta: 'Chris Williamson', c: '#a78bfa', desc: 'Long conversations on psychology, habits, and the odd corners of being human. Always leaves me with one idea to chew on.', img: cover('podcast-modern-wisdom.webp') },
+  { title: 'The Checkup', meta: 'Doctor Mike', c: '#35c95a', desc: 'A doctor cutting through health myths with actual evidence and good humor. Comfort listening that happens to be useful.', img: cover('podcast-the-checkup.webp') },
+  { title: 'HUGE*', meta: 'Cleo Abram', c: '#f2603c', desc: 'Optimistic deep dives into the technology shaping the future. The asterisk is doing a lot of work, and I love it.', img: cover('podcast-huge.webp') },
 ];
 
 export interface TimelineItem {

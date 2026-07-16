@@ -14,8 +14,8 @@ import {
   Podcast,
   Puzzle,
 } from 'lucide-react';
-import portrait from '../assets/syah-portrait.jpg';
-import portraitBack from '../assets/syah-portrait-back.jpg';
+import portrait from '../assets/syah-portrait.webp';
+import portraitBack from '../assets/syah-portrait-back.webp';
 import { booksData, gamesData, moviesData, podcastsData, timelineData } from '../data/content';
 import type { MediaItem } from '../data/content';
 import { hexToRgba, shade } from '../lib/colors';
