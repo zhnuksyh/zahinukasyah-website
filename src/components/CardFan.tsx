@@ -16,7 +16,7 @@ const HEIGHTS = [465, 475, 500, 475, 465];
 const ZS = [1, 2, 3, 2, 1];
 
 const CARD_TRANSITION = 'transform .34s cubic-bezier(.34,1.3,.64,1)';
-const FRONT_TRANSITION = 'box-shadow .34s ease, border-color .34s ease, opacity .12s linear';
+const FRONT_TRANSITION = 'border-color .34s ease, opacity .12s linear';
 const BACK_TRANSITION = 'opacity .12s linear';
 
 interface SelInfo {
@@ -456,10 +456,15 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
           const outer = i === 0 || i === 4;
           const radius = center ? 28 : 26;
           const frontClass = center
-            ? 'border border-[rgba(255,255,255,0.12)] shadow-[0_44px_90px_-24px_rgba(0,0,0,0.85)] group-hover:border-[rgba(255,255,255,0.3)] group-hover:shadow-[0_58px_110px_-22px_rgba(0,0,0,0.9)]'
+            ? 'border border-[rgba(255,255,255,0.12)] shadow-[0_44px_90px_-24px_rgba(0,0,0,0.85)] group-hover:border-[rgba(255,255,255,0.3)]'
             : outer
-              ? 'border border-[rgba(255,255,255,0.07)] shadow-[0_30px_60px_-22px_rgba(0,0,0,0.75)] group-hover:border-[rgba(255,255,255,0.24)] group-hover:shadow-[0_44px_80px_-20px_rgba(0,0,0,0.85)]'
-              : 'border border-[rgba(255,255,255,0.07)] shadow-[0_34px_66px_-22px_rgba(0,0,0,0.78)] group-hover:border-[rgba(255,255,255,0.24)] group-hover:shadow-[0_48px_88px_-20px_rgba(0,0,0,0.85)]';
+              ? 'border border-[rgba(255,255,255,0.07)] shadow-[0_30px_60px_-22px_rgba(0,0,0,0.75)] group-hover:border-[rgba(255,255,255,0.24)]'
+              : 'border border-[rgba(255,255,255,0.07)] shadow-[0_34px_66px_-22px_rgba(0,0,0,0.78)] group-hover:border-[rgba(255,255,255,0.24)]';
+          const hoverShadow = center
+            ? '0 58px 110px -22px rgba(0,0,0,0.9)'
+            : outer
+              ? '0 44px 80px -20px rgba(0,0,0,0.85)'
+              : '0 48px 88px -20px rgba(0,0,0,0.85)';
           return (
             <div
               key={i}
@@ -481,14 +486,17 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
                 href="#"
                 onClick={(e) => openCard(e, i)}
                 data-face=""
-                className={`group ${center ? 'lift-18' : 'lift-16'}`}
+                className={`group hover-shadow ${center ? 'lift-18' : 'lift-16'}`}
                 style={{
                   display: 'block',
                   position: 'relative',
                   width: '100%',
                   height: '100%',
+                  // radius only feeds the hover-shadow pseudo; the faces clip themselves
+                  borderRadius: radius,
                   transformStyle: 'preserve-3d',
                   transition: CARD_TRANSITION,
+                  ['--hover-shadow' as string]: hoverShadow,
                 }}
               >
                 {/* front face */}

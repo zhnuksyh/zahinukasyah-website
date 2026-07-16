@@ -77,20 +77,22 @@ export default function DesignBentoBack({ label, title, onOpenTile }: DesignBent
               <div
                 key={i}
                 onClick={(e) => openTile(e, i)}
-                className="lift-8 shadow-[0_16px_34px_-18px_rgba(0,0,0,0.55)] hover:shadow-[0_34px_60px_-22px_rgba(0,0,0,0.85)]"
+                className="lift-8 hover-shadow shadow-[0_16px_34px_-18px_rgba(0,0,0,0.55)]"
                 style={{
                   position: 'relative',
                   gridRow: 'span 1',
                   gridColumn: d.wide ? 'span 2' : 'span 1',
                   borderRadius: 20,
-                  overflow: 'hidden',
+                  // no overflow:hidden — it would clip the hover-shadow pseudo,
+                  // so tile content must stay inside the padding box
                   cursor: 'pointer',
                   padding: 18,
                   display: 'flex',
                   flexDirection: 'column',
                   background: d.c,
                   color: t,
-                  transition: 'transform .3s cubic-bezier(.34,1.4,.64,1), box-shadow .3s ease',
+                  transition: 'transform .3s cubic-bezier(.34,1.4,.64,1)',
+                  ['--hover-shadow' as string]: '0 34px 60px -22px rgba(0,0,0,0.85)',
                 }}
               >
                 <span

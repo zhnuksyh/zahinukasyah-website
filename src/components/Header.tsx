@@ -234,7 +234,7 @@ export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) 
             e.preventDefault();
             onOpenSocial();
           }}
-          className="pop hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
+          className="pop hover-shadow"
           style={{
             padding: '10px 22px',
             borderRadius: 999,
@@ -244,8 +244,8 @@ export default function Header({ active, onSelect, onOpenSocial }: HeaderProps) 
             background: '#ffffff',
             border: '1px solid #fff',
             display: 'inline-block',
-            transition:
-              'transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease, background .25s',
+            transition: 'transform .25s cubic-bezier(.34,1.56,.64,1), background .25s',
+            ['--hover-shadow' as string]: '0 12px 26px -8px rgba(255,255,255,0.3)',
           }}
         >
           Social

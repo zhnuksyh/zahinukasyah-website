@@ -116,6 +116,32 @@ a:hover {
   transform: scale(1.08);
 }
 
+/*
+ * Compositor-friendly hover shadows. Transitioning box-shadow repaints the
+ * element plus its whole shadow region every frame; instead the hover shadow
+ * (from the element's --hover-shadow variable) lives on a pseudo-element and
+ * only its opacity animates. The base shadow stays static on the element, so
+ * on hover the two stack — the hover value should be the desired final look.
+ */
+.hover-shadow {
+  position: relative;
+}
+@media (hover: hover) {
+  .hover-shadow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: var(--hover-shadow);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .hover-shadow:hover::after {
+    opacity: 1;
+  }
+}
+
 /* Custom hand cursor (desktop / fine pointers only). The class is added by
    CustomCursor when active; the real cursor must vanish everywhere,
    including links and buttons that set their own cursor styles. */

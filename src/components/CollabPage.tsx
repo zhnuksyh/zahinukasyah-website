@@ -123,7 +123,7 @@ export default function CollabPage({ active }: { active: boolean }) {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginTop: mobile ? 34 : 26 }}>
               <button
                 onClick={() => setEmailOpen(true)}
-                className="pop-sm hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
+                className="pop-sm hover-shadow"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -137,7 +137,8 @@ export default function CollabPage({ active }: { active: boolean }) {
                   background: '#ffffff',
                   border: '1px solid #fff',
                   cursor: 'pointer',
-                  transition: 'transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease',
+                  transition: 'transform .25s cubic-bezier(.34,1.56,.64,1)',
+                  ['--hover-shadow' as string]: '0 12px 26px -8px rgba(255,255,255,0.3)',
                 }}
               >
                 Email me
@@ -405,7 +406,7 @@ export default function CollabPage({ active }: { active: boolean }) {
           </div>
           <a
             href={`mailto:${collabEmail}`}
-            className="lift-2 hover:shadow-[0_12px_26px_-8px_rgba(255,255,255,0.3)]"
+            className="lift-2 hover-shadow"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -421,7 +422,8 @@ export default function CollabPage({ active }: { active: boolean }) {
               background: '#ffffff',
               border: '1px solid #fff',
               textDecoration: 'none',
-              transition: 'transform .25s cubic-bezier(.34,1.5,.64,1), box-shadow .25s ease',
+              transition: 'transform .25s cubic-bezier(.34,1.5,.64,1)',
+              ['--hover-shadow' as string]: '0 12px 26px -8px rgba(255,255,255,0.3)',
             }}
           >
             Open in mail app
