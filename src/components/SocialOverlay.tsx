@@ -16,11 +16,14 @@ export default function SocialOverlay({ open, onClose }: { open: boolean; onClos
         padding: mobile ? '72px 18px 32px' : 40,
         overflowY: 'auto',
         background: 'rgba(8,8,10,0.55)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
+        // blur is applied at full strength only while open (its visibility rides
+        // the opacity fade) — animating the blur radius itself repaints the whole
+        // backdrop every frame and janks badly on low-end GPUs.
+        backdropFilter: open ? 'blur(10px)' : 'none',
+        WebkitBackdropFilter: open ? 'blur(10px)' : 'none',
         opacity: open ? 1 : 0,
         pointerEvents: open ? 'auto' : 'none',
-        transition: 'opacity .4s ease, backdrop-filter .4s ease',
+        transition: 'opacity .4s ease',
       }}
     >
       <div onClick={onClose} style={{ position: 'absolute', inset: 0 }} />

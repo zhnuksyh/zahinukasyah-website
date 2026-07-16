@@ -283,11 +283,13 @@ export default function CollabPage({ active }: { active: boolean }) {
           justifyContent: 'center',
           padding: 40,
           background: 'rgba(8,8,10,0.55)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
+          // static blur gated on open — never animate the blur radius itself
+          // (repaints the full backdrop per frame; see SocialOverlay).
+          backdropFilter: emailOpen ? 'blur(10px)' : 'none',
+          WebkitBackdropFilter: emailOpen ? 'blur(10px)' : 'none',
           opacity: emailOpen ? 1 : 0,
           pointerEvents: emailOpen ? 'auto' : 'none',
-          transition: 'opacity .4s ease, backdrop-filter .4s ease',
+          transition: 'opacity .4s ease',
         }}
       >
         <div
