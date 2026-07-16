@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { MouseEvent, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { accentGlow, glowGradient } from '../lib/theme';
 import { useCenterLift } from '../lib/useCenterLift';
 import CloseButton from './CloseButton';
@@ -172,8 +172,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
     if (fanRef.current) fanRef.current.style.zIndex = '5';
   };
 
-  const openCard = (e: MouseEvent, i: number) => {
-    e.preventDefault();
+  const openCard = (i: number) => {
     if (sel !== null || !fanRef.current) return;
     clearTimers();
 
@@ -439,8 +438,9 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
             background: mc?.plainBack ? '#0a0a0b' : 'linear-gradient(180deg,#161618,#0e0e10)',
             opacity: mobileAnim ? 1 : 0,
             transform: mobileAnim ? 'scale(1)' : 'scale(0.96)',
+            visibility: mobileSel !== null ? 'visible' : 'hidden',
             pointerEvents: mobileSel !== null ? 'auto' : 'none',
-            transition: 'opacity .4s ease, transform .45s cubic-bezier(.34,1.2,.64,1)',
+            transition: 'opacity .4s ease, transform .45s cubic-bezier(.34,1.2,.64,1), visibility .45s',
             ...(mc && !mc.plainBack
               ? { display: 'flex', flexDirection: 'column', justifyContent: 'center' }
               : {}),
@@ -500,9 +500,18 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
                 transformStyle: 'preserve-3d',
               }}
             >
-              <a
-                href="#"
-                onClick={(e) => openCard(e, i)}
+              {/* div, not <a>: the back faces contain their own links and
+                  buttons, which must not nest inside another interactive element */}
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => openCard(i)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openCard(i);
+                  }
+                }}
                 data-face=""
                 className={`group hover-shadow ${center ? 'lift-18' : 'lift-16'}`}
                 style={{
@@ -510,6 +519,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
                   position: 'relative',
                   width: '100%',
                   height: '100%',
+                  cursor: 'pointer',
                   // radius only feeds the hover-shadow pseudo; the faces clip themselves
                   borderRadius: radius,
                   transformStyle: 'preserve-3d',
@@ -589,7 +599,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
                 >
                   {c.back}
                 </div>
-              </a>
+              </div>
             </div>
           );
         })}
