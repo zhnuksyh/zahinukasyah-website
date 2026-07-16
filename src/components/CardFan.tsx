@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { MouseEvent, ReactNode } from 'react';
-import { accentGlow, glowSoft } from '../lib/theme';
+import { accentGlow, glowGradient } from '../lib/theme';
 import { useCenterLift } from '../lib/useCenterLift';
 import CloseButton from './CloseButton';
 import DesignBentoBack from './DesignBentoBack';
@@ -446,8 +446,7 @@ export default function CardFan({ onOpenDesign }: { onOpenDesign: (i: number) =>
             height: Math.round(530 * s),
             transform: 'translateX(-50%)',
             borderRadius: '50%',
-            filter: 'blur(90px)',
-            background: `radial-gradient(ellipse at center, ${glowSoft}, transparent 70%)`,
+            background: glowGradient,
             animation: 'float-glow 9s ease-in-out infinite',
           }}
         />

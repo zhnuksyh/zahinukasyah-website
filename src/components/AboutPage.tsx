@@ -19,7 +19,7 @@ import portraitBack from '../assets/syah-portrait-back.jpg';
 import { booksData, gamesData, moviesData, podcastsData, timelineData } from '../data/content';
 import type { MediaItem } from '../data/content';
 import { hexToRgba, shade } from '../lib/colors';
-import { ACCENT, accentGlow, glowSoft } from '../lib/theme';
+import { ACCENT, accentGlow, glowGradient } from '../lib/theme';
 import { useDragScroll } from '../lib/useDragScroll';
 import { useViewport } from '../lib/useViewport';
 import FlipCard from './FlipCard';
@@ -286,8 +286,7 @@ export default function AboutPage({ active }: { active: boolean }) {
                 width: 390,
                 height: 390,
                 transform: 'translateX(-50%)',
-                filter: 'blur(80px)',
-                background: `radial-gradient(ellipse at center, ${glowSoft}, transparent 70%)`,
+                background: glowGradient,
                 pointerEvents: 'none',
               }}
             />
